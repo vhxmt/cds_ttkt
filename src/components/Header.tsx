@@ -12,19 +12,16 @@ const Header: React.FC = () => {
     setActiveDropdown(null);
   };
 
-  // Define a type for menu items
   interface MenuItem {
     label: string;
     link?: string;
   }
 
-  // Define a type for menu
   interface Menu {
     label: string;
     items: MenuItem[];
   }
 
-  // Menu data
   const menus: Menu[] = [
     { label: "Tin tức/Sự kiện", items: [
         { label: "Tin tức", link: "/tin-tuc-su-kien" },
@@ -39,6 +36,7 @@ const Header: React.FC = () => {
     { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Liên hệ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Tuyển dụng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    // Other menu items...
   ];
 
   return (
@@ -139,16 +137,15 @@ const Header: React.FC = () => {
                           onMouseLeave={handleMouseLeave}
                       >
                         {menu.items.map((item, itemIndex) => (
-                            <div key={itemIndex}>
-                              <a
-                                  href={item.link || "#"}
-                                  className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
-                                      itemIndex > 0 ? "border-t border-gray-600" : ""
-                                  }`}
-                              >
-                                {item.label}
-                              </a>
-                            </div>
+                            <a
+                                key={itemIndex}
+                                href={item.link || "#"}
+                                className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
+                                    itemIndex > 0 ? "border-t border-gray-600" : ""
+                                }`}
+                            >
+                              {item.label}
+                            </a>
                         ))}
                       </div>
                   )}
