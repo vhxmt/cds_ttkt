@@ -15,6 +15,40 @@ export default function Home() {
                     className="absolute inset-0"
                 />
             </div>
+            <div className="p-6 max-w-4xl mx-auto">
+                <h1 className="text-3xl font-bold mb-4 text-center">
+                    CHÀO MỪNG ĐẾN VỚI PHÒNG THÍ NGHIỆM TRƯỜNG ĐIỆN - ĐIỆN TỬ
+                </h1>
+                <p className="mb-4">
+                    Trường Điện – Điện tử là đơn vị cấp 2 thuộc ĐHBKHN và là đơn vị đào tạo và nghiên cứu nòng cốt trong
+                    lĩnh vực Điện – Điện tử, có tính tự chủ cao thuộc ĐHBKHN, có chức năng chính là đào tạo cấp bằng,
+                    NCKH và chuyển giao tri thức trong lĩnh vực chuyên môn Điện – Điện tử, kỹ thuật đa phương tiện.
+                </p>
+                <h2 className="text-xl font-semibold mb-2">Mục tiêu chiến lược của Trường Điện – Điện tử là thành:</h2>
+                <ul className="list-disc list-inside mb-4">
+                    <li>
+                        Đơn vị đào tạo nguồn nhân lực trình độ cao cho ngành Điện, ĐT-VT với định hướng tích hợp, liên
+                        ngành Điện, ĐT-VT, đáp ứng các yêu cầu nhân lực xã hội cũng như của thị trường lao động.
+                    </li>
+                    <li>
+                        Đơn vị nghiên cứu, phát triển và ứng dụng công nghệ liên ngành Điện, ĐT-VT có uy tín ở trong
+                        nước cũng như khu vực và thế giới;
+                    </li>
+                    <li>
+                        Địa chỉ đầu tư, hợp tác và CGCN hấp dẫn, tin cậy đối với các tổ chức, các doanh nghiệp trong
+                        nước và quốc tế;
+                    </li>
+                    <li>
+                        Đơn vị đóng vai trò quan trọng vào quá trình phát triển ngành Điện, ĐT-VT Việt Nam, góp phần
+                        quan trọng trong sự nghiệp phát triển kinh tế - xã hội, CNH & HĐH đất nước, giữ gìn an ninh,
+                        quốc phòng.
+                    </li>
+                    <li>
+                        Là một trong các đơn vị đi đầu, đóng góp tích cực vào sự phát triển chung theo chiến lược phát
+                        triển của ĐHBKHN.
+                    </li>
+                </ul>
+            </div>
             <section className="relative z-20 p-8">
                 <div className="text-center pt-5">
                     <h2 className="text-green-800 text-2xl font-bold mb-5">HỢP TÁC TRONG NƯỚC</h2>

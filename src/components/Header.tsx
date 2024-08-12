@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 
 const Header: React.FC = () => {
@@ -12,6 +12,35 @@ const Header: React.FC = () => {
     setActiveDropdown(null);
   };
 
+  // Define a type for menu items
+  interface MenuItem {
+    label: string;
+    link?: string;
+  }
+
+  // Define a type for menu
+  interface Menu {
+    label: string;
+    items: MenuItem[];
+  }
+
+  // Menu data
+  const menus: Menu[] = [
+    { label: "Tin tức/Sự kiện", items: [
+        { label: "Tin tức", link: "/tin-tuc-su-kien" },
+        { label: "Sự kiện", link: "/tin-tuc-su-kien" }
+      ] },
+    { label: "Nhân lực", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Công bố khoa học", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Giải thưởng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Blogs", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Liên hệ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Tuyển dụng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  ];
+
   return (
       <header id="banner" className="bg-white">
         <div className="border-t-[10px] border-red-800 w-full"></div>
@@ -19,7 +48,7 @@ const Header: React.FC = () => {
           <div id="banner-left" className="w-full md:w-8/12 flex items-center">
             <a
                 id="logo"
-                href="https://seee.hust.edu.vn/web/vien-dien/trang-chu"
+                href="/#"
                 title="Back Home"
             >
               <img
@@ -93,18 +122,7 @@ const Header: React.FC = () => {
         </div>
         <nav className="bg-gray-800 text-white p-0">
           <div className="container mx-auto flex flex-wrap justify-center">
-            {[
-              { label: "Tin tức/Sự kiện", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Nhân lực", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Nghiên cứu", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Công bố khoa học", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Giải thưởng", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Blogs", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Thiết bị & Dụng cụ", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Hợp tác", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Liên hệ", items: ["Item 1", "Item 2", "Item 3"] },
-              { label: "Tuyển dụng", items: ["Item 1", "Item 2", "Item 3"] },
-            ].map((menu, index) => (
+            {menus.map((menu, index) => (
                 <div
                     key={index}
                     className="relative flex items-center border-l border-r border-gray-600"
@@ -123,12 +141,12 @@ const Header: React.FC = () => {
                         {menu.items.map((item, itemIndex) => (
                             <div key={itemIndex}>
                               <a
-                                  href="#"
+                                  href={item.link || "#"}
                                   className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
                                       itemIndex > 0 ? "border-t border-gray-600" : ""
                                   }`}
                               >
-                                {item}
+                                {item.label}
                               </a>
                             </div>
                         ))}
