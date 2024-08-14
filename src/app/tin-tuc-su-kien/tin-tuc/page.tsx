@@ -2,19 +2,19 @@ import Image from 'next/image';
 
 export default function NewsPage() {
     return (
-        <div className="max-w-6xl mx-auto p-4">
+        <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
             <div className="flex space-x-4">
                 {/* Container chứa dòng chữ */}
                 <div className="flex-none w-1/3">
-                    <div className="text-red-600 text-lg mb-4">
-                        Trang chủ &gt;&gt; Tin tức và sự kiện
+                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
+                        Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/tin-tuc" className="text-[#BD1E1E] underline">Tin tức</a>
                     </div>
-                    <div className="text-red-600 text-lg mb-4">
-                        Tin tức
+                    <div className="text-red-600 text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]">
+                        <a href="/tin-tuc-su-kien/tin-tuc" className="text-[#BD1E1E] underline">Tin tức</a>
                     </div>
-                    <div className="text-red-600 text-lg mb-4">
-                        Sự kiện
+                    <div className="text-red-600 text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]">
+                        <a href="/tin-tuc-su-kien/su-kien" className="text-[#BD1E1E]"> Sự kiện</a>
                     </div>
                 </div>
 
@@ -30,6 +30,10 @@ export default function NewsPage() {
                             className="w-full h-auto object-cover rounded-lg"
                         />
                     </div>
+
+                    <h1 className="text-2xl font-semibold mt-4 mb-4">
+                        SEEE Tin tức & Sự kiện
+                    </h1>
 
                     {/* Container cho hai ô */}
                     <div className="flex space-x-4 mb-4">

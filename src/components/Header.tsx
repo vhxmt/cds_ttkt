@@ -24,8 +24,8 @@ const Header: React.FC = () => {
 
   const menus: Menu[] = [
     { label: "Tin tức/Sự kiện", items: [
-        { label: "Tin tức", link: "/tin-tuc-su-kien" },
-        { label: "Sự kiện", link: "/tin-tuc-su-kien" }
+        { label: "Tin tức", link: "/tin-tuc-su-kien/tin-tuc" },
+        { label: "Sự kiện", link: "/tin-tuc-su-kien/su-kien" }
       ] },
     { label: "Nhân lực", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
@@ -34,7 +34,10 @@ const Header: React.FC = () => {
     { label: "Blogs", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Liên hệ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Liên hệ", items: [
+        { label: "Thông tin liên hệ", link: "/lien-he/thong-tin-lien-he" },
+        { label: "Dẫn đường", link: "/lien-he/dan-duong" }
+      ] },
     { label: "Tuyển dụng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     // Other menu items...
   ];
