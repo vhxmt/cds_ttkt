@@ -24,17 +24,27 @@ const Header: React.FC = () => {
 
   const menus: Menu[] = [
     { label: "Tin tức/Sự kiện", items: [
-        { label: "Tin tức", link: "/tin-tuc-su-kien" },
-        { label: "Sự kiện", link: "/tin-tuc-su-kien" }
-      ] },
-    { label: "Nhân lực", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+      { label: "Tin tức", link: "/tin-tuc-su-kien/tin-tuc" },
+      { label: "Sự kiện", link: "/tin-tuc-su-kien/su-kien" }
+    ] },
+      
+    { label: "Nhân lực", items: [
+      { label: "Cán bộ", link: "/nhan-luc/can-bo" }, 
+      { label: "Học viên thạc sĩ",link: "/nhan-luc/hoc-vien-thac-si" }, 
+      { label: "Item 3",link: "/nhan-luc" }
+    ] },
+
     { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Công bố khoa học", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Giải thưởng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Blogs", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Liên hệ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+    { label: "Hợp tác", items: 
+      [{ label: "Khối doanh nghiệp", link: "/hop-tac"}, { label: "Item 2" }, { label: "Item 3" }] },
+      { label: "Liên hệ", items: [
+        { label: "Thông tin liên hệ", link: "/lien-he/thong-tin-lien-he" },
+        { label: "Dẫn đường", link: "/lien-he/dan-duong" }
+      ] },
     { label: "Tuyển dụng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
     // Other menu items...
   ];
@@ -93,7 +103,7 @@ const Header: React.FC = () => {
               <span className="mr-2">Ngôn ngữ:</span>
               <a href="#" className="inline-flex items-center">
                 <img
-                    src="VN-Flag.jpg"
+                    src="/image/flag/VN-Flag.jpg"
                     alt="Tiếng Việt"
                     className="h-4 w-4 mr-1"
                     style={{
@@ -105,7 +115,7 @@ const Header: React.FC = () => {
               </a>
               <a href="#" className="inline-flex items-center ml-4">
                 <img
-                    src="Eng-Flag.jpg"
+                    src="/image/flag/Eng-Flag.jpg"
                     alt="English"
                     className="h-4 w-4 mr-1"
                     style={{
