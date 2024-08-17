@@ -2,10 +2,7 @@ import Image from "next/image";
 
 export default function Home() {
     return (
-        <main className="relative min-h-screen bg-gray-100 dark:bg-black">
-            <header className="relative z-10">
-                {/* Header của bạn ở đây */}
-            </header>
+        <main className="relative min-h-screen bg-gray-100 dark:bg-white">
             <div className="relative w-full h-[400px] overflow-hidden">
                 <Image
                     src="/banner.png" // Đặt đường dẫn đến hình ảnh banner của bạn
