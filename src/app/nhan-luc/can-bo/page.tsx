@@ -5,6 +5,7 @@ import Banner from '@/components/display-block/Banner';
 import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import { staffData, menuItems } from '@/data/nhan-luc/can-bo/data';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function NewsPage() {
 
@@ -32,19 +33,19 @@ export default function NewsPage() {
     };
 
     return (
-        <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
-            <div className="container-nav text-red-600 text-lg mb-4">
-                <p className="font-bold">Trang chủ &gt;&gt; Nhân lực &gt;&gt; Cán bộ</p>
-            </div>
+        <div className="max-w-6xl mx-auto p-4 mt-6">
+            {/* Container chính */}
+            {/* Breadcrumb */}
+            <Breadcrumb />
+            
             <div className="flex space-x-4">
-                {/* Sidebar menu */}
+                {/* Side Menu */}
                 <SideMenu menuItems={menuItems} />
 
-                {/* Main content */}
-                <div className="flex-1">
-                    {/* Banner */}
-                    <Banner src="/banner.png" alt="Banner" />
+        {/* Container chứa banner và hai ô */}
+        <div className="flex-1">
+          {/* Ảnh banner */}
+          <Banner src="/banner.png" alt="Banner" />
 
                     {/* Display currentStaff */}
                     {currentItems.map((staff, index) => (

@@ -1,23 +1,23 @@
-import SideMenu from '../../../components/display-block/SideMenu';
-import Banner from '../../../components/display-block/Banner';
-import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
-import convertClassName from "@/utils/format-menu"; // Importing data from data.ts
+import SideMenu from '@/components/display-block/SideMenu';
+import Banner from '@/components/display-block/Banner';
+import { menuItems } from '@/data/tin-tuc-su-kien/su-kien/menu-data';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
-            <div className={convertClassName('title')}>
-                Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/tin-tuc" className={convertClassName('link')}>Tin tức</a>
-            </div>
+            {/* Breadcrumb */}
+            <Breadcrumb />
+            
             <div className="flex space-x-4">
                 {/* Side Menu */}
                 <SideMenu menuItems={menuItems} />
 
-        {/* Container chứa banner và hai ô */}
-        <div className="flex-1">
-          {/* Ảnh banner */}
-          <Banner src="/banner.png" alt="Banner" />
+            {/* Container chứa banner và hai ô */}
+            <div className="flex-1">
+            {/* Ảnh banner */}
+            <Banner src="/banner.png" alt="Banner" />
 
                     <h1 className="text-2xl font-semibold mt-4 mb-4">
                         SEEE Tin tức & Sự kiện

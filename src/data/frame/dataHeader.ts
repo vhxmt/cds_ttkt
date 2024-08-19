@@ -18,7 +18,11 @@ export const menus: Menu[] = [
       { label: "Sự kiện", link: "/tin-tuc-su-kien/su-kien" }
     ] 
   },
-  { label: "Nhân lực", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  { label: "Nhân lực", items: [
+    { label: "Cán bộ", link: "/nhan-luc/can-bo" }, 
+    { label: "Học viên thạc sĩ",link: "/nhan-luc/hoc-vien-thac-si" }, 
+    { label: "Item 3",link: "/nhan-luc" }
+  ] },
   { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { label: "Công bố khoa học", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { label: "Giải thưởng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
