@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {Menu, MenuItem} from "@/frame/dataHeader";
+import { menus } from "@/data/frame/dataHeader"; // Correctly import the menus data
 import covertClassName from "@/utils/covertClassName";
 
 const Header: React.FC = () => {
@@ -14,36 +14,6 @@ const Header: React.FC = () => {
     setActiveDropdown(null);
   };
 
-
-  const menus: Menu[] = [
-    { label: "Tin tức/Sự kiện", items: [
-      { label: "Tin tức", link: "/tin-tuc-su-kien/tin-tuc" },
-      { label: "Sự kiện", link: "/tin-tuc-su-kien/su-kien" }
-    ] },
-      
-    { label: "Nhân lực", items: [
-      { label: "Cán bộ", link: "/nhan-luc/can-bo" }, 
-      { label: "Học viên thạc sĩ",link: "/nhan-luc/hoc-vien-thac-si" }, 
-      { label: "Item 3",link: "/nhan-luc" }
-    ] },
-
-    { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Công bố khoa học", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Giải thưởng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Blogs", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-    { label: "Hợp tác", items: 
-      [{ label: "Khối doanh nghiệp", link: "/hop-tac"}, { label: "Item 2" }, { label: "Item 3" }] },
-      { label: "Liên hệ", items: [
-        { label: "Thông tin liên hệ", link: "/lien-he/thong-tin-lien-he" },
-        { label: "Dẫn đường", link: "/lien-he/dan-duong" }
-      ] },
-    { label: "Tuyển dụng", items: [
-        { label: "Tuyển dụng", link: "/tuyen-dung" }
-      ] },
-    // Other menu items...
-  ];
-
   return (
       <header id="banner" className="bg-white">
         <div className="border-t-[10px] border-red-800 w-full"></div>
@@ -51,7 +21,7 @@ const Header: React.FC = () => {
           <div id="banner-left" className="w-full md:w-8/12 flex items-center">
             <a
                 id="logo"
-                href="/#"
+                href="/"
                 title="Back Home"
             >
               <img
