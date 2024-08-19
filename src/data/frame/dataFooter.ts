@@ -1,4 +1,13 @@
-import { Footer } from "@/types/dataFooter";
+
+
+export type Footer = {
+    phone: string;
+    email: string;
+    address: string;
+    name: string;
+    office: string;
+}
+
 
 const data: Footer = {
     phone: "(+8424) 38696211 hoặc 38694957",

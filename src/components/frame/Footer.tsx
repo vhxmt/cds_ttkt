@@ -1,5 +1,5 @@
 import React from 'react';
-import data from '@/data/Footer';
+import data from '@/data/frame/dataFooter';
 
 const Footer = () => {
   return (

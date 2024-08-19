@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import {Menu, MenuItem} from "@/types/dataHeader";
+import {Menu, MenuItem} from "@/frame/dataHeader";
 import covertClassName from "@/utils/covertClassName";
 
 const Header: React.FC = () => {
