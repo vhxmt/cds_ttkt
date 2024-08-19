@@ -1,10 +1,10 @@
 "use client";
 import { useState } from 'react';
-import UserInfo from '../../../components/display-block/UserInfo';
-import Banner from '../../../components/display-block/Banner';
-import PgControl from '../../../components/display-block/PgControl';
-import SideMenu from '../../../components/display-block/SideMenu';
-import { staffData, menuItems } from '../data';
+import UserInfo from '@/components/display-block/UserInfo';
+import Banner from '@/components/display-block/Banner';
+import PgControl from '@/components/display-block/PgControl';
+import SideMenu from '@/components/display-block/SideMenu';
+import { staffData, menuItems } from '@/data/nhan-luc/can-bo/data';
 
 export default function NewsPage() {
 
