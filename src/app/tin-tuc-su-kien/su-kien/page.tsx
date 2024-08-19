@@ -1,8 +1,10 @@
-import SideMenu from '../../../components/display-block/SideMenu';
-import Banner from '../../../components/display-block/Banner';
-import NewsSection from '../../../components/display-block/NewsSection';
-import { menuItems, newsItems } from '../../../data/tin-tuc-su-kien/su-kien/menu-data';
-import convertClassName from "@/utils/format-menu"; // Importing data from data.ts
+import SideMenu from '@/components/display-block/SideMenu';
+import Banner from '@/components/display-block/Banner';
+import NewsSection from '@/components/display-block/NewsSection';
+import { menuItems, newsItems } from '@/data/tin-tuc-su-kien/menu-data';
+import convertClassName from "@/utils/format-menu";
+
+
 export default function NewsPage() {
   return (
     <div className="max-w-6xl mx-auto p-4 mt-6">

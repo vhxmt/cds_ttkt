@@ -1,29 +1,19 @@
 import Image from 'next/image';
-import { FC } from 'react';
 import { eventDetails, eventInfo, schedule } from '@/data/tin-tuc-su-kien/su-kien/su-kien-thuong-nien'; // Đảm bảo đường dẫn đúng với vị trí file data.ts
+import convertClassName from '@/utils/format-menu';
+import SideMenu from '@/components/display-block/SideMenu';
+import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
 
-const AnnualEvent: FC = () => {
+export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
-            <div className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-                {/* Sidebar chứa liên kết */}
-                <div className="flex-none w-1/3">
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/su-kien" className="text-[#BD1E1E] underline">Sự kiện</a>
-                    </div>
-                    <div className="text-red-600 text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]">
-                        <a href="/tin-tuc-su-kien/tin-tuc" className="text-[#BD1E1E] ">Tin tức</a>
-                    </div>
-                    <div className="text-red-600 text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]">
-                        <a href="/tin-tuc-su-kien/su-kien" className="text-[#BD1E1E] underline"> Sự kiện</a>
-                        <ul className="list-disc pl-5 mt-2 text-[13px] text-[#BD1E1E]">
-                            <li><a href="/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de" className="hover:underline">Thảo luận chuyên đề hằng tuần</a></li>
-                            <li><a href="/tin-tuc-su-kien/su-kien/su-kien-thuong-nien" className="underline hover:underline">Sự kiện thường niên</a></li>
-                            <li><a href="/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han" className="text-[#BD1E1E] hover:underline">Khóa học ngắn hạn</a></li>
-                        </ul>
-                    </div>
-                </div>
+            <div className={convertClassName('title')}>
+                Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/tin-tuc" className={convertClassName('link')}>Tin tức</a>
+            </div>
+            <div className="flex space-x-4">
+                {/* Side Menu */}
+                <SideMenu menuItems={menuItems} />
 
                 {/* Container chứa nội dung sự kiện */}
                 <div className="flex-1">
@@ -130,4 +120,4 @@ const AnnualEvent: FC = () => {
     );
 };
 
-export default AnnualEvent;
+

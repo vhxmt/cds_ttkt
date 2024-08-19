@@ -1,5 +1,7 @@
+"use client";
+
 import Link from 'next/link';
-import convertClassName from '@/utils/format-menu'; // Đảm bảo đường dẫn chính xác
+import convertClassName from "@/utils/format-menu";
 
 interface SubMenuItem {
   label: string;
@@ -18,28 +20,30 @@ interface SideMenuProps {
 
 export default function SideMenu({ menuItems }: SideMenuProps) {
   return (
-      <div className={convertClassName('container')}>
-        {menuItems.map((item, index) => (
-            <div key={index} className={convertClassName('text')}>
-              <Link href={item.href}>
-                <p className={convertClassName('title')}>
-                  {item.label}
-                </p>
-              </Link>
-              {/* Kiểm tra nếu có mục con */}
-              {item.subItems && (
-                  <ul className={convertClassName('subMenu')}>
-                    {item.subItems.map((subItem, subIndex) => (
-                        <li key={subIndex} className={convertClassName('subItem')}>
-                          <Link href={subItem.href}>
-                            {subItem.label}
-                          </Link>
-                        </li>
-                    ))}
-                  </ul>
-              )}
-            </div>
-        ))}
-      </div>
+    <div className="side-menu flex-none w-1/3">
+      {menuItems.map((item, index) => (
+        <div key={index} className="group text-red-600 text-lg mb-4">
+          <Link href={item.href}>
+            <p className={convertClassName('link') + " font-bold"}>
+              {item.label}
+            </p>
+          </Link>
+          {/* Check if there are sub-items */}
+          {item.subItems && (
+            <ul className="list-disc list-inside ml-4 text-red-500 text-base hidden group-hover:block">
+              {item.subItems.map((subItem, subIndex) => (
+                <li key={subIndex}>
+                  <Link className={convertClassName('link')} href={subItem.href}>
+
+                      {subItem.label}
+
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      ))}
+    </div>
   );
 }

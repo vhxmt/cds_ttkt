@@ -1,28 +1,20 @@
 import Image from 'next/image';
 import convertClassName from '@/utils/format-menu';
 import {eventDetails} from "@/data/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de-body";
-export default function Thaoluanchuyende() {
+import SideMenu from '@/components/display-block/SideMenu';
+
+import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
+
+export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
+            <div className={convertClassName('title')}>
+                Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/tin-tuc" className={convertClassName('link')}>Tin tức</a>
+            </div>
             <div className="flex space-x-4">
-                {/* Container chứa dòng chữ */}
-                <div className={convertClassName('container')}>
-                    <div className={convertClassName('title')}>
-                        Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/su-kien" className={convertClassName('link')}>Sự kiện</a>
-                    </div>
-                    <div className={convertClassName('text')}>
-                        <a href="/tin-tuc-su-kien/tin-tuc" className={convertClassName('link')}>Tin tức</a>
-                    </div>
-                    <div className={convertClassName('text')}>
-                        <a href="/tin-tuc-su-kien/su-kien" className={convertClassName('link')}>Sự kiện</a>
-                        <ul className={convertClassName('list')}>
-                            <li><a href="/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de" className={convertClassName('listItem')}>Thảo luận chuyên đề hằng tuần</a></li>
-                            <li><a href="/tin-tuc-su-kien/su-kien/su-kien-thuong-nien" className={convertClassName('hoverLink')}>Sự kiện thường niên</a></li>
-                            <li><a href="/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han" className={convertClassName('hoverLink')}>Khóa học ngắn hạn</a></li>
-                        </ul>
-                    </div>
-                </div>
+                {/* Side Menu */}
+                <SideMenu menuItems={menuItems} />
 
 
                 {/* Container chứa banner và hai ô */}
