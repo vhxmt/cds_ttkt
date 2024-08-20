@@ -18,12 +18,24 @@ export const menus: Menu[] = [
       { label: "Sự kiện", link: "/tin-tuc-su-kien/su-kien" }
     ] 
   },
-  { label: "Nhân lực", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
-  { label: "Nghiên cứu", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  
+  { label: "Nhân lực", items: [
+    { label: "Cán bộ", link: "/nhan-luc/can-bo" }, 
+    { label: "Học viên thạc sĩ",link: "/nhan-luc/hoc-vien-thac-si" }, 
+    { label: "Item 3",link: "/nhan-luc" }
+  ] },  
+  
+  { label: "Nghiên cứu", 
+    items: [
+      { label: "Bằng sáng chế", link: "/nghien-cuu/bang-sang-che" }, 
+      { label: "Dự án",link: "/nghien-cuu/du-an" }, 
+      { label: "Hướng nghiên cứu", link: "/nghien-cuu/huong-nghien-cuu"}] },
+
   { label: "Công bố khoa học", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { label: "Giải thưởng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { label: "Blogs", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { 
     label: "Liên hệ", 
     items: [
