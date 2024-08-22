@@ -58,5 +58,5 @@ export const menus: Menu[] = [
       { label: "Dẫn đường", link: "/lien-he/dan-duong" }
     ] 
   },
-  { label: "Tuyển dụng", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  { label: "Tuyển dụng", items: [ { label: "Tuyển dụng", link: "/tuyen-dung" }] },
 ];

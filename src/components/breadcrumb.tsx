@@ -27,11 +27,13 @@ const Breadcrumb: React.FC = () => {
     
     'dien-tu-vien-thong': "Điện tử viễn thông",
     'dien-tu-dong-hoa': "Điện - Tự động hóa",
-    'dien-tu-dong-hoa-cong-nghe-thong-tin': "Điện - Tự động hóa - Công nghệ thông tin"
-    
-    
-    
-   
+    'dien-tu-dong-hoa-cong-nghe-thong-tin': "Điện - Tự động hóa - Công nghệ thông tin",
+
+    'lien-he' : "Thông tin liên hệ",
+    'thong-tin-lien-he' : "Thông tin liên hệ",
+    'dan-duong' : "Dẫn đường",
+
+    'tuyen-dung': "Tuyển dụng",
   };
 
   // Fallback to capitalize the segment if not mapped
@@ -47,13 +49,13 @@ const Breadcrumb: React.FC = () => {
 
   return (
     <div className={convertClassName('title')}>
-      <Link href="/" className={`${convertClassName('link')} text-red-600`}>
+      <Link href="/" className={`${convertClassName('link')} `}>
         Trang chủ
       </Link>
       {breadcrumbItems.map((item, index) => (
         <span key={index}>
           &nbsp;&gt;&gt;&nbsp;
-          <Link href={(item as any).path} className={`${convertClassName('link')} text-red-600`}>
+          <Link href={(item as any).path} className={`${convertClassName('link')} `}>
             {(item as any).name}
           </Link>
         </span>

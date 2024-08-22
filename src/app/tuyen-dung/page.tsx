@@ -1,9 +1,10 @@
 'use client'
 import { useState } from 'react';
 import Image from 'next/image';
-import { recruitmentData } from '@/data/tuyen-dung/tuyen-dung';
-import convertClassName from "@/utils/format-menu";
+import { recruitmentData,menuItems } from '@/data/tuyen-dung/tuyen-dung';
 import FormDangKy from '@/components/display-block/form-dang-ky';
+import Breadcrumb from "@/components/breadcrumb";
+import SideMenu from "@/components/display-block/SideMenu";
 
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,16 +20,11 @@ export default function TuyenDungPage() {
 
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
+            {/* Container chính */}
+            <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Container chứa menu bên trái */}
-                <div className={convertClassName('container')}>
-                    <div className={convertClassName('title')}>
-                        Trang chủ &gt;&gt; Tuyển dụng
-                    </div>
-                    <div className={convertClassName('text')}>
-                        <a href="/tuyen-dung" className={convertClassName('link')}>Tuyển dụng</a>
-                    </div>
-                </div>
+                {/* Side Menu */}
+                <SideMenu menuItems={menuItems} />
 
                 {/* Container chứa nội dung tuyển dụng */}
                 <div className="flex-1">
