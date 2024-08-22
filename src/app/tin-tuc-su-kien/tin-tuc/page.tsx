@@ -1,5 +1,5 @@
-import SideMenu from '../../../components/display-block/SideMenu';
-import Banner from '../../../components/display-block/Banner';
+import SideMenu from '@/components/display-block/SideMenu';
+import Banner from '@/components/display-block/Banner';
 import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
 import convertClassName from "@/utils/format-menu"; // Importing data from data.ts
 
