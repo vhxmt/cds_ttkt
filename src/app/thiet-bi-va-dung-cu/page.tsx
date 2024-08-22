@@ -1,11 +1,6 @@
 "use client";
 import { useState } from 'react';
-import UserInfo from '@/components/display-block/UserInfo';
-import Banner from '@/components/display-block/Banner';
-import PgControl from '@/components/display-block/PgControl';
-import SideMenu from '@/components/display-block/SideMenu';
-import { staffData } from '@/data/nhan-luc/can-bo/data';
-import {  menuItems } from '@/data/nhan-luc/menu-data';
+
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function NewsPage() {
@@ -16,9 +11,7 @@ export default function NewsPage() {
             {/* Breadcrumb */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Sidebar menu */}
-                <SideMenu menuItems={menuItems} />
-
+            <div className="side-menu flex-none w-1/3"></div>
                 {/* Main content */}
                 <div className="flex-1">
                     <p className='h2'>Danh sách dụng cụ</p>

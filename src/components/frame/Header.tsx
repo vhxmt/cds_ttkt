@@ -101,7 +101,7 @@ const Header: React.FC = () => {
               {/* If the menu has no items, it is clickable; otherwise, it shows a dropdown */}
               <a
                 href={menu.items && menu.items.length > 0 ? "#" : menu.link || "#"}
-                className={`hover:underline mx-2 py-2 px-4 text-sm ${!menu.items || menu.items.length === 0 ? "text-blue-600" : ""}`}
+                className={`hover:underline mx-2 py-2 px-4 text-sm ${!menu.items || menu.items.length === 0 ? "text" : ""}`}
               >
                 {menu.label}
               </a>
