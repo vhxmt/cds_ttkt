@@ -7,7 +7,8 @@ export interface MenuItem {
 
 export interface Menu {
   label: string;
-  items: MenuItem[];
+  link?: string; 
+  items?: MenuItem[];
 }
 
 export const menus: Menu[] = [
@@ -49,7 +50,8 @@ export const menus: Menu[] = [
     { label: "Điện - Tự động hóa - Công nghệ thông tin", link: "/blogs/dien-tu-dong-hoa-cong-nghe-thong-tin" }, 
   ] },
 
-  { label: "Thiết bị & Dụng cụ", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
+  { label: "Thiết bị & Dụng cụ", link: "/thiet-bi-va-dung-cu"},
+
   { label: "Hợp tác", items: [{ label: "Item 1" }, { label: "Item 2" }, { label: "Item 3" }] },
   { 
     label: "Liên hệ", 
