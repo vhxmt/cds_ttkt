@@ -3,14 +3,14 @@ import { eventDetails, eventInfo, schedule } from '@/data/tin-tuc-su-kien/su-kie
 import convertClassName from '@/utils/format-menu';
 import SideMenu from '@/components/display-block/SideMenu';
 import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
+import Breadcrumb from '@/components/breadcrumb';
 
 export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
-            <div className={convertClassName('title')}>
-                Trang chủ &gt;&gt; <a href="/tin-tuc-su-kien/tin-tuc" className={convertClassName('link')}>Sự kiện thường niên</a>
-            </div>
+            {/* Breadcrumb */}
+            <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
                 <SideMenu menuItems={menuItems} />
