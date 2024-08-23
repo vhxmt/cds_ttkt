@@ -3,15 +3,14 @@ import Banner from '@/components/display-block/Banner';
 import NewsSection from '@/components/display-block/NewsSection';
 import { menuItems, newsItems } from '@/data/tin-tuc-su-kien/menu-data';
 import convertClassName from "@/utils/format-menu";
+import Breadcrumb from "@/components/breadcrumb";
 
 
 export default function NewsPage() {
   return (
     <div className="max-w-6xl mx-auto p-4 mt-6">
       {/* Container chính */}
-      <div className={convertClassName('title')}>
-        Trang chủ &gt;&gt; Tin tức và sự kiện &gt;&gt; <a href="/tin-tuc-su-kien/su-kien" className={convertClassName('link')}>Sự kiện</a>
-      </div>
+      <Breadcrumb />
       <div className="flex space-x-4">
         {/* Side Menu */}
         <SideMenu menuItems={menuItems} />

@@ -34,3 +34,10 @@ export const recruitmentData = {
         }
     ]
 };
+
+export const menuItems = [
+    {
+        label: "Tuyển dụng",
+        href: "/tuyen-dung",
+    },
+];

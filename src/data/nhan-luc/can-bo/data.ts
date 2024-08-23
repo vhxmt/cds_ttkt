@@ -110,10 +110,10 @@ staffData = [
 
 
 export const menuItems: MenuItem[] = [
-    { label: 'Cán bộ', href: '/can-bo' },
-    { label: 'Học viên Thạc sĩ', href: '/hoc-vien-thac-si' },
-    { label: 'Học viên tiến sĩ', href: '/hoc-vien-tien-si' },
-    { label: 'CTV NC', href: '/ctv-nc' },
-    { label: 'NCV sau TS', href: '/ncv-sau-ts' },
-    { label: 'Cựu SV', href: '/cuu-sv' },
+    { label: 'Cán bộ', href: '/nhan-luc/can-bo' },
+    { label: 'Học viên Thạc sĩ', href: '/nhan-luc/hoc-vien-thac-si' },
+    { label: 'Học viên tiến sĩ', href: '/nhan-luc/hoc-vien-tien-si' },
+    { label: 'CTV NC', href: '/nhan-luc/ctv-nc' },
+    { label: 'NCV sau TS', href: '/nhan-luc/ncv-sau-ts' },
+    { label: 'Cựu SV', href: '/nhan-luc/cuu-sv' },
 ];
