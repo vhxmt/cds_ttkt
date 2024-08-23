@@ -1,6 +1,6 @@
 import SideMenu from '@/components/display-block/SideMenu';
-import Banner from '@/components/display-block/Banner';
 import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
+import Banner from '@/components/display-block/Banner';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function NewsPage() {

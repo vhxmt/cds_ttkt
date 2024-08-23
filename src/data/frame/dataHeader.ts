@@ -21,13 +21,13 @@ export const menus: Menu[] = [
   ]},
 
   { label: "Nhân lực", items: [
-    { label: "Cán bộ", link: "/can-bo" }, 
-    { label: "Sinh viên Thạc sĩ", link: "/sinh-vien-thac-si" }, 
-    { label: "Sinh viên Tiến sĩ", link: "/sinh-vien-tien-si" },
-    { label: "Học giả thỉnh giảng", link: "/hoc-gia-thinh-giang" },
-    { label: "CTV NC", link: "/ctv-nc" },
-    { label: "NCV sau Thạc sĩ", link: "/ncv-sau-thac-si" },
-    { label: "Cựu sinh viên", link: "/cuu-sinh-vien" }
+    { label: "Cán bộ", link: "/nhan-luc/can-bo" }, 
+    { label: "Sinh viên Thạc sĩ", link: "/nhan-luc/sinh-vien-thac-si" }, 
+    { label: "Sinh viên Tiến sĩ", link: "/nhan-luc/sinh-vien-tien-si" },
+    { label: "Học giả thỉnh giảng", link: "/nhan-luc/hoc-gia-thinh-giang" },
+    { label: "CTV NC", link: "/nhan-luc/ctv-nc" },
+    { label: "NCV sau Thạc sĩ", link: "/nhan-luc/ncv-sau-thac-si" },
+    { label: "Cựu sinh viên", link: "/nhan-luc/cuu-sinh-vien" }
   ]},
 
   { label: "Nghiên cứu", items: [
