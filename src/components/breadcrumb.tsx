@@ -42,9 +42,10 @@ const Breadcrumb: React.FC = () => {
 
     'thiet-bi-dung-cu': 'Thiết bị dụng cụ',
 
-    'hop-tac': 'Hợp tác',
+    'hop-tac-khoi-doanh-nghiep': 'Hợp tác khối doanh nghiệp',
+    'hop-tac-khoi-han-lam': 'Hợp tác khối hàn lâm',
+    'hop-tac-quoc-te': 'Hợp tác quốc tế',
 
-    'lien-he' : "Thông tin liên hệ",
     'thong-tin-lien-he' : "Thông tin liên hệ",
     'dan-duong' : "Dẫn đường",
 

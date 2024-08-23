@@ -5,7 +5,7 @@ import Banner from '@/components/display-block/Banner';
 import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import { staffData } from '@/data/nhan-luc/can-bo/data';
-import {  menuItems } from '@/data/nhan-luc/menu-data';
+import {  menuItems } from '@/data/hop-tac/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function NewsPage() {
