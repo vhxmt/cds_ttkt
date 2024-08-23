@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { recruitmentData } from '@/data/tuyen-dung/tuyen-dung';
 import FormDangKy from '@/components/display-block/form-dang-ky';
 import Breadcrumb from "@/components/breadcrumb";
+import SideMenu from '@/components/display-block/SideMenu';
 
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +24,7 @@ export default function TuyenDungPage() {
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <div className="side-menu flex-none w-1/3"></div>
+                <SideMenu/>
 
                 {/* Container chứa nội dung tuyển dụng */}
                 <div className="flex-1">
