@@ -53,6 +53,11 @@ export const menus: Menu[] = [
     { label: "Điện - Tự động hóa - Công nghệ thông tin", link: "/blogs/dien-tu-dong-hoa-cong-nghe-thong-tin" }
   ]},
   { label: "Thiết bị & Dụng cụ", link: "/thiet-bi-va-dung-cu" },
+  { label: "Hợp tác", items: [
+    { label: "Hợp tác doanh nghiệp", link: "/hop-tac/hop-tac-khoi-doanh-nghiep" }, 
+    { label: "Hợp tác khối hàn lâm", link: "/hop-tac/hop-tac-khoi-han-lam" }, 
+    { label: "Hợp tác quốc tế", link: "/hop-tac/hop-tac-quoc-te" }
+  ]},
 
   { 
     label: "Liên hệ", 
