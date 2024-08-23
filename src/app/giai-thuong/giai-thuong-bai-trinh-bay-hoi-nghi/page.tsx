@@ -24,10 +24,9 @@ export default function BaiTrinhBayHoiNghi() {
                     </div>
                 </div>
                 
+                    <div className="w-3/4 p-4 border-l border-gray-300">
 
-                    <div className="max-w-4xl mx-auto p-4">
-
-                        <h3 className="text-xl font-semibold mb-2">Giải thưởng Bài báo Tạp chí</h3>
+                        <h3 className="text-xl font-semibold mb-2">Giải thưởng Bài trình bày hội nghị</h3>
                         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead>
                             <tr className="bg-gray-200 border-b">

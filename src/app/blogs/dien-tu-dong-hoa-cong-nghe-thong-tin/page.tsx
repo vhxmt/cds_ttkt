@@ -11,7 +11,6 @@ export default function DienTuDongHoaCNTT() {
             <div className="flex space-x-4">
                 {/* Side Menu */}
                 <SideMenu menuItems={menuItems} />
-
                 {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa - Công nghệ thông tin</h2>

@@ -6,7 +6,8 @@ export default function bangsangche() {
             {/* Container chính */}
             <div className="flex space-x-4">
                 {/* Container chứa dòng chữ */}
-                <div className="flex-none w-1/3">
+
+                <div className="flex-none w-1/4">
                     <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
                         Trang chủ &gt;&gt; Nghiên cứu &gt;&gt; <a href="/nghien-cuu/huong-nghien-cuu" className="text-[#BD1E1E] ">Hướng nghiên cứu</a>
                     </div>

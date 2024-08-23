@@ -2,6 +2,7 @@
 import SideMenu from '@/components/display-block/SideMenu';
 import { menuItems } from '@/data/blogs/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+import Image from 'next/image';
 
 export default function DienTuVienThong() {
     return (

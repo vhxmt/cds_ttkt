@@ -14,12 +14,24 @@ const Header: React.FC = () => {
     setActiveDropdown(null);
   };
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> v1.4.3
   return (
     <header id="banner" className="bg-white">
       <div className="border-t-[10px] border-red-800 w-full"></div>
       <div className="container mx-auto flex flex-wrap items-center justify-between py-2">
         <div id="banner-left" className="w-full md:w-8/12 flex items-center">
+<<<<<<< HEAD
           <a id="logo" href="/" title="Back Home">
+=======
+          <a 
+            id="logo" 
+            href="/" 
+            title="Back Home"
+          >
+>>>>>>> v1.4.3
             <img
               src="https://seee.hust.edu.vn/theme-viendien-theme/images/VienDienTV.png"
               alt="Trường Điện - Điện tử"
@@ -29,9 +41,15 @@ const Header: React.FC = () => {
         </div>
         <div id="banner-right" className="w-full md:w-4/12 flex flex-col items-end">
           <div className="line1 text-right mb-2">
+<<<<<<< HEAD
             <a
               href="c/portal/login%3Fp_l_id=86531.html"
               id="sign-in"
+=======
+            <a 
+              href="c/portal/login%3Fp_l_id=86531.html" 
+              id="sign-in" 
+>>>>>>> v1.4.3
               className="text-black"
             >
               Đăng nhập
@@ -42,10 +60,17 @@ const Header: React.FC = () => {
             </a>
           </div>
           <div className="line2 flex justify-end mb-2">
+<<<<<<< HEAD
             <form
               id="_77_fm"
               action="https://seee.hust.edu.vn/$tabs1URL"
               method="post"
+=======
+            <form 
+              id="_77_fm" 
+              action="https://seee.hust.edu.vn/$tabs1URL" 
+              method="post" 
+>>>>>>> v1.4.3
               className="flex"
             >
               <input
@@ -64,7 +89,13 @@ const Header: React.FC = () => {
             <span className="mr-2">Ngôn ngữ:</span>
             <a href="#" className="inline-flex items-center">
               <img
+<<<<<<< HEAD
                 src="/image/flag/VN-Flag.jpg"
+=======
+
+                src="/image/flag/VN-Flag.jpg"
+
+>>>>>>> v1.4.3
                 alt="Tiếng Việt"
                 className="h-4 w-4 mr-1"
                 style={{
@@ -98,6 +129,7 @@ const Header: React.FC = () => {
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             >
+<<<<<<< HEAD
               {/* If the menu has no items, it is clickable; otherwise, it shows a dropdown */}
               <a
                 href={menu.items && menu.items.length > 0 ? "#" : menu.link || "#"}
@@ -106,6 +138,12 @@ const Header: React.FC = () => {
                 {menu.label}
               </a>
               {menu.items && menu.items.length > 0 && activeDropdown === index && (
+=======
+              <a href={menu.link || "#"} className="hover:underline mx-2 py-2 px-4 text-sm">
+                {menu.label}
+              </a>
+              {menu.items && activeDropdown === index && (
+>>>>>>> v1.4.3
                 <div
                   className="absolute top-full left-0 mt-0 w-48 bg-gray-700 rounded-md shadow-lg z-50"
                   onMouseEnter={() => handleMouseEnter(index)}

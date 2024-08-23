@@ -1,7 +1,10 @@
-'use client';
+'use client'
 import SideMenu from '@/components/display-block/SideMenu';
 import { menuItems } from '@/data/blogs/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+
+import Image from 'next/image';
+
 
 export default function DienTuVienThong() {
     return (
@@ -10,6 +13,7 @@ export default function DienTuVienThong() {
             <div className="flex space-x-4">
                 {/* Side Menu */}
                 <SideMenu menuItems={menuItems} />
+
 
                 {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
@@ -20,7 +24,16 @@ export default function DienTuVienThong() {
                         {[1, 2, 3].map((item, index) => (
                             <div key={index} className="border border-blue-400 rounded-lg p-4">
                                 <div className="bg-gray-200 h-48 mb-4 flex items-center justify-center">
-                                    <span>Image Placeholder</span>
+
+
+                                    <Image
+                                        src="/cover.jpg"
+                                        alt="Thumbnail"
+                                        width={600}
+                                        height={600}
+                                        className="flex h-auto object-cover rounded-lg"
+                                    />
+
                                 </div>
                                 <p className="text-blue-600 text-sm mb-2">12/5/2022</p>
                                 <p className="font-semibold">

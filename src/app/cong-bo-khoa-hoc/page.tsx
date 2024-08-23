@@ -1,35 +1,19 @@
 import React from 'react';
+import Image from 'next/image';
 
 export default function Publications() {
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Breadcrumb */}
-            <div className="flex-none w-1/4">
+            {/* Container chính */}
+            <div className="flex space-x-4">
+                {/* Container chứa dòng chữ */}
+                <div className="flex-none w-1/4">
                     <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        Trang chủ &gt;&gt; Công bố khoa học &gt;&gt; 
-                        <a href="/cong-bo-khoa-hoc/sach" className="text-[#BD1E1E]"> Sách</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/sach" className="underline">Sách</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/chuong-sach" className="text-[#BD1E1E]">Chương sách</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/hoi-thao-trong-nuoc" className="text-[#BD1E1E]">Hội thảo trong nước</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/hoi-thao-quoc-te" className="text-[#BD1E1E]">Hội thảo quốc tế</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/tap-chi-trong-nuoc" className="text-[#BD1E1E]">Tạp chí trong nước</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/cong-bo-khoa-hoc/tap-chi-quoc-te" className="text-[#BD1E1E]">Tạp chí quốc tế</a>
+                        Trang chủ &gt;&gt;
+                        <a href="/cong-bo-khoa-hoc" className="text-[#BD1E1E]">Công bố khoa học</a>
                     </div>
                 </div>
-            <div className="flex">
-                {/* Main Content */}
+
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
@@ -56,8 +40,10 @@ export default function Publications() {
                         </button>
                     </div>
 
+                    <div className = "flex p-4 border-l border-gray-300">
+
                     {/* Sidebar */}
-                <div className="w-3/4 text-[#BD1E1E] space-y-4">
+                <div className="w-1/2 space-y-4">
                     <div className="font-bold text-[14px]">Bộ lọc:</div>
                     <div>
                         <label className="flex items-center space-x-2">
@@ -98,7 +84,7 @@ export default function Publications() {
                 </div>
 
                     {/* Year Filter */}
-                    <div className="mb-6 flex items-center space-x-4">
+                    <div className="w-1/2 mb-6 flex items-center space-x-4">
                         <div className="font-bold text-[14px]">Lọc theo năm:</div>
                         <input
                             type="number"
@@ -112,6 +98,7 @@ export default function Publications() {
                             defaultValue="2024"
                         />
                     </div>
+                    </div>
 
                     {/* Publications List */}
                     <div className="space-y-6">
@@ -120,10 +107,12 @@ export default function Publications() {
                                 key={item}
                                 className="flex space-x-4 border-b pb-4"
                             >
-                                <img
-                                    src="/bk-image-placeholder.png"
+                                <Image
+                                    src="/cover.jpg"
                                     alt="Thumbnail"
-                                    className="w-1/3 h-24 object-cover rounded-lg"
+                                    width={200}
+                                    height={200}
+                                    className="w-1/4 h-auto object-cover rounded-lg"
                                 />
                                 <div className="flex flex-col justify-between w-2/3">
                                     <div>
