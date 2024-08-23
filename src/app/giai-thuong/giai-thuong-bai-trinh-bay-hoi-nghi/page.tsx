@@ -1,28 +1,15 @@
-import Image from 'next/image';
+'use client'
+import SideMenu from '@/components/display-block/SideMenu';
+import { menuItems } from '@/data/giai-thuong/menu-data';
+import Breadcrumb from '@/components/breadcrumb';
 
 export default function BaiTrinhBayHoiNghi() {
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Container chính */}
+            <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Container chứa dòng chữ */}
-                <div className="flex-none w-1/4">
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        Trang chủ &gt;&gt; Giải thưởng &gt;&gt; <a href="/giai-thuong/giai-thuong-bai-trinh-bay-hoi-nghi" className="text-[#BD1E1E] ">Giải thưởng bài trình bày hội nghị</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/giai-thuong/giai-thuong-bai-bao-hoi-nghi" className="text-[#BD1E1E]">Giải thưởng bài báo hội nghị</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/giai-thuong/giai-thuong-bai-bao-tap-chi" className="text-[#BD1E1E]">Giải thưởng bài báo tạp chí</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/giai-thuong/giai-thuong-bai-trinh-bay-hoi-nghi" className="text-[#BD1E1E] underline">Giải thưởng bài trình bày hội nghị</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/giai-thuong/giai-thuong-khac" className="text-[#BD1E1E]">Giải thưởng khác</a>
-                    </div>
-                </div>
+                {/* Side Menu */}
+                <SideMenu menuItems={menuItems} />
                 
                     <div className="w-3/4 p-4 border-l border-gray-300">
 

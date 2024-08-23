@@ -1,25 +1,15 @@
-import Image from 'next/image';
+'use client'
+import SideMenu from '@/components/display-block/SideMenu';
+import { menuItems } from '@/data/nghien-cuu/menu-data';
+import Breadcrumb from '@/components/breadcrumb';
 
-export default function bangsangche() {
+export default function DuAn() {
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Container chính */}
+            <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Container chứa dòng chữ */}
-                <div className="flex-none w-1/4">
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        Trang chủ &gt;&gt; Nghiên cứu &gt;&gt; <a href="/nghien-cuu/du-an" className="text-[#BD1E1E] ">Dự án</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/nghien-cuu/huong-nghien-cuu" className="text-[#BD1E1E] ">Hướng nghiên cứu</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/nghien-cuu/du-an" className="text-[#BD1E1E] underline ">Dự án</a>
-                    </div>
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        <a href="/nghien-cuu/bang-sang-che" className="text-[#BD1E1E]">Bằng sáng chế</a>
-                    </div>
-                </div>
+                {/* Side Menu */}
+                <SideMenu menuItems={menuItems} />
                 
                 {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">

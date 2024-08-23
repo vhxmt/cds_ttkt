@@ -1,18 +1,15 @@
 import React from 'react';
+import Breadcrumb from '@/components/breadcrumb';
 import Image from 'next/image';
 
-export default function Publications() {
+export default function CongBoKhoaHoc() {
     return (
         <div className="max-w-6xl mx-auto p-4">
             {/* Container chính */}
+            {/* Breadcrumb */}
+            <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Container chứa dòng chữ */}
-                <div className="flex-none w-1/4">
-                    <div className="font-inter font-bold text-[14px] text-[#BD1E1E] mb-4">
-                        Trang chủ &gt;&gt;
-                        <a href="/cong-bo-khoa-hoc" className="text-[#BD1E1E]">Công bố khoa học</a>
-                    </div>
-                </div>
+            <div className="side-menu flex-none w-1/3"></div>
 
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
