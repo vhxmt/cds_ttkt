@@ -24,10 +24,25 @@ const Breadcrumb: React.FC = () => {
     'ctv-nc': 'CTV NC',
     'ncv-sau-ts': 'NCV sau TS',
     'cuu-sv': 'Cựu SV',
-    
-    'dien-tu-vien-thong': "Điện tử viễn thông",
-    'dien-tu-dong-hoa': "Điện - Tự động hóa",
-    'dien-tu-dong-hoa-cong-nghe-thong-tin': "Điện - Tự động hóa - Công nghệ thông tin",
+
+    'huong-nghien-cuu': 'Hướng nghiên cứu',
+    'du-an': 'Dự án',
+    'bang-sang-che': 'Bằng sáng chế',
+
+    'cong-bo-khoa-hoc': 'Công bố khoa học',
+
+    'giai-thuong-bai-bao-hoi-nghi': 'Giải thưởng Bài báo Hội nghị',
+    'giai-thuong-bai-bao-tap-chi': 'Giải thưởng Bài báo Tạp chí',
+    'giai-thuong-bai-trinh-bay-hoi-nghi': 'Giải thưởng Bài trình bày Hội nghị',
+    'giai-thuong-khac': 'Giải thưởng khác',
+
+    'dien-tu-vien-thong': 'Điện tử viễn thông',
+    'dien-tu-dong-hoa': 'Điện - Tự động hóa',
+    'dien-tu-dong-hoa-cong-nghe-thong-tin': 'Điện - Tự động hóa - Công nghệ thông tin',
+
+    'thiet-bi-dung-cu': 'Thiết bị dụng cụ',
+
+    'hop-tac': 'Hợp tác',
 
     'lien-he' : "Thông tin liên hệ",
     'thong-tin-lien-he' : "Thông tin liên hệ",
