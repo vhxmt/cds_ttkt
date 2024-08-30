@@ -1,145 +1,79 @@
-import React from 'react';
-import Breadcrumb from '@/components/breadcrumb';
-import Image from 'next/image';
+// Cong-bo-khoa-hoc.tsx
+import React, { useState } from 'react';
+import { filters } from '@/data/cong-bo-khoa-hoc/data1';
+import { articles, Article } from '@/data/cong-bo-khoa-hoc/data2';
 
-export default function CongBoKhoaHoc() {
+const CongBoKhoaHoc: React.FC = () => {
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const [yearRange, setYearRange] = useState({ from: 1998, to: 2024 });
+
+    const handleFilterChange = (filterId: string) => {
+        setSelectedFilters(prev =>
+            prev.includes(filterId)
+                ? prev.filter(f => f !== filterId)
+                : [...prev, filterId]
+        );
+    };
+
+    const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setYearRange(prev => ({
+            ...prev,
+            [name]: Number(value),
+        }));
+    };
+
+    const filteredArticles = articles.filter(article => {
+        // Implement filter logic here if needed based on selectedFilters and yearRange
+        return true;
+    });
+
     return (
-        <div className="max-w-6xl mx-auto p-4">
-            {/* Container chính */}
-            {/* Breadcrumb */}
-            <Breadcrumb />
-            <div className="flex space-x-4">
-            <div className="side-menu flex-none w-1/3"></div>
-
-                <div className="w-3/4 p-4 border-l border-gray-300">
-                    {/* Search Bar */}
-                    <div className="flex items-center mb-6">
+        <div className="flex">
+            <div className="w-1/4 p-4">
+                <h3>Bộ lọc:</h3>
+                {filters.map(filter => (
+                    <div key={filter.id}>
                         <input
-                            type="text"
-                            placeholder="Tìm kiếm..."
-                            className="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none"
+                            type="checkbox"
+                            id={filter.id}
+                            onChange={() => handleFilterChange(filter.id)}
                         />
-                        <button className="bg-gray-200 p-2 rounded-r-lg">
-                            <svg
-                                className="h-6 w-6 text-gray-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-4.35-4.35M4.75 10.5a5.75 5.75 0 1111.5 0 5.75 5.75 0 01-11.5 0z"
-                                ></path>
-                            </svg>
-                        </button>
+                        <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
                     </div>
-
-                    <div className = "flex p-4 border-l border-gray-300">
-
-                    {/* Sidebar */}
-                <div className="w-1/2 space-y-4">
-                    <div className="font-bold text-[14px]">Bộ lọc:</div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Sách</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Chương sách</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Hội thảo trong nước</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Hội thảo quốc tế</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Tạp chí trong nước</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Tạp chí quốc tế</span>
-                        </label>
-                    </div>
+                ))}
+                <div className="mt-4">
+                    <label>Lọc theo năm: </label>
+                    <input
+                        type="number"
+                        name="from"
+                        value={yearRange.from}
+                        onChange={handleYearChange}
+                        className="ml-2 border p-1"
+                        min="1998"
+                    />
+                    <span className="mx-2">to</span>
+                    <input
+                        type="number"
+                        name="to"
+                        value={yearRange.to}
+                        onChange={handleYearChange}
+                        className="border p-1"
+                        max={new Date().getFullYear()}
+                    />
                 </div>
-
-                    {/* Year Filter */}
-                    <div className="w-1/2 mb-6 flex items-center space-x-4">
-                        <div className="font-bold text-[14px]">Lọc theo năm:</div>
-                        <input
-                            type="number"
-                            className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
-                            defaultValue="2000"
-                        />
-                        <span>to</span>
-                        <input
-                            type="number"
-                            className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
-                            defaultValue="2024"
-                        />
+            </div>
+            <div className="w-3/4 p-4">
+                {filteredArticles.map((article: Article) => (
+                    <div key={article.id} className="mb-4">
+                        {/* <img src={article.imageUrl} alt={article.title} className="w-full h-48 object-cover" /> */}
+                        <h4 className="mt-2 font-bold">{article.title}</h4>
+                        <p className="text-gray-600">{article.date}</p>
                     </div>
-                    </div>
-
-                    {/* Publications List */}
-                    <div className="space-y-6">
-                        {[1, 2, 3].map((item) => (
-                            <div
-                                key={item}
-                                className="flex space-x-4 border-b pb-4"
-                            >
-                                <Image
-                                    src="/cover.jpg"
-                                    alt="Thumbnail"
-                                    width={200}
-                                    height={200}
-                                    className="w-1/4 h-auto object-cover rounded-lg"
-                                />
-                                <div className="flex flex-col justify-between w-2/3">
-                                    <div>
-                                        <h4 className="font-bold text-lg">
-                                            Tên bài báo {item}
-                                        </h4>
-                                        <p className="text-sm text-gray-600">
-                                            19/12/2022 12:00:00
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    {/* Pagination */}
-                    <div className="flex justify-center mt-8">
-                        <div className="flex space-x-2">
-                            <button className="px-3 py-1 border rounded bg-gray-300">1</button>
-                            <button className="px-3 py-1 border rounded">2</button>
-                            <button className="px-3 py-1 border rounded">3</button>
-                            <button className="px-3 py-1 border rounded">4</button>
-                            <button className="px-3 py-1 border rounded">5</button>
-                            <button className="px-3 py-1 border rounded">6</button>
-                            <button className="px-3 py-1 border rounded">7</button>
-                            <button className="px-3 py-1 border rounded">Next</button>
-                        </div>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );
-}
+};
+
+export default CongBoKhoaHoc;
