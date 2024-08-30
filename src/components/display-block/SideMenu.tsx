@@ -25,7 +25,7 @@ export default function SideMenu({ menuItems }: SideMenuProps) {
         menuItems.map((item, index) => (
           <div key={index} className="group text-red-600 text-lg mb-4">
             <Link href={item.href}>
-              <p className={convertClassName('link') + " font-bold"}>
+              <p className={convertClassName('link') + " font-bold text-[16px] text-[#BD1E1E]"}>
                 {item.label}
               </p>
             </Link>

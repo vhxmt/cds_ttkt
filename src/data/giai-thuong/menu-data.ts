@@ -1,7 +1,7 @@
 export const menuItems = [
     { 
       label: "Giải thưởng Bài báo Hội nghị", 
-      href: "giai-thuong/giai-thuong-bai-bao-hoi-nghi",
+      href: "/giai-thuong/giai-thuong-bai-bao-hoi-nghi",
     }, 
   
     { 
