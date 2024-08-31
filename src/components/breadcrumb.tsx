@@ -19,9 +19,11 @@ const Breadcrumb: React.FC = () => {
     'khoa-hoc-ngan-han': 'Khóa học ngắn hạn',
     
     'can-bo': 'Cán bộ',
-    'hoc-vien-thac-si': 'Học viên thạc sĩ',
-    'hoc-vien-tien-si': 'Học viên tiến sĩ',
+    'sinh-vien-thac-si': 'Sinh viên thạc sĩ',
+    'sinh-vien-tien-si': 'Sinh viên tiến sĩ',
+    'hoc-gia-thinh-giang': 'Học giả thỉnh giảng',
     'ctv-nc': 'CTV NC',
+    
     'ncv-sau-ts': 'NCV sau TS',
     'cuu-sv': 'Cựu SV',
 
