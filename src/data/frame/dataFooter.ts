@@ -1,4 +1,4 @@
-
+//src/data/frame/dataFooter.ts
 
 export type Footer = {
     phone: string;

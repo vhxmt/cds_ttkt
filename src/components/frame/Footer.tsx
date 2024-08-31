@@ -1,24 +1,27 @@
-import React from 'react';
-import data from '@/data/frame/dataFooter';
+//src/components/frame/Footer.tsx
+import type { Footer as FooterData } from '@/types/footer';
+import data from '@/data/frame/dataFooter.json';
 
 const Footer = () => {
+  const footerData: FooterData = data;
+
   return (
     <footer className="bg-red-800 text-white p-6">
       <div className="container mx-auto flex flex-wrap justify-between">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
-          <h3 className="font-bold text-lg">{data.name}</h3>
+          <h3 className="font-bold text-lg">{footerData.name}</h3>
           <p className="mt-2">
             <span className="flex items-center">
               <i className="fas fa-phone mr-2"></i>
-              {data.phone}
+              {footerData.phone}
             </span>
             <span className="flex items-center mt-2">
               <i className="fas fa-envelope mr-2"></i>
-              {data.email}
+              {footerData.email}
             </span>
             <span className="flex items-center mt-2">
               <i className="fas fa-map-marker-alt mr-2"></i>
-              {data.address}
+              {footerData.address}
             </span>
           </p>
         </div>
@@ -42,7 +45,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mx-auto text-center mt-6 border-t border-white pt-4">
-        <p>{data.office}</p>
+        <p>{footerData.office}</p>
       </div>
     </footer>
   );
