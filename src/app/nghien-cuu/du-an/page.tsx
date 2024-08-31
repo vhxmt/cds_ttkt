@@ -42,7 +42,7 @@ export default function DuAn() {
 
                 {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h2 className="text-2xl font-semibold mb-4">SEEE Dự án</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">SEEE Dự án</h2>
 
                     {/* Project List */}
                     {currentItems.map((project, index) => (

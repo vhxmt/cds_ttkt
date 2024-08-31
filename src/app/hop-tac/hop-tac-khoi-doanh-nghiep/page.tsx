@@ -29,11 +29,13 @@ const newsData = [
 export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4">
+            {/* Main Container */}
             {/* Breadcrumb */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Sidebar menu */}
-                <SideMenu menuItems={menuItems} />
+                {/* Side Menu */}
+                <SideMenu currentSection="Hợp tác" />
+
                 {/* Main content */}
                 <div className="flex-1">
                     {/* News List */}
