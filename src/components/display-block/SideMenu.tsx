@@ -1,4 +1,3 @@
-
 "use client";
 import Link from 'next/link';
 import convertClassName from "@/utils/format-menu";
@@ -13,7 +12,7 @@ export default function SideMenu({ currentSection }: SideMenuProps) {
 
   return (
     <div className="side-menu flex-none w-1/5">
-      {sectionMenu && sectionMenu.items && sectionMenu.items.length > 0 ? (
+      {sectionMenu && sectionMenu.items && sectionMenu.items.length > 0 &&
         sectionMenu.items.map((item, index) => (
           <div key={index} className="group text-red-600 text-lg mb-4">
             {item.href ? (
@@ -47,9 +46,7 @@ export default function SideMenu({ currentSection }: SideMenuProps) {
             )}
           </div>
         ))
-      ) : (
-        <div className="side-menu flex-none w-1/5">No items available</div>
-      )}
+      }
     </div>
   );
 }

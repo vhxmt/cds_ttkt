@@ -1,19 +1,46 @@
+// src/app/giai-thuong/giai-thuong-khac/page.tsx
 'use client'
 import SideMenu from '@/components/display-block/SideMenu';
-import { menuItems } from '@/data/giai-thuong/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+import PgControl from '@/components/display-block/PgControl';
+import { awardData } from '@/data/giai-thuong/giai-thuong-khac/data';
+import { useState } from 'react';
 
-export default function GiaiThuongKhac() {
+export default function BaiBaoKhac() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
+    // Calculate indices for pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = awardData.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(awardData.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     return (
         <div className="max-w-6xl mx-auto p-4">
+            {/* Main Container */}
+            {/* Breadcrumb */}
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <SideMenu menuItems={menuItems} />
+                <SideMenu currentSection="Giải thưởng" />
                 
-                    <div className="w-3/4 p-4 border-l border-gray-300">
+                <div className="w-3/4 p-4 border-l border-gray-300">
 
-                        <h3 className="text-xl font-semibold mb-2">Giải thưởng khác</h3>
+                        <h3 className="text-xl font-semibold mb-2">Giải thưởng Khác</h3>
                         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead>
                             <tr className="bg-gray-200 border-b">
@@ -25,33 +52,28 @@ export default function GiaiThuongKhac() {
                             </tr>
                             </thead>
                             <tbody>
-                            <tr className="border-b">
-                                <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">J.Huber, L.Imperiali, D.Menzi, F.Musil, J.W.Kolar</td>
-                                <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">Cuộc thi APEX 2024A dành cho các chuyên gia truyền thông</td>
-                                <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">Giải thưởng APEX cho Xuất bản Xuất sắc</td>
-                                <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">2024</td>
-                                <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">“Hiệu quả năng lượng là không đủ!” - Tác động môi trường như chiều hướng mới trong tối ưu hóa đa mục tiêu của hệ thống điện tử công suất</td>
-                            </tr>
-                            </tbody>
+                            {currentItems.map((item, index) => (
+                                <tr key={index} className="border-b">
+                                    <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">{item.recipients}</td>
+                                    <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">{item.award}</td>
+                                    <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">{item.organization}</td>
+                                    <td className="px-4 py-2 text-sm text-gray-700 border-r border-gray-300">{item.year}</td>
+                                    <td className="px-4 py-2 text-sm text-gray-700">{item.achievement}</td>
+                                </tr>
+                            ))}
+                        </tbody>
                         </table>
                     </div>
 
                 </div>
 
-                {/* Pagination */}
-                <div className="flex justify-center mt-8">
-                        <div className="flex space-x-2">
-                            <button className="px-3 py-1 border rounded bg-gray-300">1</button>
-                            <button className="px-3 py-1 border rounded">2</button>
-                            <button className="px-3 py-1 border rounded">3</button>
-                            <button className="px-3 py-1 border rounded">4</button>
-                            <button className="px-3 py-1 border rounded">5</button>
-                            <button className="px-3 py-1 border rounded">6</button>
-                            <button className="px-3 py-1 border rounded">7</button>
-                            <button className="px-3 py-1 border rounded">Next</button>
-                        </div>
-                    </div>
-
+                {/* Pagination Controls */}
+                <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={handleNextPage}
+                        onPrevPage={handlePrevPage}
+                />
             </div>
     );
 }

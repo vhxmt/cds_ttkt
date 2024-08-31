@@ -1,16 +1,66 @@
-import React from 'react';
-import Breadcrumb from '@/components/breadcrumb';
+// src/app/cong-bo-khoa-hoc/page.tsx
+"use client";
+
+import React, { useState } from 'react';
+import { filters } from '@/data/cong-bo-khoa-hoc/data1';
+import { articles, Article } from '@/data/cong-bo-khoa-hoc/data2';
+import PgControl from '@/components/display-block/PgControl';
+import Breadcrumb from "@/components/breadcrumb";
 import Image from 'next/image';
 
 export default function CongBoKhoaHoc() {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 3;
+
+    // Calculate indices for pagination
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = articles.slice(indexOfFirstItem, indexOfLastItem);
+
+    // Calculate total pages
+    const totalPages = Math.ceil(articles.length / itemsPerPage);
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const [yearRange, setYearRange] = useState({ from: 1980, to: 2024 });
+
+    const handleFilterChange = (filterId: string) => {
+        setSelectedFilters(prev =>
+            prev.includes(filterId)
+                ? prev.filter(f => f !== filterId)
+                : [...prev, filterId]
+        );
+    };
+
+    const handleYearChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setYearRange(prev => ({
+            ...prev,
+            [name]: Number(value),
+        }));
+    };
+
+    const filteredArticles = articles.filter(article => {
+        // Implement filter logic here if needed based on selectedFilters and yearRange
+        return true;
+    });
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Container chính */}
-            {/* Breadcrumb */}
-            <Breadcrumb />
+            {/* Main Container */}
+            <Breadcrumb/>
             <div className="flex space-x-4">
-            <div className="side-menu flex-none w-1/3"></div>
-
+            <div className="side-menu flex-none w-1/5"></div>
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
@@ -39,45 +89,18 @@ export default function CongBoKhoaHoc() {
 
                     <div className = "flex p-4 border-l border-gray-300">
 
-                    {/* Sidebar */}
-                <div className="w-1/2 space-y-4">
-                    <div className="font-bold text-[14px]">Bộ lọc:</div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Sách</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Chương sách</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Hội thảo trong nước</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Hội thảo quốc tế</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Tạp chí trong nước</span>
-                        </label>
-                    </div>
-                    <div>
-                        <label className="flex items-center space-x-2">
-                            <input type="checkbox" />
-                            <span>Tạp chí quốc tế</span>
-                        </label>
-                    </div>
+                    <div className="flex-none w-1/2 p-4">
+                    <h3>Bộ lọc:</h3>
+                    {filters.map(filter => (
+                        <div key={filter.id}>
+                            <input
+                                type="checkbox"
+                                id={filter.id}
+                                onChange={() => handleFilterChange(filter.id)}
+                            />
+                            <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
+                        </div>
+                    ))}
                 </div>
 
                     {/* Year Filter */}
@@ -105,7 +128,7 @@ export default function CongBoKhoaHoc() {
                                 className="flex space-x-4 border-b pb-4"
                             >
                                 <Image
-                                    src="/cover.jpg"
+                                    src="/cds_ttkt/public/cover.jpg"
                                     alt="Thumbnail"
                                     width={200}
                                     height={200}
@@ -125,19 +148,13 @@ export default function CongBoKhoaHoc() {
                         ))}
                     </div>
 
-                    {/* Pagination */}
-                    <div className="flex justify-center mt-8">
-                        <div className="flex space-x-2">
-                            <button className="px-3 py-1 border rounded bg-gray-300">1</button>
-                            <button className="px-3 py-1 border rounded">2</button>
-                            <button className="px-3 py-1 border rounded">3</button>
-                            <button className="px-3 py-1 border rounded">4</button>
-                            <button className="px-3 py-1 border rounded">5</button>
-                            <button className="px-3 py-1 border rounded">6</button>
-                            <button className="px-3 py-1 border rounded">7</button>
-                            <button className="px-3 py-1 border rounded">Next</button>
-                        </div>
-                    </div>
+                    {/* Pagination Controls */}
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={handleNextPage}
+                        onPrevPage={handlePrevPage}
+                    />
                 </div>
             </div>
         </div>
