@@ -2,8 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { filters } from '@/data/cong-bo-khoa-hoc/data1';
-import { articles, Article } from '@/data/cong-bo-khoa-hoc/data2';
+import { filters,articles, Article} from '@/data/cong-bo-khoa-hoc/data';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
 import Image from 'next/image';

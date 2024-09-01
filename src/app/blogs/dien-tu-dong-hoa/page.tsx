@@ -3,11 +3,26 @@
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
-import { blogPosts } from '@/data/blogs/dien-tu-dong-hoa/data';  
+import blogData from '@/data/blogs/dien-tu-dong-hoa/data.json'; 
 import PublicationCard from '@/components/display-block/PublicationCard';
 import { useState } from 'react';
 
+// Define the types for the blog posts
+export interface BlogPost {
+    title: string;
+    date: string;
+    description: string;
+    imageUrl: string;
+    href: string;
+}
+
+export interface BlogData {
+    blogPosts: BlogPost[];
+}
+
 export default function DienTuDongHoa() {
+    // Type the blogData import
+    const blogPosts = (blogData as BlogData).blogPosts;  
 
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
@@ -46,7 +61,7 @@ export default function DienTuDongHoa() {
                     <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa</h2>
                     
                     <div className="grid grid-cols-3 gap-4">
-                        {currentItems.map((post, index) => (
+                        {currentItems.map((post: BlogPost, index) => (
                             <PublicationCard
                                 key={index}
                                 date={post.date}
