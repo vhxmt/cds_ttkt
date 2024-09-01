@@ -40,7 +40,7 @@ export default function BaiBaoKhac() {
                 
                 <div className="w-3/4 p-4 border-l border-gray-300">
 
-                        <h3 className="text-xl font-semibold mb-2">Giải thưởng Khác</h3>
+                        <h3 className="text-xl font-semibold mb-2 text-center">Giải thưởng Khác</h3>
                         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                             <thead>
                             <tr className="bg-gray-200 border-b">

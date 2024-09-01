@@ -1,19 +1,23 @@
+// src/app/nghien-cuu/huong-nghien-cuu.tsx
 'use client'
 import SideMenu from '@/components/display-block/SideMenu';
-import { menuItems } from '@/data/nghien-cuu/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+import { useState } from 'react';
 
 export default function HuongNghienCuu() {
     return (
         <div className="max-w-6xl mx-auto p-4">
+            {/* Main Container */}
+            {/* Breadcrumb */}
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <SideMenu menuItems={menuItems} />
+                <SideMenu currentSection="Nghiên cứu" />
+
 
                 {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h2 className="text-2xl font-semibold mb-4">SEEE Hướng nghiên cứu</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">SEEE Hướng nghiên cứu</h2>
                     
                     {/* Research Focus Areas */}
                     <div className="grid grid-cols-4 gap-4 mb-6">

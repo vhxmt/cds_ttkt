@@ -1,4 +1,4 @@
-// src/data/projects/data.ts
+// src/data/nghien-cuu/du-an/data.ts
 
 export interface Project {
     duration: string;

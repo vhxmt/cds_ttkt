@@ -41,7 +41,7 @@ const Breadcrumb: React.FC = () => {
     'dien-tu-dong-hoa': 'Điện - Tự động hóa',
     'dien-tu-dong-hoa-cong-nghe-thong-tin': 'Điện - Tự động hóa - Công nghệ thông tin',
 
-    'thiet-bi-dung-cu': 'Thiết bị dụng cụ',
+    'thiet-bi-va-dung-cu': 'Thiết bị và dụng cụ',
 
     'hop-tac-khoi-doanh-nghiep': 'Hợp tác khối doanh nghiệp',
     'hop-tac-khoi-han-lam': 'Hợp tác khối hàn lâm',
