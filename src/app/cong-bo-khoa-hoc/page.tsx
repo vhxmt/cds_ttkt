@@ -2,12 +2,32 @@
 "use client";
 
 import React, { useState } from 'react';
-import { filters,articles, Article} from '@/data/cong-bo-khoa-hoc/data';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
 import Image from 'next/image';
+import data from '@/data/cong-bo-khoa-hoc/data.json';  // Import JSON data
+
+// Define the types for the JSON data
+interface Article {
+    id: number;
+    title: string;
+    date: string;
+    imageUrl: string;
+}
+
+interface Filter {
+    id: string;
+    label: string;
+}
+
+interface Data {
+    articles: Article[];
+    filters: Filter[];
+}
 
 export default function CongBoKhoaHoc() {
+    const { articles, filters } = data as Data;  // Type the JSON import
+
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
@@ -54,12 +74,13 @@ export default function CongBoKhoaHoc() {
         // Implement filter logic here if needed based on selectedFilters and yearRange
         return true;
     });
+
     return (
         <div className="max-w-6xl mx-auto p-4">
             {/* Main Container */}
             <Breadcrumb/>
             <div className="flex space-x-4">
-            <div className="side-menu flex-none w-1/5"></div>
+                <div className="side-menu flex-none w-1/5"></div>
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
@@ -86,48 +107,51 @@ export default function CongBoKhoaHoc() {
                         </button>
                     </div>
 
-                    <div className = "flex p-4 border-l border-gray-300">
-
-                    <div className="flex-none w-1/2 p-4">
-                    <h3>Bộ lọc:</h3>
-                    {filters.map(filter => (
-                        <div key={filter.id}>
-                            <input
-                                type="checkbox"
-                                id={filter.id}
-                                onChange={() => handleFilterChange(filter.id)}
-                            />
-                            <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
+                    <div className="flex p-4 border-l border-gray-300">
+                        <div className="flex-none w-1/2 p-4">
+                            <h3>Bộ lọc:</h3>
+                            {filters.map(filter => (
+                                <div key={filter.id}>
+                                    <input
+                                        type="checkbox"
+                                        id={filter.id}
+                                        onChange={() => handleFilterChange(filter.id)}
+                                    />
+                                    <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
+                                </div>
+                            ))}
                         </div>
-                    ))}
-                </div>
 
-                    {/* Year Filter */}
-                    <div className="w-1/2 mb-6 flex items-center space-x-4">
-                        <div className="font-bold text-[14px]">Lọc theo năm:</div>
-                        <input
-                            type="number"
-                            className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
-                            defaultValue="2000"
-                        />
-                        <span>to</span>
-                        <input
-                            type="number"
-                            className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
-                            defaultValue="2024"
-                        />
-                    </div>
+                        {/* Year Filter */}
+                        <div className="w-1/2 mb-6 flex items-center space-x-4">
+                            <div className="font-bold text-[14px]">Lọc theo năm:</div>
+                            <input
+                                type="number"
+                                name="from"
+                                value={yearRange.from}
+                                onChange={handleYearChange}
+                                className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
+                            />
+                            <span>to</span>
+                            <input
+                                type="number"
+                                name="to"
+                                value={yearRange.to}
+                                onChange={handleYearChange}
+                                className="w-20 p-2 border border-gray-300 rounded focus:outline-none"
+                            />
+                        </div>
                     </div>
 
                     {/* Publications List */}
                     <div className="space-y-6">
-                        {[1, 2, 3].map((item) => (
+                        {currentItems.map(article => (
                             <div
-                                key={item}
+                                key={article.id}
                                 className="flex space-x-4 border-b pb-4"
                             >
                                 <Image
-                                    src="/cds_ttkt/public/cover.jpg"
+                                    src={article.imageUrl}
                                     alt="Thumbnail"
                                     width={200}
                                     height={200}
@@ -136,10 +160,10 @@ export default function CongBoKhoaHoc() {
                                 <div className="flex flex-col justify-between w-2/3">
                                     <div>
                                         <h4 className="font-bold text-lg">
-                                            Tên bài báo {item}
+                                            {article.title}
                                         </h4>
                                         <p className="text-sm text-gray-600">
-                                            19/12/2022 12:00:00
+                                            {article.date}
                                         </p>
                                     </div>
                                 </div>
@@ -159,3 +183,4 @@ export default function CongBoKhoaHoc() {
         </div>
     );
 }
+
