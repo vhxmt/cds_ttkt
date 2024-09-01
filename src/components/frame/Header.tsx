@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { menus } from "@/data/frame/dataHeader"; // Correctly import the menus data
+import menusData from "@/data/frame/dataHeader.json";
 import covertClassName from "@/utils/covertClassName";
 
 const Header: React.FC = () => {
@@ -98,7 +98,7 @@ const Header: React.FC = () => {
       </div>
       <nav className={covertClassName("container-nav")}>
         <div className="container mx-auto flex flex-wrap justify-center">
-          {menus.map((menu, index) => (
+          {menusData.map((menu, index) => (
             <div
               key={index}
               className="relative flex items-center border-l border-r border-gray-600"
@@ -108,31 +108,33 @@ const Header: React.FC = () => {
               {/* If the menu has no items, it is clickable; otherwise, it shows a dropdown */}
               <a
                 href={menu.items && menu.items.length > 0 ? "#" : menu.href || "#"}
-                className={`hover:underline mx-2 py-2 px-4 text-sm ${!menu.items || menu.items.length === 0 ? "text" : ""}`}
+                className={`hover:underline mx-2 py-2 px-4 text-sm ${
+                  !menu.items || menu.items.length === 0 ? "text" : ""
+                }`}
               >
                 {menu.label}
               </a>
-              {menu.items && menu.items.length > 0 && activeDropdown === index && (
-
-
-                <div
-                  className="absolute top-full left-0 mt-0 w-48 bg-gray-700 rounded-md shadow-lg z-50"
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  {menu.items.map((item, itemIndex) => (
-                    <a
-                      key={itemIndex}
-                      href={item.href || "#"}
-                      className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
-                        itemIndex > 0 ? "border-t border-gray-600" : ""
-                      }`}
-                    >
-                      {item.label}
-                    </a>
-                  ))}
-                </div>
-              )}
+              {menu.items &&
+                menu.items.length > 0 &&
+                activeDropdown === index && (
+                  <div
+                    className="absolute top-full left-0 mt-0 w-48 bg-gray-700 rounded-md shadow-lg z-50"
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    {menu.items.map((item, itemIndex) => (
+                      <a
+                        key={itemIndex}
+                        href={item.href || "#"}
+                        className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
+                          itemIndex > 0 ? "border-t border-gray-600" : ""
+                        }`}
+                      >
+                        {item.label}
+                      </a>
+                    ))}
+                  </div>
+                )}
             </div>
           ))}
         </div>
