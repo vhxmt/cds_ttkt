@@ -2,7 +2,7 @@ import Image from 'next/image';
 import {labCategories} from "@/data/lien-he/dan-duong";
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
-import {menuItems} from "@/data/lien-he/menu-data";
+
 
 export default function danduong() {
     return (
@@ -11,8 +11,7 @@ export default function danduong() {
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <SideMenu menuItems={menuItems} />
-
+                <SideMenu currentSection="Liên hệ" />
                 {/* Container chứa banner và hai ô */}
                 <div className="flex-1">
                     {/* Ảnh banner */}

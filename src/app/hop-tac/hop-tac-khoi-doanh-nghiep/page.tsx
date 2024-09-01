@@ -2,7 +2,7 @@
 import CooperationSection from "@/components/frame/CooperationSection";
 import { domesticCooperation } from "@/data/cooperations";
 import SideMenu from '@/components/display-block/SideMenu';
-import { menuItems } from '@/data/hop-tac/menu-data';
+
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 

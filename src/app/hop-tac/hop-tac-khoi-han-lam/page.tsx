@@ -5,7 +5,7 @@ import Banner from '@/components/display-block/Banner';
 import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import { staffData } from '@/data/nhan-luc/can-bo/data';
-import {  menuItems } from '@/data/hop-tac/menu-data';
+
 import Breadcrumb from '@/components/breadcrumb';
 
 export default function NewsPage() {
@@ -40,7 +40,7 @@ export default function NewsPage() {
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Sidebar menu */}
-                <SideMenu menuItems={menuItems} />
+                <SideMenu currentSection="Hợp tác" />
 
                 {/* Main content */}
                 <div className="flex-1">

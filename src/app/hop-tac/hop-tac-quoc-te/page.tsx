@@ -40,7 +40,7 @@ export default function NewsPage() {
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Sidebar menu */}
-                <SideMenu menuItems={menuItems} />
+                <SideMenu currentSection="Hợp tác" />
 
                 {/* Main content */}
                 <div className="flex-1">

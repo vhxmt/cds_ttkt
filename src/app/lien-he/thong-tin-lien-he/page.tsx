@@ -2,7 +2,7 @@ import Image from 'next/image';
 import {contactInfo} from "@/data/lien-he/thong-tin-lien-he";
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
-import {menuItems} from "@/data/lien-he/menu-data";
+
 
 export default function ThongTinLienHe() {
     return (
@@ -11,7 +11,7 @@ export default function ThongTinLienHe() {
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <SideMenu menuItems={menuItems} />
+                <SideMenu currentSection="Liên hệ" />
 
 
                 {/* Container chứa banner và hai ô */}
