@@ -1,14 +1,14 @@
 "use client";
 import Link from 'next/link';
 import convertClassName from "@/utils/format-menu";
-import { menus } from '@/data/frame/dataHeader';
+import menusData from '@/data/frame/dataHeader.json';  // Update the import
 
 interface SideMenuProps {
   currentSection: string; // This prop determines which section's menu to display
 }
 
 export default function SideMenu({ currentSection }: SideMenuProps) {
-  const sectionMenu = menus.find(menu => menu.label === currentSection);
+  const sectionMenu = menusData.find(menu => menu.label === currentSection); // Access the menus property
 
   return (
     <div className="side-menu flex-none w-1/5">

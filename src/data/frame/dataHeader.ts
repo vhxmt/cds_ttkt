@@ -1,8 +1,9 @@
-// src/frame/Header.tsx
+// src/data/frame/dataHeader.tsx
 
 export interface MenuItem {
   label: string;
   href?: string;
+  subItems?: MenuItem[];
 }
 
 export interface Menu {
@@ -16,9 +17,17 @@ export const menus: Menu[] = [
     label: "Tin tức/Sự kiện", 
     items: [
       { label: "Tin tức", href: "/tin-tuc-su-kien/tin-tuc" },
-      { label: "Sự kiện", href: "/tin-tuc-su-kien/su-kien" }
-
-  ]},
+      { 
+        label: "Sự kiện", 
+        href: "/tin-tuc-su-kien/su-kien",
+        subItems: [
+          { label: "Thảo luận chuyên đề hằng tuần", href: "/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de" },
+          { label: "Sự kiện thường niên", href: "/tin-tuc-su-kien/su-kien/su-kien-thuong-nien" },
+          { label: "Khóa học ngắn hạn", href: "/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han" }
+        ]
+      }
+    ]
+  },
 
   { label: "Nhân lực", items: [
     { label: "Cán bộ", href: "/nhan-luc/can-bo" }, 
@@ -46,17 +55,19 @@ export const menus: Menu[] = [
     { label: "Giải thưởng khác", href: "/giai-thuong/giai-thuong-khac" } 
   ]},
 
+
   { label: "Blogs", items: [
     { label: "Điện tử viễn thông", href: "/blogs/dien-tu-vien-thong" }, 
     { label: "Điện - Tự động hóa", href: "/blogs/dien-tu-dong-hoa" }, 
     { label: "Điện - Tự động hóa - Công nghệ thông tin", href: "/blogs/dien-tu-dong-hoa-cong-nghe-thong-tin" }
   ]},
-  { label: "Thiết bị & Dụng cụ", href: "/thiet-bi-va-dung-cu" },
+  // { label: "Thiết bị & Dụng cụ", href: "/thiet-bi-va-dung-cu" },
   { label: "Hợp tác", items: [
     { label: "Hợp tác doanh nghiệp", href: "/hop-tac/hop-tac-khoi-doanh-nghiep" }, 
     { label: "Hợp tác khối hàn lâm", href: "/hop-tac/hop-tac-khoi-han-lam" }, 
     { label: "Hợp tác quốc tế", href: "/hop-tac/hop-tac-quoc-te" }
   ]},
+
   { 
     label: "Liên hệ", 
     items: [
