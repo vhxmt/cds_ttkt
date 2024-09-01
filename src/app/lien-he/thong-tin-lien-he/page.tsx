@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {contactInfo} from "@/data/lien-he/thong-tin-lien-he";
+import {contactInfo} from "@/data/frame/dataFooter.json";
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
 

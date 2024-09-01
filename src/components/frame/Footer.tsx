@@ -1,25 +1,27 @@
 //src/components/frame/Footer.tsx
-// import type { Footer as FooterData } from '@/types/footer';
 import data from '@/data/frame/dataFooter.json';
 
 const Footer = () => {
+  // Assuming contactInfo has at least one item, access the first item
+  const contact = data.contactInfo[0];
+
   return (
     <footer className="bg-red-800 text-white p-6">
       <div className="container mx-auto flex flex-wrap justify-between">
         <div className="w-full md:w-1/3 mb-6 md:mb-0">
-          <h3 className="font-bold text-lg">{data.name}</h3>
+          <h3 className="font-bold text-lg">{contact.name}</h3>
           <p className="mt-2">
             <span className="flex items-center">
               <i className="fas fa-phone mr-2"></i>
-              {data.phone}
+              {contact.phone}
             </span>
             <span className="flex items-center mt-2">
               <i className="fas fa-envelope mr-2"></i>
-              {data.email}
+              {contact.email}
             </span>
             <span className="flex items-center mt-2">
               <i className="fas fa-map-marker-alt mr-2"></i>
-              {data.address}
+              {contact.address}
             </span>
           </p>
         </div>
@@ -43,7 +45,7 @@ const Footer = () => {
         </div>
       </div>
       <div className="container mx-auto text-center mt-6 border-t border-white pt-4">
-        <p>{data.office}</p>
+        <p>{contact.office}</p>
       </div>
     </footer>
   );
