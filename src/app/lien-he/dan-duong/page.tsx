@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {labCategories} from "@/data/lien-he/dan-duong";
+import {labCategories} from "@/data/lien-he/dan-duong.json";
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
 

@@ -1,0 +1,31 @@
+
+{
+    "labCategories":[
+    {
+      "title": "A. Thuộc lĩnh vực Điện tử viễn thông",
+      "data": [
+        {
+        "id": 1,
+        "name": "Phòng thí nghiệm A",
+        "location": "Địa điểm A",
+        "leader": "Trưởng nhóm A",
+        "contactInfo": "Thông tin A",
+        "postalCode": "ABC123"
+        }
+      ]
+    },
+    {
+      "title": "B. Thuộc lĩnh vực Điện - Tự động hóa",
+      "data": [
+        {
+        "id": 2,
+        "name": "Phòng thí nghiệm B",
+        "location": "Địa điểm B",
+        "leader": "Trưởng nhóm B",
+        "contactInfo": "Thông tin B",
+        "postalCode": "ABC123"}
+      ]
+    }
+  ]
+}
+  

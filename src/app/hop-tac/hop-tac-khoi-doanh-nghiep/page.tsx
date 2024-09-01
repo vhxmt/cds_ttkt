@@ -1,8 +1,7 @@
 "use client";
 import CooperationSection from "@/components/frame/CooperationSection";
-import { domesticCooperation } from "@/data/cooperations";
+import { domesticCooperation } from "@/data/cooperations.json";
 import SideMenu from '@/components/display-block/SideMenu';
-
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 

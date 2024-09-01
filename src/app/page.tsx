@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CooperationSection from "@/components/frame/CooperationSection";
-import { domesticCooperation, internationalCooperation } from "@/data/cooperations";
+import { domesticCooperation, internationalCooperation } from "@/data/cooperations.json";
 
 export default function Home() {
     return (
