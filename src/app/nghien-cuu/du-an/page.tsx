@@ -3,24 +3,26 @@
 import { useState } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from '@/components/breadcrumb';
-import { projects } from '@/data/nghien-cuu/du-an/data.json';
+import data from '@/data/nghien-cuu/du-an/data.json'; // Import JSON as default export
 import SideMenu from '@/components/display-block/SideMenu';
 
 // Define the types for the projects
 export interface Project {
-    duration: string,
-    title: string,
-    details: string
+    duration: string;
+    title: string;
+    details: string[];
 }
 
-export interface ProjectData {
-    projects: Project;
+interface ProjectData {
+    projects: Project[];
 }
 
 export default function DuAn() {
-
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
+
+    // Access the data from the imported JSON
+    const { projects }: ProjectData = data;
 
     // Calculate indices for pagination
     const indexOfLastItem = currentPage * itemsPerPage;

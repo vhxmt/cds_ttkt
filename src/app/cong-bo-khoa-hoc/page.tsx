@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
 import Image from 'next/image';
+import SideMenu from '@/components/display-block/SideMenu';
 import data from '@/data/cong-bo-khoa-hoc/data.json';  // Import JSON data
 
 // Define the types for the JSON data
@@ -80,7 +81,8 @@ export default function CongBoKhoaHoc() {
             {/* Main Container */}
             <Breadcrumb/>
             <div className="flex space-x-4">
-                <div className="side-menu flex-none w-1/5"></div>
+                {/* Side Menu */}
+                <SideMenu  />
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
