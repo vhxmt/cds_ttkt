@@ -1,0 +1,37 @@
+{
+    "banner": {
+      "src": "/banner.png",
+      "alt": "Banner"
+    },
+    "featuredNews": [
+      {
+        "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+        "link": "https://seee.hust.edu.vn/asset-page/-/asset_publisher/3YpEUUuUWBB6/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024"
+      }
+
+    ],
+    "events": [
+      {
+        "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+        "description": "Cơ hội gặp gỡ và giao lưu với CTO của tập đoàn ebm-papst, đối tác của FPT Software tại Talkshow Powering the Future: Electronics Driving Global Industries. 15:00 - 17:00 ngày 01/08/2024 (thứ 5)",
+        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/talkshow-powering-the-future-electronics-driving-global-industries"
+      }
+
+    ],
+    "additionalNews": [
+      {
+        "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
+        "description": "Trường Điện - Điện tử dự kiến phối hợp với Tạp chí Tự động hóa ngày nay tổ chức Trường hè quốc gia lần thứ Nhất về Điện tử công suất (VSSPE’24) tại Toà C7, Đại học Bách Khoa Hà Nội, từ ngày 9 -...",
+        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/gioi-thieu-truong-he-quoc-gia-lan-thu-nhat-ve-ien-tu-cong-suat?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
+        "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
+      },
+      {
+        "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+        "description": "Lễ bảo vệ đồ án tốt nghiệp là một sự kiện có ý nghĩa đặc biệt. Tại buổi bảo vệ, các sinh viên trình bày đồ án, giới thiệu sản phẩm và trả lời các câu hỏi từ Hội đồng bảo vệ. Đây dịp để sinh viên...",
+        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
+        "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
+      }
+
+    ]
+  }
+  

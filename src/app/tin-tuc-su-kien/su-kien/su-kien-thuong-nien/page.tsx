@@ -40,10 +40,8 @@ export default function NewsPage() {
                     <p className="text-lg mb-4 font-inter text-center mt-20 mb-20">
                         {eventDetails.registrationNote}
                     </p>
-                </div>
-            </div>
 
-            {/* Phần nội dung mới */}
+                    {/* Phần nội dung mới */}
             <div className="mt-20">
                 <p className="text-lg mb-20 text-center">
                     Hội nghị tổng kết hàng năm của trường Điện - Điện tử là một sự kiện diễn ra trong 2 ngày hằng năm dành cho các thành viên của trường, bao gồm các bài thuyết trình về nghiên cứu đang diễn ra, các buổi hướng dẫn của giảng viên trường Điện - Điện tử, tham quan các phòng lab, và thuyết trình poster của sinh viên, cũng như nhiều cơ hội kết nối mở rộng.
@@ -116,6 +114,10 @@ export default function NewsPage() {
                     </div>
                 </div>
             </div>
+                </div>
+            </div>
+
+            
         </div>
     );
 }
