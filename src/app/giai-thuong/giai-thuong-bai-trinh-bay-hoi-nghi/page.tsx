@@ -1,5 +1,4 @@
 // src/app/giai-thuong/giai-thuong-khac/page.tsx
-// src/app/giai-thuong/giai-thuong-khac/page.tsx
 'use client'
 import { useState } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';

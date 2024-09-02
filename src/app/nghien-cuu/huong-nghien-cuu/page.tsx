@@ -1,61 +1,93 @@
-// src/app/nghien-cuu/huong-nghien-cuu.tsx
-'use client'
+'use client';
+import { useState, useEffect } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 
+// Define the types for the data based on the JSON structure
+interface ResearchArea {
+    name: string;
+    highlight?: boolean;
+    description?: string;
+    relatedNews?: RelatedNews[];
+}
+
+interface RelatedNews {
+    id: number;
+    title: string;
+    description: string;
+    link: string;
+}
+
+interface ResearchData {
+    title: string;
+    researchAreas: ResearchArea[];
+    description: string;
+    relatedNews: RelatedNews[];
+}
 
 export default function HuongNghienCuu() {
+    const [researchData, setResearchData] = useState<ResearchData | null>(null);
+    const [selectedAreaIndex, setSelectedAreaIndex] = useState<number>(0); // Default to the first item
+
+    useEffect(() => {
+        import('@/data/nghien-cuu/huong-nghien-cuu/data.json')
+            .then((module) => {
+                setResearchData(module.default as ResearchData);
+                // Set default selected area to the first one if data is available
+                if (module.default && module.default.researchAreas.length > 0) {
+                    setSelectedAreaIndex(0);
+                }
+            })
+            .catch((error) => console.error('Error loading JSON data:', error));
+    }, []);
+
+    if (!researchData) {
+        return <div>Loading...</div>;
+    }
+
+    const { title, researchAreas } = researchData;
+    const selectedArea = researchAreas[selectedAreaIndex];
+
+    const handleAreaClick = (index: number) => {
+        setSelectedAreaIndex(index);
+    };
+
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
-            {/* Breadcrumb */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Side Menu */}
                 <SideMenu currentSection="Nghiên cứu" />
-
-
-                {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">SEEE Hướng nghiên cứu</h2>
-                    
-                    {/* Research Focus Areas */}
+                    <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
                     <div className="grid grid-cols-4 gap-4 mb-6">
-                        <div className="bg-gray-200 text-center py-8 rounded-lg bg-gray-300">Lý thuyết điều khiển và ứng dụng</div>
-                        <div className="bg-gray-200 text-center py-8 rounded-lg ">Năng lượng điện</div>
-                        <div className="bg-gray-200 text-center py-8 rounded-lg bg-gray-300">Hệ thống điện và năng lượng</div>
-                        <div className="bg-gray-200 text-center py-8 rounded-lg bg-gray-300">Lưới điện thông minh</div>
+                        {researchAreas.map((area, index) => (
+                            <button
+                                key={index}
+                                onClick={() => handleAreaClick(index)}
+                                className={`py-8 rounded-lg text-center ${
+                                    selectedAreaIndex === index ? 'bg-gray-200' : 'bg-gray-300'
+                                }`}
+                            >
+                                {area.name}
+                            </button>
+                        ))}
                     </div>
-
-                    {/* Research Description */}
                     <div className="text-base mb-8">
-                        Nghiên cứu của CAP Group về Điện tử công suất bao gồm kiểm soát, chuyển đổi, truyền tải và thu thập năng lượng điện. Trọng tâm đặc biệt dành cho công nghệ DC điện áp cao và hệ thống truyền tải điện không dây.
+                        {selectedArea.description}
                     </div>
-
-                    {/* Related News */}
                     <h3 className="text-xl font-semibold mb-4">Các tin liên quan</h3>
                     <div className="space-y-6">
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h4 className="font-bold">#1: Các thành tựu & giải thưởng của Phòng thí nghiệm</h4>
-                                <p className="text-gray-600">ABCD</p>
+                        {selectedArea.relatedNews?.map((news) => (
+                            <div key={news.id} className="flex justify-between items-center">
+                                <div>
+                                    <h4 className="font-bold">{news.title}</h4>
+                                    <p className="text-gray-600">{news.description}</p>
+                                </div>
+                                <a href={news.link} className="text-[#BD1E1E]">
+                                    Chi tiết &gt;&gt;
+                                </a>
                             </div>
-                            <a href="#" className="text-[#BD1E1E]">Chi tiết &gt;&gt;</a>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h4 className="font-bold">#2: Thông báo về CFP của Hội nghị</h4>
-                                <p className="text-gray-600">ABCD</p>
-                            </div>
-                            <a href="#" className="text-[#BD1E1E]">Chi tiết &gt;&gt;</a>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <div>
-                                <h4 className="font-bold">#3: Tổng kết hoạt động tham gia Hội nghị & Giao lưu</h4>
-                                <p className="text-gray-600">ABCD</p>
-                            </div>
-                            <a href="#" className="text-[#BD1E1E]">Chi tiết &gt;&gt;</a>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </div>

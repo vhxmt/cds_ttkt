@@ -1,13 +1,13 @@
 "use client";
 import CooperationSection from "@/components/frame/CooperationSection";
 import cooperationData from "@/data/cooperations.json";
-import cooperationEventData from "@/data/hop-tac/cooperationEventData.json"; // Importing the new JSON file
+import cooperationEventData from "@/data/hop-tac/cooperationEventData.json"; 
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 
 const { domesticCooperation } = cooperationData;
-const { cooperationEventData: newsData } = cooperationEventData; // Accessing the event data
+const { cooperationEventData: newsData } = cooperationEventData; 
 
 export default function NewsPage() {
     return (
