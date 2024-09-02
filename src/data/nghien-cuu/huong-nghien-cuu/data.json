@@ -3,7 +3,6 @@
     "researchAreas": [
         {
             "name": "Lý thuyết điều khiển và ứng dụng",
-            "highlight": false,
             "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
             "relatedNews": [
                 {
@@ -22,7 +21,6 @@
         },
         {
             "name": "Năng lượng điện",
-            "highlight": true,
             "description": "Nghiên cứu về năng lượng điện bao gồm chuyển đổi, lưu trữ và phân phối năng lượng điện.",
             "relatedNews": [
                 {
@@ -41,7 +39,6 @@
         },
         {
             "name": "Hệ thống điện và năng lượng",
-            "highlight": true,
             "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
             "relatedNews": [
                 {
@@ -60,7 +57,6 @@
         },
         {
             "name": "Lưới điện thông minh",
-            "highlight": true,
             "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
             "relatedNews": [
                 {
