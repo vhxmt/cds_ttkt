@@ -1,0 +1,21 @@
+{
+    "banner": {
+      "src": "/banner.png",
+      "alt": "Banner Image"
+    },
+    "introduction": {
+      "title": "CHÀO MỪNG ĐẾN VỚI PHÒNG THÍ NGHIỆM TRƯỜNG ĐIỆN - ĐIỆN TỬ",
+      "description": "Trường Điện – Điện tử là đơn vị cấp 2 thuộc ĐHBKHN và là đơn vị đào tạo và nghiên cứu nòng cốt trong lĩnh vực Điện – Điện tử, có tính tự chủ cao thuộc ĐHBKHN, có chức năng chính là đào tạo cấp bằng, NCKH và chuyển giao tri thức trong lĩnh vực chuyên môn Điện – Điện tử, kỹ thuật đa phương tiện."
+    },
+    "strategicGoals": {
+      "title": "Mục tiêu chiến lược của Trường Điện – Điện tử là thành:",
+      "items": [
+        "Đơn vị đào tạo nguồn nhân lực trình độ cao cho ngành Điện, ĐT-VT với định hướng tích hợp, liên ngành Điện, ĐT-VT, đáp ứng các yêu cầu nhân lực xã hội cũng như của thị trường lao động.",
+        "Đơn vị nghiên cứu, phát triển và ứng dụng công nghệ liên ngành Điện, ĐT-VT có uy tín ở trong nước cũng như khu vực và thế giới.",
+        "Địa chỉ đầu tư, hợp tác và CGCN hấp dẫn, tin cậy đối với các tổ chức, các doanh nghiệp trong nước và quốc tế.",
+        "Đơn vị đóng vai trò quan trọng vào quá trình phát triển ngành Điện, ĐT-VT Việt Nam, góp phần quan trọng trong sự nghiệp phát triển kinh tế - xã hội, CNH & HĐH đất nước, giữ gìn an ninh, quốc phòng.",
+        "Là một trong các đơn vị đi đầu, đóng góp tích cực vào sự phát triển chung theo chiến lược phát triển của ĐHBKHN."
+      ]
+    }
+  }
+  

@@ -1,30 +1,13 @@
 "use client";
 import CooperationSection from "@/components/frame/CooperationSection";
-import { domesticCooperation } from "@/data/cooperations.json";
+import cooperationData from "@/data/cooperations.json";
+import cooperationEventData from "@/data/hop-tac/cooperationEventData.json"; 
 import SideMenu from '@/components/display-block/SideMenu';
-
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 
-const newsData = [
-    {
-        imageSrc: "/image/thiet-bi/Oscilloscope.png",
-        title: "Lễ ký kết Thỏa thuận hợp tác MOU...",
-        date: "19/12/2022 12:02:00"
-    },
-    {
-        imageSrc: "/image/thiet-bi/Oscilloscope.png",
-        title: "MAPR 2023 CfP Submission Deadline...",
-        date: "19/12/2022 12:00:00"
-    },
-    {
-        imageSrc: "/image/thiet-bi/Oscilloscope.png",
-        title: "Lễ ký kết Thỏa thuận hợp tác (MOU)...",
-        date: "19/12/2022 11:57:00"
-    }
-    // Add more news items as needed
-];
-
+const { domesticCooperation } = cooperationData;
+const { cooperationEventData: newsData } = cooperationEventData; 
 
 export default function NewsPage() {
     return (

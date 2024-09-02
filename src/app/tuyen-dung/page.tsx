@@ -11,12 +11,6 @@ export default function TuyenDungPage() {
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
-    const handleOutsideClick = (e: React.MouseEvent) => {
-        if ((e.target as HTMLElement).classList.contains('modal-background')) {
-            closeModal();
-        }
-    };
-
     // Access the correct structure from the imported data
     const { recruitmentData } = data;
     const { bannerSrc, description, positions } = recruitmentData;

@@ -4,8 +4,9 @@ import Breadcrumb from '@/components/breadcrumb';
 import ToolOneCol from '@/components/display-block/tool/toolonecol';
 import ToolTwoCol from '@/components/display-block/tool/tooltwocol';
 import ToolThreeCol from '@/components/display-block/tool/toolthreecol';
-import { toolsTwoCol, toolsThreeCol, toolOneCol } from '@/data/thiet-bi-va-dung-cu/data.json';
+import toolData from '@/data/thiet-bi-va-dung-cu/data.json';
 
+const { toolsTwoCol, toolsThreeCol, toolOneCol } = toolData;
 export default function NewsPage() {
     return (
         <div className="max-w-6xl mx-auto p-4">
