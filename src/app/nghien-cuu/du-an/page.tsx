@@ -3,8 +3,19 @@
 import { useState } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from '@/components/breadcrumb';
-import { projects } from '@/data/nghien-cuu/du-an/data';
+import { projects } from '@/data/nghien-cuu/du-an/data.json';
 import SideMenu from '@/components/display-block/SideMenu';
+
+// Define the types for the projects
+export interface Project {
+    duration: string,
+    title: string,
+    details: string
+}
+
+export interface ProjectData {
+    projects: Project;
+}
 
 export default function DuAn() {
 
