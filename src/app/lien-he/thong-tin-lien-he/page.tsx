@@ -1,28 +1,28 @@
 import Image from 'next/image';
-import contactInfo from "@/data/lien-he/thong-tin-lien-he.json";
+import contactData from "@/data/lien-he/thong-tin-lien-he.json"; // Import JSON data
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
 
-
 export default function ThongTinLienHe() {
+    const { contactInfo, banner } = contactData; // Extract contactInfo and banner
+
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
-            {/* Container chính */}
+            {/* Main Container */}
             <Breadcrumb />
             <div className="flex space-x-4">
                 {/* Side Menu */}
                 <SideMenu currentSection="Liên hệ" />
 
-
-                {/* Container chứa banner và hai ô */}
+                {/* Container with banner and contact info */}
                 <div className="flex-1">
-                    {/* Ảnh banner */}
+                    {/* Banner Image */}
                     <div className="mb-4">
                         <Image
-                            src="/ảnh trường.png" // Đổi thành đường dẫn đến ảnh banner của bạn
-                            alt="Banner"
-                            width={1200}
-                            height={400}
+                            src={banner.imageSrc} // Use banner data from JSON
+                            alt={banner.altText}
+                            width={banner.width}
+                            height={banner.height}
                             className="w-full h-auto object-cover rounded-lg"
                         />
                     </div>
