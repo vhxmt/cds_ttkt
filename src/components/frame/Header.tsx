@@ -5,13 +5,20 @@ import covertClassName from "@/utils/covertClassName";
 
 const Header: React.FC = () => {
   const [activeDropdown, setActiveDropdown] = useState<number | null>(null);
+  const [activeSubDropdown, setActiveSubDropdown] = useState<number | null>(null);
 
   const handleMouseEnter = (index: number) => {
     setActiveDropdown(index);
+    setActiveSubDropdown(null); // Reset the subDropdown when hovering over a new item
   };
 
   const handleMouseLeave = () => {
     setActiveDropdown(null);
+    setActiveSubDropdown(null); // Close the subDropdown when leaving
+  };
+
+  const handleSubMenuEnter = (subIndex: number) => {
+    setActiveSubDropdown(subIndex);
   };
 
   return (
@@ -29,13 +36,7 @@ const Header: React.FC = () => {
         </div>
         <div id="banner-right" className="w-full md:w-4/12 flex flex-col items-end">
           <div className="line1 text-right mb-2">
-
-            <a
-              href="c/portal/login%3Fp_l_id=86531.html"
-              id="sign-in"
-
-              className="text-black"
-            >
+            <a href="c/portal/login%3Fp_l_id=86531.html" id="sign-in" className="text-black">
               Đăng nhập
             </a>
             <span className="mx-3 text-gray-600">|</span>
@@ -44,13 +45,7 @@ const Header: React.FC = () => {
             </a>
           </div>
           <div className="line2 flex justify-end mb-2">
-            <form 
-              id="_77_fm" 
-              action="https://seee.hust.edu.vn/$tabs1URL" 
-              method="post" 
-
-              className="flex"
-            >
+            <form id="_77_fm" action="https://seee.hust.edu.vn/$tabs1URL" method="post" className="flex">
               <input
                 className="border border-gray-400 p-2 rounded-l-md"
                 id="_77_keywords"
@@ -67,11 +62,7 @@ const Header: React.FC = () => {
             <span className="mr-2">Ngôn ngữ:</span>
             <a href="#" className="inline-flex items-center">
               <img
-
-
                 src="/image/flag/VN-Flag.jpg"
-
-
                 alt="Tiếng Việt"
                 className="h-4 w-4 mr-1"
                 style={{
@@ -105,7 +96,6 @@ const Header: React.FC = () => {
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={handleMouseLeave}
             >
-              {/* If the menu has no items, it is clickable; otherwise, it shows a dropdown */}
               <a
                 href={menu.items && menu.items.length > 0 ? "#" : menu.href || "#"}
                 className={`hover:underline mx-2 py-2 px-4 text-sm ${
@@ -114,27 +104,47 @@ const Header: React.FC = () => {
               >
                 {menu.label}
               </a>
-              {menu.items &&
-                menu.items.length > 0 &&
-                activeDropdown === index && (
-                  <div
-                    className="absolute top-full left-0 mt-0 w-48 bg-gray-700 rounded-md shadow-lg z-50"
-                    onMouseEnter={() => handleMouseEnter(index)}
-                    onMouseLeave={handleMouseLeave}
-                  >
-                    {menu.items.map((item, itemIndex) => (
+              {menu.items && menu.items.length > 0 && activeDropdown === index && (
+                <div
+                  className="absolute top-full left-0 mt-0 w-48 bg-gray-700 rounded-md shadow-lg z-50"
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {menu.items.map((item, itemIndex) => (
+                    <div
+                      key={itemIndex}
+                      className="relative"
+                      onMouseEnter={() => handleSubMenuEnter(itemIndex)}
+                      onMouseLeave={() => setActiveSubDropdown(null)}
+                    >
                       <a
-                        key={itemIndex}
-                        href={item.href || "#"}
+                        href={item.subItems && item.subItems.length > 0 ? "#" : item.href || "#"}
                         className={`block px-4 py-2 text-white hover:bg-gray-600 text-sm ${
                           itemIndex > 0 ? "border-t border-gray-600" : ""
                         }`}
                       >
                         {item.label}
                       </a>
-                    ))}
-                  </div>
-                )}
+                      {item.subItems && item.subItems.length > 0 && activeSubDropdown === itemIndex && (
+                      <div className="absolute top-0 left-full ml-1 w-48 bg-gray-600 rounded-md shadow-lg z-50">
+                        {item.subItems.map((subItem, subItemIndex) => (
+                          <a
+                            key={subItemIndex}
+                            href={subItem.href || "#"}
+                            className={`block px-4 py-2 text-white hover:bg-gray-500 text-sm ${
+                              subItemIndex > 0 ? "border-t border-gray-500" : ""
+                            }`}
+                          >
+                            {subItem.label}
+                          </a>
+                        ))}
+                      </div>
+                    )}
+
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           ))}
         </div>

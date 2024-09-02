@@ -3,7 +3,7 @@
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
-import { patents } from '@/data/nghien-cuu/bang-sang-che/data';
+import { patents } from '@/data/nghien-cuu/bang-sang-che/data.json';
 import { useState } from 'react';
 
 export default function BangSangChe() {

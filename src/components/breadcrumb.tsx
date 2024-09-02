@@ -13,7 +13,6 @@ const Breadcrumb: React.FC = () => {
   // Define a mapping of segment names to display names
   const pathNamesMap: { [key: string]: string } = {
     'tin-tuc': 'Tin tức',
-    'su-kien': 'Sự kiện',
     'thao-luan-chuyen-de': 'Thảo luận chuyên đề hằng tuần',
     'su-kien-thuong-nien': 'Sự kiện thường niên',
     'khoa-hoc-ngan-han': 'Khóa học ngắn hạn',

@@ -3,7 +3,7 @@
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
-import blogData from '@/data/blogs/dien-tu-vien-thong/data.json';  // Import JSON data
+import blogData from '@/data/blogs/dien-tu-vien-thong/data.json';  
 import PublicationCard from '@/components/display-block/PublicationCard';
 import { useState } from 'react';
 

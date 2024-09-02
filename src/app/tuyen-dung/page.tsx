@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react';
 import Image from 'next/image';
-import { recruitmentData } from '@/data/tuyen-dung/tuyen-dung';
+import data from '@/data/tuyen-dung/tuyen-dung.json'; // Import JSON as default export
 import FormDangKy from '@/components/display-block/form-dang-ky';
 import Breadcrumb from "@/components/breadcrumb";
 
@@ -17,12 +17,16 @@ export default function TuyenDungPage() {
         }
     };
 
+    // Access the correct structure from the imported data
+    const { recruitmentData } = data;
+    const { bannerSrc, description, positions } = recruitmentData;
+
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Container chính */}
             <Breadcrumb />
             <div className="flex space-x-4">
-            <div className="side-menu flex-none w-1/5"></div>
+                <div className="side-menu flex-none w-1/5"></div>
 
                 {/* Container chứa nội dung tuyển dụng */}
                 <div className="flex-1">
@@ -31,7 +35,7 @@ export default function TuyenDungPage() {
                         {/* Ảnh banner tuyển dụng */}
                         <div className="mb-4">
                             <Image
-                                src={recruitmentData.bannerSrc}
+                                src={bannerSrc}
                                 alt="Banner Tuyển dụng"
                                 width={1200}
                                 height={400}
@@ -42,7 +46,7 @@ export default function TuyenDungPage() {
                         {/* Nội dung mô tả tuyển dụng */}
                         <div className="p-4">
                             <p className="text-lg text-gray-700 mb-4">
-                                {recruitmentData.description}
+                                {description}
                             </p>
                         </div>
                     </div>
@@ -52,7 +56,7 @@ export default function TuyenDungPage() {
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Danh sách các vị trí tuyển dụng</h2>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            {recruitmentData.positions.map((position, index) => (
+                            {positions.map((position, index) => (
                                 <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
                                     <Image
                                         src={position.imageSrc}

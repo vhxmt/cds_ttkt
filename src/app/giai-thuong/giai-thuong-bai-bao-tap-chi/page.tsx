@@ -3,7 +3,7 @@
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
-import { awardData } from '@/data/giai-thuong/giai-thuong-bai-bao-tap-chi/data';
+import { awardData } from '@/data/giai-thuong/giai-thuong-bai-bao-tap-chi/data.json';
 import { useState } from 'react';
 
 export default function BaiBaoTapChi() {

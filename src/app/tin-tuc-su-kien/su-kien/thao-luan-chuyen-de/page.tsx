@@ -1,8 +1,10 @@
+//src/app/tin-tuc-va-su-kien/su-kien/thao-luan-chuyen-de/page.tsx
 import Image from 'next/image';
-import {eventDetails} from "@/data/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de-body";
+import data from "@/data/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de-body.json";
 import SideMenu from '@/components/display-block/SideMenu';
-import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+
+const { eventDetails } = data;
 
 export default function NewsPage() {
     return (

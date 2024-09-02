@@ -1,8 +1,10 @@
 import Image from 'next/image';
-import { courseLibrary, upcomingCourses } from "@/data/tin-tuc-su-kien/su-kien/khoa-hoc-body";
+import eventData from "@/data/tin-tuc-su-kien/su-kien/khoa-hoc-body.json";
 import SideMenu from '@/components/display-block/SideMenu';
-import { menuItems } from '@/data/tin-tuc-su-kien/menu-data';
 import Breadcrumb from '@/components/breadcrumb';
+
+// Destructure the imported JSON
+const { courseLibrary, upcomingCourses } = eventData;
 
 export default function NewsPage() {
     return (

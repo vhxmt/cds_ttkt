@@ -1,8 +1,11 @@
 //src/app/tin-tuc-va-su-kien/su-kien/su-kien-thuong-nien/page.tsx
 import Image from 'next/image';
-import { eventDetails, eventInfo, schedule } from '@/data/tin-tuc-su-kien/su-kien/su-kien-thuong-nien'; // Đảm bảo đường dẫn đúng với vị trí file data.ts
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
+import eventData from '@/data/tin-tuc-su-kien/su-kien/su-kien-thuong-nien.json';
+
+// Destructure the imported JSON
+const { eventDetails, eventInfo, schedule } = eventData;
 
 export default function NewsPage() {
     return (
@@ -25,7 +28,7 @@ export default function NewsPage() {
                             alt={eventDetails.title}
                             width={1200}
                             height={400}
-                            className="w-full h-auto object-cover rounded-lg"
+                            className="w-full h-auto rounded-lg object-cover"
                         />
                     </div>
                     <p className="text-lg mb-4 font-inter text-center font-bold">
@@ -65,9 +68,9 @@ export default function NewsPage() {
                                 <Image
                                     src={eventInfo[key as keyof typeof eventInfo].imageSrc}
                                     alt={eventInfo[key as keyof typeof eventInfo].imageAlt}
-                                    layout="fill"
-                                    objectFit="cover"
-                                    className="rounded-lg"
+                                    width={800} // Update as needed
+                                    height={400} // Update as needed
+                                    className="rounded-lg object-cover"
                                 />
                             </div>
                             <h3 className="text-lg font-bold mb-4">{eventInfo[key as keyof typeof eventInfo].title}</h3>
@@ -106,17 +109,13 @@ export default function NewsPage() {
                         <Image
                             src="/banner-su-kien-thuong-nien.png" // Thay đổi đường dẫn ảnh cho phù hợp
                             alt="Banner sự kiện"
-                            layout="responsive"
                             width={1200}
                             height={400}
                             className="rounded-lg object-cover"
                         />
                     </div>
                 </div>
-
             </div>
         </div>
     );
-};
-
-
+}
