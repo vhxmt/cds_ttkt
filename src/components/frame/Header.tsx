@@ -49,7 +49,7 @@ const Header: React.FC = () => {
                   </>
               ) : (
                   <>
-                    <a href="/login" id="sign-in" className="text-black">
+                    <a href="/NewPage/login" id="sign-in" className="text-black">
                       Đăng nhập
                     </a>
                     <span className="mx-3 text-gray-600">|</span>

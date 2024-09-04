@@ -1,35 +1,73 @@
+// src/app/NewPage/nghien-cuu/du-an/page.tsx
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from '@/components/breadcrumb';
-import data from '@/data/nghien-cuu/du-an/data.json'; // Import JSON as default export
 import SideMenu from '@/components/display-block/SideMenu';
-import { useAuth } from '@/components/providers/AuthProvider'; // Import hook để kiểm tra quyền admin
-
-// Define the types for the projects
-export interface Project {
-    duration: string;
-    title: string;
-    details: string[];
-}
-
-interface ProjectData {
-    projects: Project[];
-}
+import { useAuth } from '@/components/providers/AuthProvider';
+import ProjectForm, { Project } from './form-du-an'; // Import the new component
 
 export default function DuAn() {
+    const [projects, setProjects] = useState<Project[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [formProject, setFormProject] = useState<Project | null>(null);
     const itemsPerPage = 3;
 
-    // Access the data from the imported JSON
-    const { projects }: ProjectData = data;
+    useEffect(() => {
+        fetchProjects();
+    }, []);
 
-    // Calculate indices for pagination
+    const fetchProjects = async () => {
+        const response = await fetch('/api/nghien-cuu/du-an');
+        const data = await response.json();
+        setProjects(data.projects);
+    };
+
+    const handleAdd = () => {
+        setFormProject(null); // No project means it's for adding a new one
+        setIsFormOpen(true); // Open the form
+    };
+
+    const handleEdit = (project: Project) => {
+        setFormProject(project); // Set the current project to edit
+        setIsFormOpen(true); // Open the form
+    };
+
+    const handleSubmit = async (project: Project) => {
+        if (project.id) {
+            // Update existing project
+            await fetch(`/api/nghien-cuu/du-an?id=${project.id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(project),
+            });
+        } else {
+            // Add new project
+            await fetch('/api/nghien-cuu/du-an', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(project),
+            });
+        }
+        fetchProjects(); // Re-fetch data after submitting
+        setIsFormOpen(false); // Close the form
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!id) {
+            console.error('Project ID is missing');
+            return;
+        }
+        await fetch(`/api/nghien-cuu/du-an?id=${id}`, {
+            method: 'DELETE',
+        });
+        fetchProjects(); 
+    };
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = projects.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Calculate total pages
     const totalPages = Math.ceil(projects.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -44,49 +82,29 @@ export default function DuAn() {
         }
     };
 
-    const handleAdd = () => {
-        console.log("Thêm dự án mới");
-    };
-
-    const handleEdit = (project: Project) => {
-        console.log("Sửa dự án:", project);
-    };
-
-    const handleDelete = (project: Project) => {
-        console.log("Xóa dự án:", project);
-    };
-
-    // Get user authentication and role information
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Side Menu */}
                 <SideMenu currentSection="Nghiên cứu" />
-
-                {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    {/* Nút "Thêm" */}
+                    
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Danh sách dự án</h2>
                     {isAdmin && (
                         <div className="flex justify-end mb-4">
                             <button
                                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                                 onClick={handleAdd}
                             >
-                                Thêm
+                                Thêm dự án
                             </button>
                         </div>
                     )}
-
-                    <h2 className="text-2xl font-semibold mb-4 text-center">Danh sách dự án</h2>
-
-                    {/* Project List */}
-                    {currentItems.map((project, index) => (
-                        <div key={index} className="mb-6 p-4 border border-gray-300 rounded-lg">
+                    {currentItems.map((project) => (
+                        <div key={project.id} className="mb-6 p-4 border border-gray-300 rounded-lg">
                             <h3 className="text-lg font-semibold">{project.duration}</h3>
                             <h4 className="font-medium">{project.title}</h4>
                             <ul className="list-disc list-inside mb-4">
@@ -105,7 +123,7 @@ export default function DuAn() {
                                         </button>
                                         <button
                                             className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                            onClick={() => handleDelete(project)}
+                                            onClick={() => handleDelete(project.id)}
                                         >
                                             Xóa
                                         </button>
@@ -114,8 +132,6 @@ export default function DuAn() {
                             </div>
                         </div>
                     ))}
-
-                    {/* Pagination Controls */}
                     <PgControl
                         currentPage={currentPage}
                         totalPages={totalPages}
@@ -124,6 +140,13 @@ export default function DuAn() {
                     />
                 </div>
             </div>
+            {isFormOpen && (
+                <ProjectForm
+                    project={formProject || undefined}
+                    onSubmit={handleSubmit}
+                    onClose={() => setIsFormOpen(false)}
+                />
+            )}
         </div>
     );
 }

@@ -1,98 +1,77 @@
 {
-    "title": "SEEE Hướng nghiên cứu",
-    "researchAreas": [
+  "title": "SEEE Hướng nghiên cứu",
+  "researchAreas": [
+    {
+      "name": "Lý thuyết điều khiển và ứng dụng",
+      "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
+      "relatedNews": [
         {
-            "name": "Lý thuyết điều khiển và ứng dụng",
-            "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
-            "relatedNews": [
-                {
-                    "id": 1,
-                    "title": "Thành tựu trong điều khiển tự động",
-                    "description": "Nghiên cứu và phát triển các phương pháp điều khiển tự động mới.",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "title": "Hội thảo về lý thuyết điều khiển",
-                    "description": "Tham gia hội thảo quốc tế về lý thuyết điều khiển.",
-                    "link": "#"
-                }
-            ]
+          "id": 1,
+          "title": "Thành tựu trong điều khiển tự động",
+          "description": "Nghiên cứu và phát triển các phương pháp điều khiển tự động mới.",
+          "link": "#"
         },
         {
-            "name": "Năng lượng điện",
-            "description": "Nghiên cứu về năng lượng điện bao gồm chuyển đổi, lưu trữ và phân phối năng lượng điện.",
-            "relatedNews": [
-                {
-                    "id": 1,
-                    "title": "Nghiên cứu về pin năng lượng",
-                    "description": "Phát triển công nghệ pin hiệu suất cao.",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "title": "Hội thảo về năng lượng xanh",
-                    "description": "Tham gia hội thảo quốc tế về năng lượng xanh.",
-                    "link": "#"
-                }
-            ]
-        },
-        {
-            "name": "Hệ thống điện và năng lượng",
-            "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
-            "relatedNews": [
-                {
-                    "id": 1,
-                    "title": "Dự án cải tiến hệ thống điện",
-                    "description": "Cải tiến hệ thống điện trong khu công nghiệp.",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "title": "Hội thảo về quản lý năng lượng",
-                    "description": "Tham gia hội thảo về quản lý năng lượng bền vững.",
-                    "link": "#"
-                }
-            ]
-        },
-        {
-            "name": "Lưới điện thông minh",
-            "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
-            "relatedNews": [
-                {
-                    "id": 1,
-                    "title": "Phát triển lưới điện thông minh",
-                    "description": "Các công nghệ mới cho lưới điện thông minh.",
-                    "link": "#"
-                },
-                {
-                    "id": 2,
-                    "title": "Hội thảo về lưới điện tương lai",
-                    "description": "Tham gia hội thảo về tương lai của lưới điện.",
-                    "link": "#"
-                }
-            ]
+          "id": 2,
+          "title": "Hội thảo về lý thuyết điều khiển",
+          "description": "Tham gia hội thảo quốc tế về lý thuyết điều khiển.",
+          "link": "#"
         }
-    ],
-    "description": "Nghiên cứu của CAP Group về Điện tử công suất bao gồm kiểm soát, chuyển đổi, truyền tải và thu thập năng lượng điện. Trọng tâm đặc biệt dành cho công nghệ DC điện áp cao và hệ thống truyền tải điện không dây.",
-    "relatedNews": [
+      ]
+    },
+    {
+      "name": "Năng lượng điện",
+      "description": "Nghiên cứu về năng lượng điện bao gồm chuyển đổi, lưu trữ và phân phối năng lượng điện.",
+      "relatedNews": [
         {
-            "id": 1,
-            "title": "Các thành tựu & giải thưởng của Phòng thí nghiệm",
-            "description": "ABCD",
-            "link": "#"
+          "id": 1,
+          "title": "Nghiên cứu về pin năng lượng",
+          "description": "Phát triển công nghệ pin hiệu suất cao.",
+          "link": "#"
         },
         {
-            "id": 2,
-            "title": "Thông báo về CFP của Hội nghị",
-            "description": "ABCD",
-            "link": "#"
-        },
-        {
-            "id": 3,
-            "title": "Tổng kết hoạt động tham gia Hội nghị & Giao lưu",
-            "description": "ABCD",
-            "link": "#"
+          "id": 2,
+          "title": "Hội thảo về năng lượng xanh",
+          "description": "Tham gia hội thảo quốc tế về năng lượng xanh.",
+          "link": "#"
         }
-    ]
+      ]
+    },
+    {
+      "name": "Hệ thống điện và năng lượng",
+      "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
+      "relatedNews": [
+        {
+          "id": 1,
+          "title": "Dự án cải tiến hệ thống điện",
+          "description": "Cải tiến hệ thống điện trong khu công nghiệp.",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "title": "Hội thảo về quản lý năng lượng",
+          "description": "Tham gia hội thảo về quản lý năng lượng bền vững.",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "name": "Lưới điện thông minh",
+      "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
+      "relatedNews": [
+        {
+          "id": 1,
+          "title": "Phát triển lưới điện thông minh",
+          "description": "Các công nghệ mới cho lưới điện thông minh.",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "title": "Hội thảo về lưới điện tương lai",
+          "description": "Tham gia hội thảo về tương lai của lưới điện.",
+          "link": "#"
+        }
+      ]
+    }
+  ]
 }

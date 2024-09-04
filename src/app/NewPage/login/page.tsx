@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
 
             const user = await response.json();
             localStorage.setItem('user', JSON.stringify(user));
-            router.push('/'); // Chuyển hướng về trang chính sau khi đăng nhập
+            router.push('/'); 
         } catch (err) {
             console.error('Lỗi khi đăng nhập:', err);
             setError('Đã xảy ra lỗi khi đăng nhập.');
