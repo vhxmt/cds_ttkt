@@ -7,6 +7,7 @@ import Breadcrumb from "@/components/breadcrumb";
 
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isAdmin, setIsAdmin] = useState(true); // Set this based on the actual user status
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -14,6 +15,21 @@ export default function TuyenDungPage() {
     // Access the correct structure from the imported data
     const { recruitmentData } = data;
     const { bannerSrc, description, positions } = recruitmentData;
+
+    const handleAdd = () => {
+        console.log("Thêm vị trí tuyển dụng");
+        // Add your add logic here
+    };
+
+    const handleEdit = (position: { title: string; description: string; requirements: string[] }) => {
+        console.log("Sửa vị trí tuyển dụng:", position);
+        // Add your edit logic here
+    };
+
+    const handleDelete = (position: { title: string; description: string; requirements: string[] }) => {
+        console.log("Xóa vị trí tuyển dụng:", position);
+        // Add your delete logic here
+    };
 
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
@@ -49,9 +65,22 @@ export default function TuyenDungPage() {
                     <div className="bg-white rounded-lg shadow-md p-4 mb-8">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Danh sách các vị trí tuyển dụng</h2>
 
+                        {/* Admin action buttons */}
+                        {isAdmin && (
+                            <div className="flex justify-between mb-4">
+                                <button
+                                    onClick={handleAdd}
+                                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+                                >
+                                    Thêm
+                                </button>
+                                {/* Additional actions here if needed */}
+                            </div>
+                        )}
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             {positions.map((position, index) => (
-                                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+                                <div key={index} className="bg-white rounded-lg shadow-md overflow-hidden relative">
                                     <Image
                                         src={position.imageSrc}
                                         alt={position.title}
@@ -76,6 +105,24 @@ export default function TuyenDungPage() {
                                         >
                                             Đăng ký ngay &gt;&gt;
                                         </button>
+
+                                        {/* Admin action buttons for each position */}
+                                        {isAdmin && (
+                                            <div className="absolute top-2 right-2 flex space-x-2">
+                                                <button
+                                                    onClick={() => handleEdit(position)}
+                                                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600"
+                                                >
+                                                    Sửa
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(position)}
+                                                    className="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             ))}

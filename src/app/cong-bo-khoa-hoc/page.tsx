@@ -1,12 +1,12 @@
-// src/app/cong-bo-khoa-hoc/page.tsx
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
 import Image from 'next/image';
 import SideMenu from '@/components/display-block/SideMenu';
-import data from '@/data/cong-bo-khoa-hoc/data.json';  // Import JSON data
+import data from '@/data/cong-bo-khoa-hoc/data.json';
+import {useAuth} from "@/components/providers/AuthProvider";  // Import JSON data
 
 // Define the types for the JSON data
 interface Article {
@@ -76,13 +76,29 @@ export default function CongBoKhoaHoc() {
         return true;
     });
 
+    // Simulate a check for admin status (you would replace this with actual authentication logic)
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
+
+    const handleAdd = () => {
+        console.log("Thêm bài báo mới");
+    };
+
+    const handleEdit = (id: number) => {
+        console.log("Sửa bài báo với ID:", id);
+    };
+
+    const handleDelete = (id: number) => {
+        console.log("Xóa bài báo với ID:", id);
+    };
+
     return (
         <div className="max-w-6xl mx-auto p-4">
             {/* Main Container */}
             <Breadcrumb/>
             <div className="flex space-x-4">
                 {/* Side Menu */}
-                <SideMenu  />
+                <SideMenu />
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
                     <div className="flex items-center mb-6">
@@ -168,6 +184,22 @@ export default function CongBoKhoaHoc() {
                                             {article.date}
                                         </p>
                                     </div>
+                                    {isAdmin && (
+                                        <div className="flex space-x-2 mt-2">
+                                            <button
+                                                className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+                                                onClick={() => handleEdit(article.id)}
+                                            >
+                                                Sửa
+                                            </button>
+                                            <button
+                                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                                                onClick={() => handleDelete(article.id)}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         ))}
@@ -180,9 +212,19 @@ export default function CongBoKhoaHoc() {
                         onNextPage={handleNextPage}
                         onPrevPage={handlePrevPage}
                     />
+
+                    {isAdmin && (
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                                onClick={handleAdd}
+                            >
+                                Thêm
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
     );
 }
-

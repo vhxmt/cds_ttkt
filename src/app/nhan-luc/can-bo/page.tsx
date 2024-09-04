@@ -1,4 +1,3 @@
-// src/pages/nhan-luc/can-bo/page.tsx
 "use client";
 
 import { useState } from 'react';
@@ -6,10 +5,10 @@ import UserInfo from '@/components/display-block/UserInfo';
 import Banner from '@/components/display-block/Banner';
 import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
-import data from '@/data/nhan-luc/can-bo/data.json'; // Import JSON as default export
+import data from '@/data/nhan-luc/can-bo/data.json';
 import Breadcrumb from '@/components/breadcrumb';
+import {useAuth} from "@/components/providers/AuthProvider";
 
-// Define types for your data
 interface Staff {
     name: string;
     title: string;
@@ -26,16 +25,14 @@ interface Data {
 export default function NewsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 5;
-
-    // Access the data from the imported JSON
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
     const { staffData }: Data = data;
 
-    // Calculate indices for pagination
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = staffData.slice(indexOfFirstItem, indexOfLastItem);
 
-    // Calculate total pages
     const totalPages = Math.ceil(staffData.length / itemsPerPage);
 
     const handleNextPage = () => {
@@ -50,32 +47,56 @@ export default function NewsPage() {
         }
     };
 
+    const handleAdd = () => {
+        console.log("Thêm cán bộ");
+    };
+
+    const handleEdit = (staff: Staff) => {
+        console.log("Sửa thông tin cán bộ:", staff);
+    };
+
+    const handleDelete = (staff: Staff) => {
+        console.log("Xóa cán bộ:", staff);
+    };
+
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Sidebar menu */}
                 <SideMenu currentSection="Nhân lực" />
 
-                {/* Main content */}
                 <div className="flex-1">
-                    {/* Banner */}
                     <Banner src="/banner.png" alt="Banner" />
+
+                    {/* Thêm nút "Thêm" ở đầu danh sách */}
+                    <div className="flex justify-end mb-4">
+                        {isAdmin && (
+                            <button
+                                className="ml-auto bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                                onClick={handleAdd}
+                            >
+                                Thêm
+                            </button>
+                        )}
+                    </div>
 
                     {/* Display currentItems */}
                     {currentItems.map((staff, index) => (
-                        <UserInfo
-                            key={index}
-                            name={staff.name}
-                            title={staff.title}
-                            mail={staff.mail}
-                            tel={staff.tel}
-                            imageUrl={staff.imageUrl}
-                        />
+                        <div key={index} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
+                            <UserInfo
+                                name={staff.name}
+                                title={staff.title}
+                                mail={staff.mail}
+                                tel={staff.tel}
+                                imageUrl={staff.imageUrl}
+                                onEdit={() => handleEdit(staff)}
+                                onDelete={() => handleDelete(staff)}
+                                isAdmin
+                            />
+                            {/* Thêm các nút Sửa và Xóa */}
+                        </div>
                     ))}
 
-                    {/* Pagination Controls */}
                     <PgControl
                         currentPage={currentPage}
                         totalPages={totalPages}

@@ -10,9 +10,12 @@ interface News {
 
 interface NewsListProps {
     news: News[];
+    isAdmin: boolean;
+    onEdit?: (item: News) => void;
+    onDelete?: (item: News) => void;
 }
 
-const NewsList: React.FC<NewsListProps> = ({ news }) => {
+const NewsList: React.FC<NewsListProps> = ({ news, isAdmin, onEdit, onDelete }) => {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
 
@@ -25,7 +28,15 @@ const NewsList: React.FC<NewsListProps> = ({ news }) => {
     return (
         <div className="mb-8">
             {paginatedNews.map((item, index) => (
-                <NewsItem key={index} imageSrc={item.imageSrc} title={item.title} date={item.date} />
+                <NewsItem
+                    key={index}
+                    imageSrc={item.imageSrc}
+                    title={item.title}
+                    date={item.date}
+                    isAdmin={isAdmin}
+                    onEdit={() => onEdit && onEdit(item)}
+                    onDelete={() => onDelete && onDelete(item)}
+                />
             ))}
             <div className="flex justify-center mt-6">
                 <div className="flex space-x-1">
