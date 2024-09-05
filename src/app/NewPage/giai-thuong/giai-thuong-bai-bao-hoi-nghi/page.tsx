@@ -1,6 +1,6 @@
 // src/app/giai-thuong/giai-thuong-khac/page.tsx
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
@@ -16,8 +16,6 @@ interface Award {
     achievement: string;
 }
 
-
-
 export default function BaiBaoKhac() {
     const [currentPage, setCurrentPage] = useState(1);
     const [awardData, setAwardData] = useState<Award[]>([]);
@@ -26,28 +24,29 @@ export default function BaiBaoKhac() {
     const itemsPerPage = 3;
 
     // Fetch the awards from the API
-    useEffect(() => {
-        const fetchAwards = async () => {
-            try {
-                const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
-                    method: 'GET',
-                });
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const data = await response.json();
-                console.log("Fetched awardData: ", data);  // Debugging log
-                setAwardData(data || []);  // Ensure it's an array
-            } catch (error) {
-                console.error('Failed to fetch awards:', error);
-                setIsError(true);  // Set error state
-            } finally {
-                setIsLoading(false);  // Set loading to false
+    const fetchAwards = useCallback(async () => {
+        setIsLoading(true); // Set loading state before fetching data
+        try {
+            const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
+                method: 'GET',
+            });
+            if (!response.ok) {
+                throw new Error('Failed to fetch data');
             }
-        };
+            const data = await response.json();
+            console.log("Fetched awardData: ", data);  // Debugging log
+            setAwardData(data || []);  // Ensure it's an array
+        } catch (error) {
+            console.error('Failed to fetch awards:', error);
+            setIsError(true);  // Set error state
+        } finally {
+            setIsLoading(false);  // Set loading to false
+        }
+    }, []); // Add an empty dependency array to ensure it doesn't recreate unnecessarily
 
+    useEffect(() => {
         fetchAwards();
-    }, []);
+    }, [fetchAwards]);
 
     // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
@@ -82,8 +81,7 @@ export default function BaiBaoKhac() {
             });
 
             if (response.ok) {
-                const addedAward = await response.json();
-                setAwardData([...awardData, addedAward]);
+                await fetchAwards();  // Refetch the data after successfully adding a new award
             } else {
                 console.error('Failed to add award:', await response.json());
             }
@@ -105,9 +103,7 @@ export default function BaiBaoKhac() {
             });
 
             if (response.ok) {
-                setAwardData((prev) =>
-                    prev.map((item) => (item.year === award.year ? updatedAward : item))
-                );
+                await fetchAwards();  // Refetch the data after successfully editing an award
             }
         } catch (error) {
             console.error('Failed to update award:', error);
@@ -121,7 +117,7 @@ export default function BaiBaoKhac() {
             });
 
             if (response.ok) {
-                setAwardData(awardData.filter((item) => item.year !== award.year));
+                await fetchAwards();  // Refetch the data after successfully deleting an award
             }
         } catch (error) {
             console.error('Failed to delete award:', error);
