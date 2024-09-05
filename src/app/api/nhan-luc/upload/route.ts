@@ -1,8 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
-import formidable from 'formidable';
+import { IncomingForm, Fields, Files } from 'formidable';
 import { IncomingMessage } from 'http';
+import { Readable } from 'stream';
 
 // Path to the directory where uploaded files will be saved
 const uploadDir = path.join(process.cwd(), 'public/image/nhan-luc/can-bo');
@@ -12,16 +13,33 @@ if (!fs.existsSync(uploadDir)) {
     fs.mkdirSync(uploadDir, { recursive: true });
 }
 
-// Formidable options
-const form = new formidable.IncomingForm({
-    uploadDir,
-    keepExtensions: true, // Keep file extensions
-    filename: (name, ext, part, form) => `${Date.now()}_${part.originalFilename}`
-});
+// Helper function to convert NextRequest to a Node.js-readable stream (IncomingMessage-like)
+async function nextRequestToIncomingMessage(req: NextRequest): Promise<IncomingMessage> {
+    const readable = new Readable();
+    readable._read = () => {}; // No-op
+    readable.push(Buffer.from(await req.arrayBuffer()));
+    readable.push(null);
+
+    // Cast the readable stream to IncomingMessage
+    (readable as any).headers = Object.fromEntries(req.headers);
+    (readable as any).method = req.method;
+    (readable as any).url = req.url;
+
+    return readable as unknown as IncomingMessage;
+}
 
 export async function POST(req: NextRequest) {
+    const form = new IncomingForm({
+        uploadDir,
+        keepExtensions: true, // Keep file extensions
+        filename: (name, ext, part, form) => `${Date.now()}_${part.originalFilename}`
+    });
+
+    // Convert NextRequest to IncomingMessage
+    const incomingMessage = await nextRequestToIncomingMessage(req);
+
     return new Promise<NextResponse>((resolve, reject) => {
-        form.parse(req as unknown as IncomingMessage, (err, fields, files) => {
+        form.parse(incomingMessage, (err: Error, fields: Fields, files: Files) => {
             if (err) {
                 return reject(NextResponse.json({ message: 'Failed to upload image' }, { status: 500 }));
             }
