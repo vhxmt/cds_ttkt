@@ -1,0 +1,107 @@
+{
+  "title": "SEEE Hướng nghiên cứu",
+  "researchAreas": [
+    {
+      "name": "Updated Research Area",
+      "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
+      "relatedNews": [
+        {
+          "id": 2,
+          "title": "Hội thảo về lý thuyết điều khiển",
+          "description": "Tham gia hội thảo quốc tế về lý thuyết điều khiển.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "name": "Updated Research Area",
+      "description": "Nghiên cứu về năng lượng điện bao gồm chuyển đổi, lưu trữ và phân phối năng lượng điện.",
+      "relatedNews": [
+        {
+          "id": 1,
+          "title": "Nghiên cứu về pin năng lượng",
+          "description": "Phát triển công nghệ pin hiệu suất cao.",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "title": "Hội thảo về năng lượng xanh",
+          "description": "Tham gia hội thảo quốc tế về năng lượng xanh.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "name": "Hệ thống điện và năng lượng",
+      "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
+      "relatedNews": [
+        {
+          "id": 1,
+          "title": "Dự án cải tiến hệ thống điện",
+          "description": "Cải tiến hệ thống điện trong khu công nghiệp.",
+          "link": "#"
+        },
+        {
+          "id": 2,
+          "title": "Hội thảo về quản lý năng lượng",
+          "description": "Tham gia hội thảo về quản lý năng lượng bền vững.",
+          "link": "#"
+        }
+      ]
+    },
+    {
+      "name": "Lưới điện thông minh",
+      "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
+      "relatedNews": [
+        {
+          "id": 2,
+          "title": "Hội thảo về lưới điện tương lai",
+          "description": "Tham gia hội thảo về tương lai của lưới điện.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 5,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        }
+      ]
+    }
+  ]
+}

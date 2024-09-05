@@ -1,0 +1,184 @@
+'use client'
+import Image from 'next/image';
+import SideMenu from '@/components/display-block/SideMenu';
+import Breadcrumb from '@/components/breadcrumb';
+import eventData from '@/data/tin-tuc-su-kien/su-kien/su-kien-thuong-nien.json';
+import {useAuth} from "@/components/providers/AuthProvider";
+
+// Destructure the imported JSON
+const { eventDetails, eventInfo, schedule } = eventData;
+
+export default function NewsPage() {
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
+
+    const handleAdd = () => {
+        // Xử lý logic khi người dùng muốn thêm sự kiện
+        console.log("Add new event");
+    };
+
+    const handleEdit = (eventTitle: string) => {
+        // Xử lý logic khi người dùng muốn sửa sự kiện
+        console.log("Edit event:", eventTitle);
+    };
+
+    const handleDelete = (eventTitle: string) => {
+        // Xử lý logic khi người dùng muốn xóa sự kiện
+        console.log("Delete event:", eventTitle);
+    };
+
+    return (
+        <div className="max-w-6xl mx-auto p-4 mt-6">
+            {/* Breadcrumb */}
+            <Breadcrumb />
+            <div className="flex space-x-4">
+                {/* Side Menu */}
+                <SideMenu currentSection="Tin tức/Sự kiện" />
+
+                {/* Container chứa nội dung sự kiện */}
+                <div className="flex-1">
+                    <h2 className="text-2xl font-bold mb-4 font-inter mt-4 mb-10 text-center">
+                        {eventDetails.title}
+                    </h2>
+                    <div className="mb-4 text-center mb-20">
+                        <Image
+                            src="/su-kien-thuong-nien.jpg"
+                            alt={eventDetails.title}
+                            width={1200}
+                            height={400}
+                            className="w-full h-auto rounded-lg object-cover"
+                        />
+                    </div>
+                    <p className="text-lg mb-4 font-inter text-center font-bold">
+                        {eventDetails.date}
+                    </p>
+                    <p className="text-lg mb-4 font-inter text-center font-bold">
+                        {eventDetails.location}
+                    </p>
+                    <p className="text-lg mb-4 font-inter text-center mt-20 mb-20">
+                        {eventDetails.registrationNote}
+                    </p>
+
+                    {/* Phần nội dung mới */}
+                    <div className="mt-20">
+                        <p className="text-lg mb-20 text-center">
+                            Hội nghị tổng kết hàng năm của trường Điện - Điện tử là một sự kiện diễn ra trong 2 ngày hằng năm dành cho các thành viên của trường, bao gồm các bài thuyết trình về nghiên cứu đang diễn ra, các buổi hướng dẫn của giảng viên trường Điện - Điện tử, tham quan các phòng lab, và thuyết trình poster của sinh viên, cũng như nhiều cơ hội kết nối mở rộng.
+                        </p>
+                        <div className="mt-8 p-4 bg-red-700 text-center rounded-lg">
+                            <div className="bg-red-700 text-white p-6 rounded-lg w-[80%] mx-auto">
+                                <h3 className="text-3xl font-bold mt-5 mb-10">
+                                    Chào mừng đến với Hội nghị tổng kết thường niên năm 2024!
+                                </h3>
+                                <p className="text-l mb-20">
+                                    Hãy xem lại thời gian biểu các bài thuyết trình do giảng viên và sinh viên trình bày, sau đó là phiên thảo luận dự án nghiên cứu “Phòng thí nghiệm” từ đánh giá thường niên năm 2024.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-between space-x-4">
+                            {/* Sinh ra các ô cho từng phần sự kiện */}
+                            {Object.keys(eventInfo).map((key, index) => (
+                                <div key={index} className="bg-white text-black p-6 rounded-lg w-[48%]">
+                                    <div className="relative w-full h-80 mb-4">
+                                        <Image
+                                            src={eventInfo[key as keyof typeof eventInfo].imageSrc}
+                                            alt={eventInfo[key as keyof typeof eventInfo].imageAlt}
+                                            width={800}
+                                            height={400}
+                                            className="rounded-lg object-cover"
+                                        />
+                                    </div>
+                                    <h3 className="text-lg font-bold mb-4">{eventInfo[key as keyof typeof eventInfo].title}</h3>
+                                    <ul className="list-disc pl-5 text-left">
+                                        {eventInfo[key as keyof typeof eventInfo].details.map((detail, detailIndex) => (
+                                            <li key={detailIndex}>{detail}</li>
+                                        ))}
+                                    </ul>
+
+                                    {isAdmin && (
+                                        <div className="mt-4 flex space-x-2">
+                                            <button
+                                                onClick={() => handleEdit(eventInfo[key as keyof typeof eventInfo].title)}
+                                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                            >
+                                                Sửa
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(eventInfo[key as keyof typeof eventInfo].title)}
+                                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        <p className="text-lg mt-20 text-center font-bold">
+                            Lịch trình 2024
+                        </p>
+
+                        <div className="flex justify-between space-x-4 mt-8">
+                            {/* Sinh ra các ô cho từng ngày */}
+                            {Object.keys(schedule).map((day, dayIndex) => (
+                                <div key={dayIndex} className="bg-white text-black p-6 rounded-lg w-[48%] border border-gray-300">
+                                    <h4 className="bg-red-700 text-white text-lg font-bold mb-4 rounded-lg p-4">
+                                        Ngày {schedule[day as keyof typeof schedule].date}
+                                    </h4>
+                                    <ul className="list-disc pl-5">
+                                        {schedule[day as keyof typeof schedule].sessions.map((session, sessionIndex) => (
+                                            <li key={sessionIndex} className="mb-4">
+                                                <strong>{session.time}:</strong> {session.title} - {session.speaker}
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    {isAdmin && (
+                                        <div className="mt-4 flex space-x-2">
+                                            <button
+                                                onClick={() => handleEdit(schedule[day as keyof typeof schedule].date)}
+                                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                            >
+                                                Sửa
+                                            </button>
+                                            <button
+                                                onClick={() => handleDelete(schedule[day as keyof typeof schedule].date)}
+                                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+
+                        <div className="mt-8 p-6 rounded-lg text-center">
+                            <div className="relative">
+                                <Image
+                                    src="/banner-su-kien-thuong-nien.png"
+                                    alt="Banner sự kiện"
+                                    width={1200}
+                                    height={400}
+                                    className="rounded-lg object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+
+                    {/*{isAdmin && (*/}
+                    {/*    <div className="mt-6 flex justify-center">*/}
+                    {/*        <button*/}
+                    {/*            onClick={handleAdd}*/}
+                    {/*            className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"*/}
+                    {/*        >*/}
+                    {/*            Thêm sự kiện mới*/}
+                    {/*        </button>*/}
+                    {/*    </div>*/}
+                    {/*)}*/}
+                </div>
+            </div>
+        </div>
+    );
+}

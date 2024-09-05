@@ -1,0 +1,116 @@
+{
+  "staffData": [
+    {
+      "id": "2024-09-05T04:58:39.967Z",
+      "name": "TS. Nguyễn Vũ Thanh",
+      "title": "Trưởng khoa Điện",
+      "mail": "email1@example.com",
+      "tel": "123-456-789",
+      "imageUrl": "/image/nhan-luc/can-bo/Screenshot 2024-09-05 110557.jpg"
+    },
+    {
+      "id": "2024-09-05T04:58:59.967Z",
+      "name": "TS. Nguyễn Quốc Minh",
+      "title": "Phó trưởng khoa Điện",
+      "mail": "email3@example.com",
+      "tel": "555-555-555",
+      "imageUrl": "/image/nhan-luc/can-bo/1725548560900_TRINH_Phu_Quang.jpg"
+    },
+    {
+      "id": "2024-09-05T05:58:19.967Z",
+      "name": "TS. Trần Văn Tài",
+      "title": "Giảng viên",
+      "mail": "email4@example.com",
+      "tel": "111-222-333",
+      "imageUrl": "/image/nhan-luc/can-bo/559be0ae5c458ee554f5d3a00.jpg"
+    },
+    {
+      "id": "2024-09-05T54:58:39.967Z",
+      "name": "TS. Lê Thị Hồng",
+      "title": "Giảng viên",
+      "mail": "email5@example.com",
+      "tel": "444-555-666",
+      "imageUrl": "/path-to-image-5.png"
+    },
+    {
+      "id": "2024-09-55T04:58:39.967Z",
+      "name": "TS. Vũ Quang Minh",
+      "title": "Giảng viên",
+      "mail": "email6@example.com",
+      "tel": "777-888-999",
+      "imageUrl": "/path-to-image-6.png"
+    },
+    {
+      "id": "2024-09-05T04:51:39.967Z",
+      "name": "TS. Đặng Thị Hà",
+      "title": "Giảng viên",
+      "mail": "email7@example.com",
+      "tel": "000-111-222",
+      "imageUrl": "/path-to-image-7.png"
+    },
+    {
+      "id": "2024-09-05T04:52:39.967Z",
+      "name": "TS. Nguyễn Hữu Thắng",
+      "title": "Phó Trưởng phòng",
+      "mail": "email8@example.com",
+      "tel": "333-444-555",
+      "imageUrl": "/path-to-image-8.png"
+    },
+    {
+      "id": "2024-09-05T04:53:39.967Z",
+      "name": "TS. Lê Anh Tuấn",
+      "title": "Trưởng bộ môn",
+      "mail": "email9@example.com",
+      "tel": "666-777-888",
+      "imageUrl": "/path-to-image-9.png"
+    },
+    {
+      "id": "2023-09-05T04:58:39.967Z",
+      "name": "TS. Phạm Thị Lan",
+      "title": "Giảng viên",
+      "mail": "email10@example.com",
+      "tel": "999-000-111",
+      "imageUrl": "/path-to-image-10.png"
+    },
+    {
+      "id": "2004-09-05T04:58:39.967Z",
+      "name": "TS. Vũ Thị Thu",
+      "title": "Giảng viên",
+      "mail": "email11@example.com",
+      "tel": "222-333-444",
+      "imageUrl": "/path-to-image-11.png"
+    },
+    {
+      "id": "2024-08-05T04:58:39.967Z",
+      "name": "TS. Phan Quốc Việt",
+      "title": "Giảng viên",
+      "mail": "email12@example.com",
+      "tel": "555-666-777",
+      "imageUrl": "/path-to-image-12.png"
+    },
+    {
+      "id": "2024-07-05T04:58:39.967Z",
+      "name": "TS. Trần Văn Nam",
+      "title": "Giảng viên",
+      "mail": "email13@example.com",
+      "tel": "888-999-000",
+      "imageUrl": "/path-to-image-13.png"
+    },
+    {
+      "id": "2024-10-05T04:58:39.967Z",
+      "name": "New Staff",
+      "title": "New Title",
+      "mail": "new.email@example.com",
+      "tel": "000-000-000",
+      "imageUrl": "/path-to-new-image.png"
+    },
+    {
+      "id": "2024-09-05T11:06:22.097Z",
+      "name": "àdadfa",
+      "title": "adfadf",
+      "mail": "agh@xcv",
+      "tel": "12312312312",
+      "imageUrl": "/path-to-default-image.png"
+    }
+  ]
+}

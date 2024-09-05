@@ -7,7 +7,7 @@ export default function convertClassName(className: string) {
         case 'link':
             return 'text-[#BD1E1E] hover:underline';
         case 'text':
-            return 'text-red-600 text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]';
+            return 'text-l mb-4 font-inter font-bold text-[14px] text-[#BD1E1E]';
         case 'list':
             return 'list-disc pl-5 mt-2 text-[13px] text-[#BD1E1E]';
         case 'listItem':
