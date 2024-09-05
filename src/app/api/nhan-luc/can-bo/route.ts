@@ -36,19 +36,37 @@ export async function GET(req: NextRequest) {
 
 // POST: Add a new staff member
 export async function POST(req: NextRequest) {
-    const body = await req.json();
-    const newStaff: Staff = body;
+    try {
+        const body = await req.json();
+        const newStaff: Staff = body;
 
-    // Validate the required fields
-    if (!newStaff.name || !newStaff.title || !newStaff.mail || !newStaff.tel || !newStaff.imageUrl) {
-        return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        // Validate the required fields
+        if (!newStaff.name || !newStaff.title || !newStaff.mail || !newStaff.tel) {
+            console.error('Validation failed: Missing required fields', newStaff);
+            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        }
+
+        // Generate ID based on the current date and time
+        newStaff.id = new Date().toISOString();
+
+        // Ensure imageUrl is set or use a default placeholder image
+        newStaff.imageUrl = newStaff.imageUrl || '/path-to-default-image.png';
+
+        // Read the existing staff data
+        const staffData = readData();
+
+        // Add the new staff member
+        staffData.push(newStaff);
+
+        // Write the updated staff data back to the file
+        writeData(staffData);
+
+        // Return a success response with the newly added staff data
+        return NextResponse.json(newStaff, { status: 201 });
+    } catch (error) {
+        console.error('Error processing POST request:', error);
+        return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
-
-    const staffData = readData();
-    staffData.push(newStaff);
-    writeData(staffData);
-
-    return NextResponse.json({ message: 'Staff added successfully', staff: newStaff }, { status: 201 });
 }
 
 // PUT: Update an existing staff member's information
