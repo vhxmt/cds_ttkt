@@ -56,7 +56,7 @@ export default function NewsPage() {
                 const formData = new FormData();
                 formData.append('file', imageFile);
 
-                const uploadResponse = await fetch('/api/nhan-luc/upload', {
+                const uploadResponse = await fetch('/api/nhan-luc/can-bo/upload', {
                     method: 'POST',
                     body: formData,
                 });
