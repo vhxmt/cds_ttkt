@@ -6,7 +6,7 @@ import UserInfo from '@/components/display-block/UserInfo';
 import Banner from '@/components/display-block/Banner';
 import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
-import { staffData } from '@/data/nhan-luc/can-bo/data.json';
+import { staffData } from '@/data/nhan-luc/sinh-vien-thac-si/data.json';
 import Breadcrumb from '@/components/breadcrumb';
 import {useAuth} from "@/components/providers/AuthProvider";
 

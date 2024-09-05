@@ -1,4 +1,3 @@
-// src/components/ToolTwoCol.tsx
 import React from 'react';
 
 interface Tool {
@@ -53,7 +52,7 @@ const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools = [], isAdmin, onAdd, onE
             ))}
 
             {isAdmin && onAdd && (
-                <div className="flex justify-center mt-4">
+                <div className="col-span-2 flex justify-center mt-4">
                     <button
                         onClick={onAdd}
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
