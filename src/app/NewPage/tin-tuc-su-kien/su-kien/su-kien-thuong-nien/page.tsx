@@ -27,6 +27,14 @@ export default function NewsPage() {
         console.log("Delete event:", eventTitle);
     };
 
+    function handleDeleteBoth() {
+
+    }
+
+    function handleEditBoth() {
+
+    }
+
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
             {/* Breadcrumb */}
@@ -59,7 +67,24 @@ export default function NewsPage() {
                         {eventDetails.registrationNote}
                     </p>
 
-                    {/* Phần nội dung mới */}
+                    {/* Thêm nút Sửa và Xóa cho phần nội dung trên */}
+                    {isAdmin && (
+                        <div className="flex justify-center space-x-2 mb-6">
+                            <button
+                                onClick={() => handleEdit(eventDetails.title)}
+                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            >
+                                Sửa
+                            </button>
+                            <button
+                                onClick={() => handleDelete(eventDetails.title)}
+                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                            >
+                                Xóa
+                            </button>
+                        </div>
+                    )}
+
                     <div className="mt-20">
                         <p className="text-lg mb-20 text-center">
                             Hội nghị tổng kết hàng năm của trường Điện - Điện tử là một sự kiện diễn ra trong 2 ngày hằng năm dành cho các thành viên của trường, bao gồm các bài thuyết trình về nghiên cứu đang diễn ra, các buổi hướng dẫn của giảng viên trường Điện - Điện tử, tham quan các phòng lab, và thuyết trình poster của sinh viên, cũng như nhiều cơ hội kết nối mở rộng.
@@ -72,48 +97,66 @@ export default function NewsPage() {
                                 <p className="text-l mb-20">
                                     Hãy xem lại thời gian biểu các bài thuyết trình do giảng viên và sinh viên trình bày, sau đó là phiên thảo luận dự án nghiên cứu “Phòng thí nghiệm” từ đánh giá thường niên năm 2024.
                                 </p>
+                                {isAdmin && (
+                                    <div className="flex justify-center space-x-2 mb-6">
+                                        <button
+                                            onClick={() => handleEdit(eventDetails.title)}
+                                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                        >
+                                            Sửa
+                                        </button>
+                                        <button
+                                            onClick={() => handleDelete(eventDetails.title)}
+                                            className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                        >
+                                            Xóa
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
-
-                        <div className="flex justify-between space-x-4">
-                            {/* Sinh ra các ô cho từng phần sự kiện */}
-                            {Object.keys(eventInfo).map((key, index) => (
-                                <div key={index} className="bg-white text-black p-6 rounded-lg w-[48%]">
-                                    <div className="relative w-full h-80 mb-4">
-                                        <Image
-                                            src={eventInfo[key as keyof typeof eventInfo].imageSrc}
-                                            alt={eventInfo[key as keyof typeof eventInfo].imageAlt}
-                                            width={800}
-                                            height={400}
-                                            className="rounded-lg object-cover"
-                                        />
-                                    </div>
-                                    <h3 className="text-lg font-bold mb-4">{eventInfo[key as keyof typeof eventInfo].title}</h3>
-                                    <ul className="list-disc pl-5 text-left">
-                                        {eventInfo[key as keyof typeof eventInfo].details.map((detail, detailIndex) => (
-                                            <li key={detailIndex}>{detail}</li>
-                                        ))}
-                                    </ul>
-
-                                    {isAdmin && (
-                                        <div className="mt-4 flex space-x-2">
-                                            <button
-                                                onClick={() => handleEdit(eventInfo[key as keyof typeof eventInfo].title)}
-                                                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                                            >
-                                                Sửa
-                                            </button>
-                                            <button
-                                                onClick={() => handleDelete(eventInfo[key as keyof typeof eventInfo].title)}
-                                                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-                                            >
-                                                Xóa
-                                            </button>
+                        <div className="bg-white text-black p-6 rounded-lg w-full">
+                            {/* Gộp hai ô nội dung thành một phần */}
+                            <div className="flex justify-between space-x-4">
+                                {Object.keys(eventInfo).map((key, index) => (
+                                    <div key={index} className="w-[48%]">
+                                        <div className="relative w-full h-80 mb-8">
+                                            <Image
+                                                src={eventInfo[key as keyof typeof eventInfo].imageSrc}
+                                                alt={eventInfo[key as keyof typeof eventInfo].imageAlt}
+                                                width={800}
+                                                height={400}
+                                                className="rounded-lg object-cover"
+                                            />
                                         </div>
-                                    )}
+                                        <h3 className="text-lg font-bold mb-4">{eventInfo[key as keyof typeof eventInfo].title}</h3>
+                                        <ul className="list-disc pl-5 text-left">
+                                            {eventInfo[key as keyof typeof eventInfo].details.map((detail, detailIndex) => (
+                                                <li key={detailIndex}>{detail}</li>
+                                            ))}
+                                        </ul>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {isAdmin && (
+                                <div className="mt-4 flex justify-center space-x-2">
+                                    <button
+                                        onClick={() => handleEditBoth()}
+                                        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                                    >
+                                        Sửa
+                                    </button>
+                                    <button
+                                        onClick={() => handleDeleteBoth()}
+                                        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+                                    >
+                                        Xóa
+                                    </button>
                                 </div>
-                            ))}
+                            )}
                         </div>
+
 
                         <p className="text-lg mt-20 text-center font-bold">
                             Lịch trình 2024
@@ -153,30 +196,7 @@ export default function NewsPage() {
                                 </div>
                             ))}
                         </div>
-
-                        <div className="mt-8 p-6 rounded-lg text-center">
-                            <div className="relative">
-                                <Image
-                                    src="/banner-su-kien-thuong-nien.png"
-                                    alt="Banner sự kiện"
-                                    width={1200}
-                                    height={400}
-                                    className="rounded-lg object-cover"
-                                />
-                            </div>
-                        </div>
                     </div>
-
-                    {/*{isAdmin && (*/}
-                    {/*    <div className="mt-6 flex justify-center">*/}
-                    {/*        <button*/}
-                    {/*            onClick={handleAdd}*/}
-                    {/*            className="px-6 py-2 bg-green-500 text-white rounded hover:bg-green-600"*/}
-                    {/*        >*/}
-                    {/*            Thêm sự kiện mới*/}
-                    {/*        </button>*/}
-                    {/*    </div>*/}
-                    {/*)}*/}
                 </div>
             </div>
         </div>
