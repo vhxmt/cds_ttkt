@@ -1,14 +1,12 @@
 // src/app/giai-thuong/giai-thuong-khac/page.tsx
-// src/app/giai-thuong/giai-thuong-khac/page.tsx
-'use client'
-import { useState } from 'react';
+'use client';
+import { useState, useEffect } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
 import TableHeader from '@/components/display-block/TableHeader';
 import TableRow from '@/components/display-block/TableRow';
-import data from '@/data/giai-thuong/giai-thuong-bai-bao-hoi-nghi/data.json';
-import {useAuth} from "@/components/providers/AuthProvider";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 interface Award {
     recipients: string;
@@ -18,100 +16,173 @@ interface Award {
     achievement: string;
 }
 
-interface AwardData {
-    awardData: Award[];
-}
+
 
 export default function BaiBaoKhac() {
     const [currentPage, setCurrentPage] = useState(1);
+    const [awardData, setAwardData] = useState<Award[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
+    const [isError, setIsError] = useState(false);
     const itemsPerPage = 3;
 
-    // Access the data from the imported JSON
-    const { awardData }: AwardData = data;
+    // Fetch the awards from the API
+    useEffect(() => {
+        const fetchAwards = async () => {
+            try {
+                const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
+                    method: 'GET',
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
+                }
+                const data = await response.json();
+                console.log("Fetched awardData: ", data);  // Debugging log
+                setAwardData(data || []);  // Ensure it's an array
+            } catch (error) {
+                console.error('Failed to fetch awards:', error);
+                setIsError(true);  // Set error state
+            } finally {
+                setIsLoading(false);  // Set loading to false
+            }
+        };
 
-    // Calculate indices for pagination
+        fetchAwards();
+    }, []);
+
+    // Pagination logic
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = awardData.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Calculate total pages
     const totalPages = Math.ceil(awardData.length / itemsPerPage);
 
     const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
-        }
+        if (currentPage < totalPages) setCurrentPage(currentPage + 1);
     };
 
     const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
+        if (currentPage > 1) setCurrentPage(currentPage - 1);
+    };
+
+    const handleAdd = async () => {
+        const newAward: Award = {
+            recipients: "New Recipient",
+            award: "New Award",
+            organization: "New Organization",
+            year: 2024,
+            achievement: "New Achievement",
+        };
+
+        try {
+            const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newAward),
+            });
+
+            if (response.ok) {
+                const addedAward = await response.json();
+                setAwardData([...awardData, addedAward]);
+            } else {
+                console.error('Failed to add award:', await response.json());
+            }
+        } catch (error) {
+            console.error('Failed to add award:', error);
         }
     };
-    const handleAdd = () => {
-        console.log("Thêm cán bộ");
-    };
-    const handleEdit = (index: Award) => {
-        console.log("Sửa lĩnh vực nghiên cứu tại vị trí:", index);
+
+    const handleEdit = async (award: Award) => {
+        const updatedAward: Award = { ...award, recipients: 'Updated Recipient' };
+
+        try {
+            const response = await fetch(`/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?year=${award.year}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(updatedAward),
+            });
+
+            if (response.ok) {
+                setAwardData((prev) =>
+                    prev.map((item) => (item.year === award.year ? updatedAward : item))
+                );
+            }
+        } catch (error) {
+            console.error('Failed to update award:', error);
+        }
     };
 
-    const handleDelete = (index: Award) => {
-        console.log("Xóa lĩnh vực nghiên cứu tại vị trí:", index);
-    };
-    // Define table headers and columns
-    const headers = [
-        'Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích','Thao tác'
-    ];
+    const handleDelete = async (award: Award) => {
+        try {
+            const response = await fetch(`/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?year=${award.year}`, {
+                method: 'DELETE',
+            });
 
-    const columns = [
-        'recipients', 'award', 'organization', 'year', 'achievement',
-    ];
+            if (response.ok) {
+                setAwardData(awardData.filter((item) => item.year !== award.year));
+            }
+        } catch (error) {
+            console.error('Failed to delete award:', error);
+        }
+    };
+
+    const headers = ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích', 'Thao tác'];
+    const columns = ['recipients', 'award', 'organization', 'year', 'achievement'];
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
+
+    if (isLoading) {
+        return <p>Loading data...</p>;
+    }
+
+    if (isError) {
+        return <p>Failed to load data. Please try again later.</p>;
+    }
+
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Side Menu */}
                 <SideMenu currentSection="Giải thưởng" />
-
                 <div className="w-3/4 p-4 border-l border-gray-300">
-
                     <h3 className="text-xl font-semibold mb-2 text-center">Giải thưởng Bài báo Hội nghị</h3>
+
                     <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                         <thead>
-                        <TableHeader headers={headers} />
+                            <TableHeader headers={headers} />
                         </thead>
                         <tbody>
-                            {currentItems.map((item, index) => (
-                                <TableRow
-                                    key={index}
-                                    rowData={item}
-                                    columns={columns}
-                                    onEdit={() => handleEdit(item)}
-                                    onDelete={() => handleDelete(item)}
-                                />
-                            ))}
+                            {currentItems.length > 0 ? (
+                                currentItems.map((item, index) => (
+                                    <TableRow
+                                        key={index}
+                                        rowData={item}
+                                        columns={columns}
+                                        onEdit={() => handleEdit(item)}
+                                        onDelete={() => handleDelete(item)}
+                                    />
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={headers.length} className="text-center">
+                                        No awards found.
+                                    </td>
+                                </tr>
+                            )}
                         </tbody>
                     </table>
+
                     {isAdmin && (
                         <div className="mb-4 mt-4">
-                            <button
-                                onClick={handleAdd}
-                                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                            >
-                                Thêm
+                            <button onClick={handleAdd} className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+                                Thêm giải thưởng
                             </button>
                         </div>
                     )}
-                    {/* Pagination Controls */}
-                    <PgControl
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onNextPage={handleNextPage}
-                        onPrevPage={handlePrevPage}
-                    />
+
+                    <PgControl currentPage={currentPage} totalPages={totalPages} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
                 </div>
             </div>
         </div>
