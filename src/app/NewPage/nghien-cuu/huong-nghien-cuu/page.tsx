@@ -61,7 +61,7 @@ export default function HuongNghienCuu() {
         setSelectedAreaIndex(index);
     };
 
-    const handleAdd = async () => {
+    const handleAddResearchAreas = async () => {
         const newArea = {
             name: "New Research Area",
             description: "Description of new research area",
@@ -112,7 +112,7 @@ export default function HuongNghienCuu() {
         }
     };
 
-    const handleDelete = async (index: number) => {
+    const handleDeleteResearchAreas = async (index: number) => {
         const areaName = researchAreas[index].name;
 
         try {
@@ -140,19 +140,21 @@ export default function HuongNghienCuu() {
     };
 
     const handleDeleteNews = async (id: number) => {
-        const areaName = selectedArea.name;
-
+        const areaName = selectedArea.name; // Get the name of the currently selected area
+    
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName, newsId: id }),
+                body: JSON.stringify({ areaName, newsId: id }), // Send the correct area name and news ID
             });
-
+    
             if (response.ok) {
-                await fetchData(); // Refetch data after deleting the news
+                await fetchData(); // Refetch the data after deleting the news
+                // Ensure the currently selected area remains selected after data refresh
+                setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
             } else {
                 console.error('Failed to delete news:', response.statusText);
             }
@@ -163,25 +165,27 @@ export default function HuongNghienCuu() {
 
     const handleAddNews = async () => {
         const newNews = {
-            id: Math.max(...(selectedArea.relatedNews?.map(news => news.id) || [0]), 0) + 1, // Generate a new ID
+            id: Math.max(...(selectedArea.relatedNews?.map(news => news.id) || [0]), 0) + 1,
             title: "New Related News",
             description: "Description of the new related news",
             link: "#",
         };
-
-        const areaName = selectedArea.name;
-
+    
+        const areaName = selectedArea.name; // Get the name of the currently selected area
+    
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ type: 'news', areaName, news: newNews }),
+                body: JSON.stringify({ type: 'news', areaName, news: newNews }), // Send the correct area name
             });
-
+    
             if (response.ok) {
-                await fetchData(); // Refetch data after adding new news
+                await fetchData(); // Refetch the data after adding the news
+                // Ensure the currently selected area remains selected after data refresh
+                setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
             } else {
                 console.error('Failed to add new news:', response.statusText);
             }
@@ -201,7 +205,7 @@ export default function HuongNghienCuu() {
                         <div className="flex justify-end mb-4">
                             <button
                                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                                onClick={handleAdd}
+                                onClick={handleAddResearchAreas}
                             >
                                 Thêm hướng nghiên cứu
                             </button>
@@ -227,7 +231,7 @@ export default function HuongNghienCuu() {
                                         </button>
                                         <button
                                             className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                            onClick={() => handleDelete(index)}
+                                            onClick={() => handleDeleteResearchAreas(index)}
                                         >
                                             Xóa
                                         </button>

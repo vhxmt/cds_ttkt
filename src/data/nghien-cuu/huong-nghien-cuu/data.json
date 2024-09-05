@@ -6,15 +6,21 @@
       "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
       "relatedNews": [
         {
-          "id": 1,
-          "title": "Thành tựu trong điều khiển tự động",
-          "description": "Nghiên cứu và phát triển các phương pháp điều khiển tự động mới.",
-          "link": "#"
-        },
-        {
           "id": 2,
           "title": "Hội thảo về lý thuyết điều khiển",
           "description": "Tham gia hội thảo quốc tế về lý thuyết điều khiển.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
           "link": "#"
         }
       ]
@@ -33,6 +39,24 @@
           "id": 2,
           "title": "Hội thảo về năng lượng xanh",
           "description": "Tham gia hội thảo quốc tế về năng lượng xanh.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 5,
+          "title": "New Related News",
+          "description": "Description of the new related news",
           "link": "#"
         }
       ]
@@ -60,15 +84,27 @@
       "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
       "relatedNews": [
         {
-          "id": 1,
-          "title": "Phát triển lưới điện thông minh",
-          "description": "Các công nghệ mới cho lưới điện thông minh.",
-          "link": "#"
-        },
-        {
           "id": 2,
           "title": "Hội thảo về lưới điện tương lai",
           "description": "Tham gia hội thảo về tương lai của lưới điện.",
+          "link": "#"
+        },
+        {
+          "id": 3,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 4,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        },
+        {
+          "id": 5,
+          "title": "New Related News",
+          "description": "Description of the new related news",
           "link": "#"
         }
       ]
