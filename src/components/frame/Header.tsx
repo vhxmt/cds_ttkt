@@ -77,7 +77,7 @@ const Header: React.FC = () => {
               <span className="mr-2">Ngôn ngữ:</span>
               <a href="#" className="inline-flex items-center">
                 <img
-                    src="/image/flag/VN-Flag.jpg"
+                    src="/image/header/VN-Flag.jpg"
                     alt="Tiếng Việt"
                     className="h-4 w-4 mr-1"
                     style={{
@@ -89,7 +89,7 @@ const Header: React.FC = () => {
               </a>
               <a href="#" className="inline-flex items-center ml-4">
                 <img
-                    src="/image/flag/Eng-Flag.jpg"
+                    src="/image/header/Eng-Flag.jpg"
                     alt="English"
                     className="h-4 w-4 mr-1"
                     style={{
