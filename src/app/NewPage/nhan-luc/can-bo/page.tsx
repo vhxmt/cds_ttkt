@@ -21,80 +21,76 @@ interface Staff {
 export default function NewsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [staffData, setStaffData] = useState<Staff[]>([]);
-    const [editingStaff, setEditingStaff] = useState<Staff | null>(null); // Track editing state
-    const [isFormVisible, setIsFormVisible] = useState(false); // Show/hide form
+    const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const itemsPerPage = 5;
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
-    useEffect(() => {
-        // Fetch data from the API
-        const fetchStaffData = async () => {
-            try {
-                const response = await fetch('/api/nhan-luc/can-bo');
-                if (response.ok) {
-                    const data = await response.json();
-                    setStaffData(data.staffData);
-                } else {
-                    console.error('Failed to fetch staff data');
-                }
-            } catch (error) {
-                console.error('Error fetching staff data:', error);
+    // Function to fetch staff data from the backend
+    const fetchStaffData = async () => {
+        try {
+            const response = await fetch('/api/nhan-luc/can-bo');
+            if (response.ok) {
+                const data = await response.json();
+                setStaffData(data.staffData);
+            } else {
+                console.error('Failed to fetch staff data');
             }
-        };
+        } catch (error) {
+            console.error('Error fetching staff data:', error);
+        }
+    };
 
+    useEffect(() => {
+        // Initial fetch of staff data
         fetchStaffData();
     }, []);
 
     const handleSubmitForm = async (staff: Staff, imageFile?: File) => {
         try {
             let imageUrl = staff.imageUrl;
-    
+
             // Handle image upload if a new image is provided
             if (imageFile) {
                 const formData = new FormData();
                 formData.append('file', imageFile);
-    
+
                 const uploadResponse = await fetch('/api/nhan-luc/upload', {
                     method: 'POST',
                     body: formData,
                 });
-    
+
                 if (uploadResponse.ok) {
                     const data = await uploadResponse.json();
-                    imageUrl = data.imageUrl; // Get the uploaded image URL
+                    imageUrl = data.imageUrl;
                 } else {
                     console.error('Image upload failed');
                     return;
                 }
             }
-    
+
             // Generate a random ID for new staff if not editing
-            const id = editingStaff ? editingStaff.id : `${Date.now()}`; // Use timestamp as ID
-    
+            const id = editingStaff ? editingStaff.id : `${Date.now()}`;
+
             const method = editingStaff ? 'PUT' : 'POST';
             const url = editingStaff
                 ? `/api/nhan-luc/can-bo?id=${editingStaff.id}`
                 : '/api/nhan-luc/can-bo';
-    
+
             const response = await fetch(url, {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ ...staff, imageUrl, id }), // Include the ID
+                body: JSON.stringify({ ...staff, imageUrl, id }),
             });
-    
+
             if (response.ok) {
-                const updatedStaff = await response.json();
-                setStaffData((prev) => {
-                    if (editingStaff) {
-                        return prev.map((s) => (s.id === editingStaff.id ? updatedStaff : s));
-                    }
-                    return [...prev, updatedStaff]; // Add new staff data
-                });
                 setIsFormVisible(false);
                 setEditingStaff(null);
+                // Refetch the staff data after submission
+                fetchStaffData();
             } else {
                 console.error('Failed to submit staff data');
             }
@@ -102,7 +98,23 @@ export default function NewsPage() {
             console.error('Error submitting staff data:', error);
         }
     };
-    
+
+    const handleDelete = async (staff: Staff) => {
+        try {
+            const response = await fetch(`/api/nhan-luc/can-bo?id=${staff.id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                // Refetch the staff data after deletion
+                fetchStaffData();
+            } else {
+                console.error('Failed to delete staff');
+            }
+        } catch (error) {
+            console.error('Error deleting staff:', error);
+        }
+    };
 
     const handleAdd = () => {
         setEditingStaff(null);
@@ -113,38 +125,6 @@ export default function NewsPage() {
         setEditingStaff(staff);
         setIsFormVisible(true);
     };
-
-    const handleDelete = async (staff: Staff) => {
-        try {
-            const response = await fetch(`/api/nhan-luc/can-bo?id=${staff.id}`, {
-                method: 'DELETE',
-            });
-    
-            if (response.ok) {
-                // Refetch staff data after deletion
-                const fetchStaffData = async () => {
-                    try {
-                        const response = await fetch('/api/nhan-luc/can-bo');
-                        if (response.ok) {
-                            const data = await response.json();
-                            setStaffData(data.staffData); // Update state with latest data
-                        } else {
-                            console.error('Failed to fetch staff data');
-                        }
-                    } catch (error) {
-                        console.error('Error fetching staff data:', error);
-                    }
-                };
-    
-                fetchStaffData();
-            } else {
-                console.error('Failed to delete staff');
-            }
-        } catch (error) {
-            console.error('Error deleting staff:', error);
-        }
-    };
-    
 
     const handleCancelForm = () => {
         setIsFormVisible(false);
