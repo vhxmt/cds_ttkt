@@ -37,7 +37,7 @@ function writeData(data: ResearchData): void {
 // Handle GET requests
 export async function GET(req: NextRequest) {
     const areaName = req.nextUrl.searchParams.get('areaName');
-    let data = readData();
+    const data = readData();
 
     if (areaName) {
         const area = data.researchAreas.find(area => area.name === areaName);
@@ -53,54 +53,76 @@ export async function GET(req: NextRequest) {
 // Handle POST requests
 export async function POST(req: NextRequest) {
     const body = await req.json();
-    let data = readData();
+    const data = readData();
 
     if (body.type === 'area') {
-        const newArea: ResearchArea = body.area;
+        const newArea: ResearchArea = {
+            ...body.area,
+            relatedNews: [], // Initialize with an empty array
+        };
+
         data.researchAreas.push(newArea);
         writeData(data);
         return NextResponse.json({ message: 'Research area added successfully' }, { status: 201 });
     } else if (body.type === 'news') {
         const areaName = body.areaName;
         const area = data.researchAreas.find(area => area.name === areaName);
+
         if (!area) {
             return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
         }
-        const newNews: RelatedNews = body.news;
+
+        const newNews: RelatedNews = {
+            ...body.news,
+            id: new Date().getTime(), // Ensure unique ID by using timestamp
+        };
+
         area.relatedNews.push(newNews);
         writeData(data);
-        return NextResponse.json(data, { status: 201 }); // Return the updated data
+        return NextResponse.json({ message: 'Related news added successfully' }, { status: 201 });
     } else {
-        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        return NextResponse.json({ message: 'Invalid request type' }, { status: 400 });
     }
 }
 
 // Handle PUT requests
 export async function PUT(req: NextRequest) {
     const body = await req.json();
-    let data = readData();
-
+    const data = readData();
     const areaName = body.areaName;
     const newsId = body.newsId;
 
-    if (areaName && newsId) {
+    if (newsId) {
+        // Update related news
         const area = data.researchAreas.find(area => area.name === areaName);
         if (!area) {
             return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
         }
-        const newsIndex = area.relatedNews.findIndex(news => news.id === parseInt(newsId));
+
+        const newsIndex = area.relatedNews.findIndex(news => news.id === newsId);
         if (newsIndex === -1) {
             return NextResponse.json({ message: 'News not found' }, { status: 404 });
         }
-        area.relatedNews[newsIndex] = body.news;
+
+        area.relatedNews[newsIndex] = {
+            ...area.relatedNews[newsIndex],
+            ...body.news, // Update only provided fields
+        };
+
         writeData(data);
         return NextResponse.json({ message: 'Related news updated successfully' });
     } else if (areaName) {
+        // Update research area
         const areaIndex = data.researchAreas.findIndex(area => area.name === areaName);
         if (areaIndex === -1) {
             return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
         }
-        data.researchAreas[areaIndex] = body.area;
+
+        data.researchAreas[areaIndex] = {
+            ...data.researchAreas[areaIndex],
+            ...body.area, // Update only provided fields
+        };
+
         writeData(data);
         return NextResponse.json({ message: 'Research area updated successfully' });
     } else {
@@ -110,16 +132,18 @@ export async function PUT(req: NextRequest) {
 
 // Handle DELETE requests
 export async function DELETE(req: NextRequest) {
-    const { areaName, newsId } = await req.json();
-    let data = readData();
+    const body = await req.json();
+    const { areaName, newsId } = body;
+    const data = readData();
 
-    if (areaName && newsId) {
+    if (newsId) {
         // Delete related news
         const area = data.researchAreas.find(area => area.name === areaName);
         if (!area) {
             return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
         }
-        area.relatedNews = area.relatedNews.filter(news => news.id !== parseInt(newsId));
+
+        area.relatedNews = area.relatedNews.filter(news => news.id !== newsId);
         writeData(data);
         return NextResponse.json({ message: 'Related news deleted successfully' });
     } else if (areaName) {

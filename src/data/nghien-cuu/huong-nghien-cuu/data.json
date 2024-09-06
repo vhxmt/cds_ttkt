@@ -2,106 +2,17 @@
   "title": "SEEE Hướng nghiên cứu",
   "researchAreas": [
     {
-      "name": "Updated Research Area",
-      "description": "Nghiên cứu về lý thuyết điều khiển bao gồm các mô hình và phương pháp điều khiển tiên tiến, ứng dụng trong các hệ thống công nghiệp và tự động hóa.",
+      "name": "Siêu bão YAGI tăng tốc, giật cấp 17 vào Hải Phòng – Quảng Ninh ngày mai",
+      "description": "TPO - Dự báo đêm nay (6/9), siêu bão YAGI sẽ vượt qua phía bắc đảo Hải Nam, Trung Quốc để đi vào vịnh Bắc Bộ nước ta. Dù ma sát với đảo Hải Nam, bão vẫn giữ cường độ cấp 14, giật cấp 17 trên vịnh Bắc Bộ, là cơn bão mạnh nhất từ trước đến nay ở khu vực này.",
       "relatedNews": [
         {
-          "id": 2,
-          "title": "Hội thảo về lý thuyết điều khiển",
-          "description": "Tham gia hội thảo quốc tế về lý thuyết điều khiển.",
-          "link": "#"
-        },
-        {
-          "id": 3,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 4,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
+          "title": "abc",
+          "description": "123",
+          "link": "https://www.msn.com/vi-vn/news/national/si%C3%AAu-b%C3%A3o-yagi-h%C3%A0-n%E1%BB%99i-c%C3%A2y-%C4%91%E1%BB%95-la-li%E1%BB%87t-%C4%91%C3%A8-2-ng%C6%B0%E1%BB%9Di-%C4%91i-%C4%91%C6%B0%E1%BB%9Dng-b%E1%BA%A5t-t%E1%BB%89nh/ar-AA1q6yWK?ocid=entnewsntp&pc=U531&cvid=d958f6627eeb4ad49b858aea33a36a02&ei=23",
+          "id": 1725636217252
         }
-      ]
-    },
-    {
-      "name": "Updated Research Area",
-      "description": "Nghiên cứu về năng lượng điện bao gồm chuyển đổi, lưu trữ và phân phối năng lượng điện.",
-      "relatedNews": [
-        {
-          "id": 1,
-          "title": "Nghiên cứu về pin năng lượng",
-          "description": "Phát triển công nghệ pin hiệu suất cao.",
-          "link": "#"
-        },
-        {
-          "id": 2,
-          "title": "Hội thảo về năng lượng xanh",
-          "description": "Tham gia hội thảo quốc tế về năng lượng xanh.",
-          "link": "#"
-        },
-        {
-          "id": 3,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 4,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        }
-      ]
-    },
-    {
-      "name": "Hệ thống điện và năng lượng",
-      "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
-      "relatedNews": [
-        {
-          "id": 1,
-          "title": "Dự án cải tiến hệ thống điện",
-          "description": "Cải tiến hệ thống điện trong khu công nghiệp.",
-          "link": "#"
-        },
-        {
-          "id": 2,
-          "title": "Hội thảo về quản lý năng lượng",
-          "description": "Tham gia hội thảo về quản lý năng lượng bền vững.",
-          "link": "#"
-        }
-      ]
-    },
-    {
-      "name": "Lưới điện thông minh",
-      "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
-      "relatedNews": [
-        {
-          "id": 2,
-          "title": "Hội thảo về lưới điện tương lai",
-          "description": "Tham gia hội thảo về tương lai của lưới điện.",
-          "link": "#"
-        },
-        {
-          "id": 3,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 4,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 5,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        }
-      ]
+      ],
+      "highlight": true
     }
   ]
 }
