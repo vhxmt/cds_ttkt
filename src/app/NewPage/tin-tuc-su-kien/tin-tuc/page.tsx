@@ -6,12 +6,35 @@ import Banner from '@/components/display-block/Banner';
 import Breadcrumb from '@/components/breadcrumb';
 import data from '@/data/tin-tuc-su-kien/tin-tuc/tin-tuc.json';
 import { useAuth } from '@/components/providers/AuthProvider';
+import PgControl from '@/components/display-block/PgControl';
 
+const ITEMS_PER_PAGE = 5
 export default function NewsPage() {
   const { banner, featuredNews, events, additionalNews } = data;
   const [newsList, setNewsList] = useState(additionalNews);
   const { isLoggedIn, user } = useAuth();
   const isAdmin = isLoggedIn && user?.role === 'admin';
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = Math.ceil(additionalNews.length / ITEMS_PER_PAGE);
+
+  // Lấy danh sách tin tức cho trang hiện tại
+  const currentNewsList = additionalNews.slice(
+      (currentPage - 1) * ITEMS_PER_PAGE,
+      currentPage * ITEMS_PER_PAGE
+  );
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
 
   const handleAdd = async () => {
     try {
@@ -130,7 +153,7 @@ export default function NewsPage() {
                 </div>
               </div>
             </div>
-            {newsList.map((newsItem) => (
+            {currentNewsList.map((newsItem) => (
                 <div key={newsItem.id} className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm mb-4">
                   <h3 className="text-lg font-semibold mb-2">
                     <a href={newsItem.link} className="text-blue-600 hover:underline">
@@ -157,6 +180,14 @@ export default function NewsPage() {
                   )}
                 </div>
             ))}
+
+            {/* Component Phân trang */}
+            <PgControl
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onNextPage={handleNextPage}
+                onPrevPage={handlePrevPage}
+            />
           </div>
         </div>
       </div>

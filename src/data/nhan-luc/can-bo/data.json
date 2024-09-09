@@ -103,6 +103,14 @@
       "mail": "agh@xcv",
       "tel": "12312312312",
       "imageUrl": "/path-to-default-image.png"
+    },
+    {
+      "id": "2024-09-09T03:48:52.640Z",
+      "name": "Nguyễn Hữu Thanh",
+      "title": "Giảng viên",
+      "mail": "test@example.com",
+      "tel": "0123456789",
+      "imageUrl": "/image/nhan-luc/can-bo/a25506ddfe39974df024b0600.png"
     }
   ]
 }

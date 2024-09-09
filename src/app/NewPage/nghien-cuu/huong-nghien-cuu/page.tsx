@@ -5,7 +5,7 @@ import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider'; // Import hook to check admin rights
 import ResearchAreaForm, { ResearchArea } from './form-huong-nghien-cuu';
 import RelatedNewsForm, { RelatedNews } from './form-tin-tuc-lien-quan';
-
+import PgControl from '@/components/display-block/PgControl';
 interface ResearchData {
     title: string;
     researchAreas: ResearchArea[];
@@ -14,8 +14,10 @@ interface ResearchData {
 export default function HuongNghienCuu() {
     const [researchData, setResearchData] = useState<ResearchData | null>(null);
     const [selectedAreaIndex, setSelectedAreaIndex] = useState<number>(0);
-    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // Số tin tức mỗi trang
     const [editAreaIndex, setEditAreaIndex] = useState<number | null>(null);
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const [isNewsFormVisible, setIsNewsFormVisible] = useState(false);
     const [editNewsIndex, setEditNewsIndex] = useState<number | null>(null);
 
@@ -26,6 +28,7 @@ export default function HuongNghienCuu() {
             setResearchData(data);
             if (data.researchAreas.length > 0) {
                 setSelectedAreaIndex(0);
+                setCurrentPage(1); // Reset page khi dữ liệu thay đổi
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -43,11 +46,29 @@ export default function HuongNghienCuu() {
         return <div>Loading...</div>;
     }
 
-    const { title, researchAreas = [] } = researchData;
+    const { title, researchAreas = [] } = researchData || {};
     const selectedArea = researchAreas[selectedAreaIndex] || { name: '', description: '', relatedNews: [] };
+    const totalPages = Math.ceil(selectedArea.relatedNews.length / itemsPerPage);
 
+    const currentNews = selectedArea.relatedNews.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
     const handleAreaClick = (index: number) => {
         setSelectedAreaIndex(index);
+        setCurrentPage(1);
     };
 
     const handleSubmitArea = async (area: ResearchArea) => {
@@ -141,7 +162,9 @@ export default function HuongNghienCuu() {
             console.error('Error deleting news:', error);
         }
     };
-
+    if (!researchData) {
+        return <div>Loading...</div>;
+    }
     const handleSubmitNews = async (news: RelatedNews) => {
         const method = editNewsIndex !== null ? 'PUT' : 'POST';
         const url = '/api/nghien-cuu/huong-nghien-cuu';
@@ -232,7 +255,7 @@ export default function HuongNghienCuu() {
                         )}
                     </div>
                     <div className="space-y-6">
-                        {selectedArea.relatedNews?.map((news, index) => (
+                        {currentNews.map((news, index) => (
                             <div key={news.id} className="flex justify-between items-center">
                                 <div>
                                     <h4 className="font-bold">{news.title}</h4>
@@ -243,7 +266,7 @@ export default function HuongNghienCuu() {
                                         Chi tiết &gt;&gt;
                                     </a>
                                     {isAdmin && (
-                                        <>
+                                        <div className="flex space-x-2">
                                             <button
                                                 className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
                                                 onClick={() => handleEditNews(index)}
@@ -256,12 +279,18 @@ export default function HuongNghienCuu() {
                                             >
                                                 Xóa
                                             </button>
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         ))}
                     </div>
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={handleNextPage}
+                        onPrevPage={handlePrevPage}
+                    />
                     {isFormVisible && (
                         <ResearchAreaForm
                             researchArea={editAreaIndex !== null ? researchAreas[editAreaIndex] : null}
