@@ -50,7 +50,7 @@ export default function NewsPage() {
                     </h2>
                     <div className="mb-4 text-center mb-20">
                         <Image
-                            src="/su-kien-thuong-nien.jpg"
+                            src="/image/banner/banner-su-kien-thuong-nien.png"
                             alt={eventDetails.title}
                             width={1200}
                             height={400}

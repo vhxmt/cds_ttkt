@@ -18,14 +18,14 @@ export default function NewsPage() {
         console.log("Add tool");
     };
 
-    const handleEdit = (toolTitle: string) => {
-        // Implement your edit logic here
-        console.log(`Edit tool: ${toolTitle}`);
+    const handleEdit = (toolId: string) => {
+        // Implement your edit logic here, using toolId
+        console.log(`Edit tool with ID: ${toolId}`);
     };
 
-    const handleDelete = (toolTitle: string) => {
-        // Implement your delete logic here
-        console.log(`Delete tool: ${toolTitle}`);
+    const handleDelete = (toolId: string) => {
+        // Implement your delete logic here, using toolId
+        console.log(`Delete tool with ID: ${toolId}`);
     };
 
     return (
@@ -40,8 +40,8 @@ export default function NewsPage() {
                         tool={toolOneCol}
                         isAdmin={isAdmin}
                         onAdd={isAdmin ? handleAdd : undefined}
-                        onEdit={isAdmin ? () => handleEdit(toolOneCol.title) : undefined}
-                        onDelete={isAdmin ? () => handleDelete(toolOneCol.title) : undefined}
+                        onEdit={isAdmin ? () => handleEdit(toolOneCol.id) : undefined}
+                        onDelete={isAdmin ? () => handleDelete(toolOneCol.id) : undefined}
                     />
 
                     {/* Two Column Layout */}
@@ -49,8 +49,8 @@ export default function NewsPage() {
                         tools={toolsTwoCol}
                         isAdmin={isAdmin}
                         onAdd={isAdmin ? handleAdd : undefined}
-                        onEdit={isAdmin ? (tool) => handleEdit(tool.title) : undefined}
-                        onDelete={isAdmin ? (tool) => handleDelete(tool.title) : undefined}
+                        onEdit={isAdmin ? (tool) => handleEdit(tool.id) : undefined}
+                        onDelete={isAdmin ? (tool) => handleDelete(tool.id) : undefined}
                     />
 
                     {/* Three Column Layout */}
@@ -58,8 +58,8 @@ export default function NewsPage() {
                         tools={toolsThreeCol}
                         isAdmin={isAdmin}
                         onAdd={isAdmin ? handleAdd : undefined}
-                        onEdit={isAdmin ? (tool) => handleEdit(tool.title) : undefined}
-                        onDelete={isAdmin ? (tool) => handleDelete(tool.title) : undefined}
+                        onEdit={isAdmin ? (tool) => handleEdit(tool.id) : undefined}
+                        onDelete={isAdmin ? (tool) => handleDelete(tool.id) : undefined}
                     />
                 </div>
             </div>

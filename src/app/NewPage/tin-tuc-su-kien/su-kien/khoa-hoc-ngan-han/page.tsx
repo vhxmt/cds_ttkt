@@ -43,7 +43,7 @@ export default function NewsPage() {
 
                     <div className="mb-4">
                         <Image
-                            src="/khoa-hoc-ngan.png"
+                            src="/image/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han/khoa-hoc-ngan.png"
                             alt="Banner"
                             width={1200}
                             height={400}

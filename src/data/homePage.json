@@ -1,6 +1,6 @@
 {
     "banner": {
-      "src": "/banner.png",
+      "src": "/image/banner/banner.png",
       "alt": "Banner Image"
     },
     "introduction": {

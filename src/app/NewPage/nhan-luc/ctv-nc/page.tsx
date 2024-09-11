@@ -51,7 +51,7 @@ export default function NewsPage() {
                 <SideMenu currentSection="Nhân lực" />
 
                 <div className="flex-1">
-                    <Banner src="/banner.png" alt="Banner" />
+                    <Banner src="/image/banner/banner.png" alt="Banner" />
 
                     {/* Nút "Thêm" */}
                     <div className="flex justify-end mb-4">

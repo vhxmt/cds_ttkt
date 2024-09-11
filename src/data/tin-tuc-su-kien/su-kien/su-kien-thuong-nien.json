@@ -7,7 +7,7 @@
   },
   "eventInfo": {
     "section1": {
-      "imageSrc": "/su-kien1.png",
+      "imageSrc": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien1.png",
       "imageAlt": "Thông tin sự kiện 1",
       "title": "Thông tin sự kiện",
       "details": [
@@ -19,7 +19,7 @@
       ]
     },
     "section2": {
-      "imageSrc": "/su-kien2.png",
+      "imageSrc": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien2.png",
       "imageAlt": "Thông tin sự kiện 2",
       "title": "Lợi ích tham gia",
       "details": [

@@ -8,6 +8,7 @@ const filePath = path.join(process.cwd(), 'src/data/giai-thuong/giai-thuong-bai-
 
 // Define interfaces for the data structure
 interface Award {
+    id: string;
     recipients: string;
     award: string;
     organization: string;
@@ -23,10 +24,10 @@ interface AwardData {
 function readData(): AwardData {
     try {
         const jsonData = fs.readFileSync(filePath, 'utf8');
-        return JSON.parse(jsonData);  // Parsing the JSON file
+        return JSON.parse(jsonData);
     } catch (error) {
         console.error("Error reading the data file:", error);
-        return { awardData: [] };  // Return an empty array if error occurs
+        return { awardData: [] };
     }
 }
 
@@ -42,19 +43,18 @@ function writeData(data: AwardData): void {
 // GET method to fetch awards
 export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
-    const year = searchParams.get('year');
+    const id = searchParams.get('id');
     
     const data = readData();
 
-    // If `year` is provided, fetch the award by `year`
-    if (year) {
-        const award = data.awardData.find(a => a.year === parseInt(year));
+    if (id) {
+        const award = data.awardData.find(a => a.id === id);
         if (!award) {
             return NextResponse.json({ message: 'Award not found' }, { status: 404 });
         }
         return NextResponse.json(award, { status: 200 });
     } else {
-        // Return all awards if no `year` is provided
+        // Return all awards if no `id` is provided
         return NextResponse.json(data.awardData, { status: 200 });
     }
 }
@@ -62,36 +62,34 @@ export async function GET(req: NextRequest) {
 // POST method to add a new award
 export async function POST(req: NextRequest) {
     const body = await req.json();
-    const newAward: Award = body;
+    const newAward: Award = {
+        ...body,
+        id: new Date().toISOString(),  // Generate an ISO string as ID
+    };
 
-    // Validation: Check for all required fields
     if (!newAward.recipients || !newAward.award || !newAward.organization || !newAward.year || !newAward.achievement) {
         console.error('Validation failed: Missing required fields', newAward);
         return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
     }
 
-    // Read the existing data
     const data = readData();
-    
-    // Add the new award and write the updated data to the file
-    data.awardData.push(newAward);
+    data.awardData.unshift(newAward);
     writeData(data);
-    
     return NextResponse.json({ message: 'Award added successfully', award: newAward }, { status: 201 });
 }
 
-// PUT method to update an existing award by `year`
+// PUT method to update an existing award by `id`
 export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { searchParams } = new URL(req.url);
-    const year = searchParams.get('year');
+    const id = searchParams.get('id');
 
-    if (!year) {
-        return NextResponse.json({ message: 'Year is required for updating' }, { status: 400 });
+    if (!id) {
+        return NextResponse.json({ message: 'ID is required for updating' }, { status: 400 });
     }
 
     const data = readData();
-    const awardIndex = data.awardData.findIndex(a => a.year === parseInt(year));
+    const awardIndex = data.awardData.findIndex(a => a.id === id);
 
     if (awardIndex === -1) {
         return NextResponse.json({ message: 'Award not found' }, { status: 404 });
@@ -104,17 +102,17 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ message: 'Award updated successfully', award: data.awardData[awardIndex] }, { status: 200 });
 }
 
-// DELETE method to delete an award by `year`
+// DELETE method to delete an award by `id`
 export async function DELETE(req: NextRequest) {
     const { searchParams } = new URL(req.url);
-    const year = searchParams.get('year');
+    const id = searchParams.get('id');
 
-    if (!year) {
-        return NextResponse.json({ message: 'Year is required for deletion' }, { status: 400 });
+    if (!id) {
+        return NextResponse.json({ message: 'ID is required for deletion' }, { status: 400 });
     }
 
     const data = readData();
-    const updatedAwards = data.awardData.filter(a => a.year !== parseInt(year));
+    const updatedAwards = data.awardData.filter(a => a.id !== id);
 
     if (updatedAwards.length === data.awardData.length) {
         return NextResponse.json({ message: 'Award not found' }, { status: 404 });

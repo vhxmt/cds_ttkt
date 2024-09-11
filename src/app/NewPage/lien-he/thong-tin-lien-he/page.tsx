@@ -5,10 +5,12 @@ import contactData from "@/data/lien-he/thong-tin-lien-he.json"; // Import JSON 
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
 import { useState } from 'react';
+import {useAuth} from "@/components/providers/AuthProvider";
 
 export default function ThongTinLienHe() {
     const { contactInfo, banner } = contactData; // Extract contactInfo and banner
-    const [isAdmin, setIsAdmin] = useState(true); // Change this based on actual user status
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const handleEdit = () => {
         console.log("Sửa thông tin liên hệ");
