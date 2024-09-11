@@ -5,10 +5,12 @@ import labData from "@/data/lien-he/dan-duong.json"; // Import the JSON data
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from "@/components/display-block/SideMenu";
 import { useState } from 'react';
+import {useAuth} from "@/components/providers/AuthProvider";
 
 export default function DanDuong() {
     const { headers, labCategories } = labData; // Extract headers and labCategories from labData
-    const [isAdmin, setIsAdmin] = useState(true); // Change this based on actual user status
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const handleAdd = () => {
         console.log("Thêm phòng thí nghiệm");
@@ -37,7 +39,7 @@ export default function DanDuong() {
                     {/* Banner Image */}
                     <div className="mb-4">
                         <Image
-                            src="/banner-danduong.png" // Change to your banner image path
+                            src="/image/lien-he/dan-duong/banner.png" // Change to your banner image path
                             alt="Banner"
                             width={1200}
                             height={400}

@@ -4,19 +4,19 @@
         "id": 1,
         "title": "Tên bài báo 1",
         "date": "19/12/2022 12:00:00",
-        "imageUrl": "/su-kien1.png"
+        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien1.png"
       },
       {
         "id": 2,
         "title": "Tên bài báo 2",
         "date": "19/12/2022 12:00:00",
-        "imageUrl": "/su-kien1.png"
+        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien2.png"
       },
       {
         "id": 3,
         "title": "Tên bài báo 3",
         "date": "19/12/2022 12:00:00",
-        "imageUrl": "/su-kien1.png"
+        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien1.png"
       }
     ],
     "filters": [
