@@ -1,24 +1,25 @@
 import React from 'react';
 
 interface Tool {
+    id: string;
     title: string;
     imgSrc: string;
     description: string;
 }
 
 interface ToolTwoColProps {
-    tools?: Tool[]; // Mark tools as optional
-    isAdmin: boolean; // Prop để kiểm tra quyền admin
-    onAdd?: () => void; // Hàm xử lý sự kiện nhấn nút Thêm
-    onEdit?: (tool: Tool) => void; // Hàm xử lý sự kiện nhấn nút Sửa
-    onDelete?: (tool: Tool) => void; // Hàm xử lý sự kiện nhấn nút Xóa
+    tools: Tool[]; // Array of tools
+    isAdmin: boolean;
+    onAdd?: () => void;
+    onEdit?: (id: string) => void;
+    onDelete?: (id: string) => void;
 }
 
-const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools = [], isAdmin, onAdd, onEdit, onDelete }) => {
+const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools, isAdmin, onAdd, onEdit, onDelete }) => {
     return (
         <div className="grid grid-cols-2 gap-8 mb-12">
-            {tools.map((tool, index) => (
-                <div key={index} className="text-center">
+            {tools.map((tool) => (
+                <div key={tool.id} className="text-center">
                     <img
                         src={tool.imgSrc}
                         alt={tool.title}
@@ -32,7 +33,7 @@ const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools = [], isAdmin, onAdd, onE
                         <div className="flex justify-center space-x-2 mt-4">
                             {onEdit && (
                                 <button
-                                    onClick={() => onEdit(tool)}
+                                    onClick={() => onEdit(tool.id)} // Pass the tool id to the onEdit handler
                                     className="bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600"
                                 >
                                     Sửa
@@ -40,7 +41,7 @@ const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools = [], isAdmin, onAdd, onE
                             )}
                             {onDelete && (
                                 <button
-                                    onClick={() => onDelete(tool)}
+                                    onClick={() => onDelete(tool.id)} // Pass the tool id to the onDelete handler
                                     className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
                                 >
                                     Xóa
@@ -50,7 +51,6 @@ const ToolTwoCol: React.FC<ToolTwoColProps> = ({ tools = [], isAdmin, onAdd, onE
                     )}
                 </div>
             ))}
-
             {isAdmin && onAdd && (
                 <div className="col-span-2 flex justify-center mt-4">
                     <button
