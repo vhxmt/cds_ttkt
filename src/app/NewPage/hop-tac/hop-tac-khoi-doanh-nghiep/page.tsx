@@ -1,4 +1,4 @@
-// src/pages/NewsPage.tsx
+// src/app/NewPage/hop-tac/hop-tac-khoi-doanh-nghiep
 "use client";
 import CooperationSection from "@/components/frame/CooperationSection";
 import cooperationData from "@/data/cooperations.json";

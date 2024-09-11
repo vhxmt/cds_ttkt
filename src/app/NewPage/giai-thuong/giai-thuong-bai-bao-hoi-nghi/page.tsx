@@ -1,4 +1,3 @@
-// src/app/giai-thuong/giai-thuong-khac/page.tsx
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
@@ -6,9 +5,11 @@ import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
 import TableHeader from '@/components/display-block/TableHeader';
 import TableRow from '@/components/display-block/TableRow';
+import Modal from './form';  // Import the Modal component
 import { useAuth } from "@/components/providers/AuthProvider";
 
 interface Award {
+    id: string;
     recipients: string;
     award: string;
     organization: string;
@@ -21,11 +22,13 @@ export default function BaiBaoKhac() {
     const [awardData, setAwardData] = useState<Award[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentAward, setCurrentAward] = useState<Award | null>(null);  // For editing
     const itemsPerPage = 3;
 
     // Fetch the awards from the API
     const fetchAwards = useCallback(async () => {
-        setIsLoading(true); // Set loading state before fetching data
+        setIsLoading(true);
         try {
             const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
                 method: 'GET',
@@ -34,21 +37,79 @@ export default function BaiBaoKhac() {
                 throw new Error('Failed to fetch data');
             }
             const data = await response.json();
-            console.log("Fetched awardData: ", data);  // Debugging log
-            setAwardData(data || []);  // Ensure it's an array
+            setAwardData(data || []);
         } catch (error) {
             console.error('Failed to fetch awards:', error);
-            setIsError(true);  // Set error state
+            setIsError(true);
         } finally {
-            setIsLoading(false);  // Set loading to false
+            setIsLoading(false);
         }
-    }, []); // Add an empty dependency array to ensure it doesn't recreate unnecessarily
+    }, []);
 
     useEffect(() => {
         fetchAwards();
     }, [fetchAwards]);
 
-    // Pagination logic
+    // Open the modal for adding or editing
+    const handleAdd = () => {
+        setCurrentAward(null);  // Clear current data for adding
+        setIsModalOpen(true);
+    };
+
+    const handleEdit = (award: Award) => {
+        setCurrentAward(award);  // Load current data for editing
+        setIsModalOpen(true);
+    };
+
+    const handleDelete = async (award: Award) => {
+        try {
+            const response = await fetch(`/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?id=${award.id}`, {
+                method: 'DELETE',
+            });
+
+            if (response.ok) {
+                await fetchAwards();  // Refetch the data after successfully deleting an award
+            }
+        } catch (error) {
+            console.error('Failed to delete award:', error);
+        }
+    };
+
+    const handleModalSubmit = async (award: Award) => {
+        const method = award.id ? 'PUT' : 'POST';
+        const url = award.id
+            ? `/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?id=${award.id}`
+            : '/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi';
+
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(award),
+            });
+
+            if (response.ok) {
+                await fetchAwards();  // Refetch the data after successfully adding or editing an award
+                setIsModalOpen(false);  // Close the modal after submission
+            } else {
+                console.error('Failed to submit award:', await response.json());
+            }
+        } catch (error) {
+            console.error('Failed to submit award:', error);
+        }
+    };
+
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
+
+    const headers = isAdmin
+        ? ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích', 'Thao tác']
+        : ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích'];
+
+    const columns = ['recipients', 'award', 'organization', 'year', 'achievement'];
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
     const currentItems = awardData.slice(indexOfFirstItem, indexOfLastItem);
@@ -61,73 +122,6 @@ export default function BaiBaoKhac() {
     const handlePrevPage = () => {
         if (currentPage > 1) setCurrentPage(currentPage - 1);
     };
-
-    const handleAdd = async () => {
-        const newAward: Award = {
-            recipients: "New Recipient",
-            award: "New Award",
-            organization: "New Organization",
-            year: 2024,
-            achievement: "New Achievement",
-        };
-
-        try {
-            const response = await fetch('/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newAward),
-            });
-
-            if (response.ok) {
-                await fetchAwards();  // Refetch the data after successfully adding a new award
-            } else {
-                console.error('Failed to add award:', await response.json());
-            }
-        } catch (error) {
-            console.error('Failed to add award:', error);
-        }
-    };
-
-    const handleEdit = async (award: Award) => {
-        const updatedAward: Award = { ...award, recipients: 'Updated Recipient' };
-
-        try {
-            const response = await fetch(`/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?year=${award.year}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(updatedAward),
-            });
-
-            if (response.ok) {
-                await fetchAwards();  // Refetch the data after successfully editing an award
-            }
-        } catch (error) {
-            console.error('Failed to update award:', error);
-        }
-    };
-
-    const handleDelete = async (award: Award) => {
-        try {
-            const response = await fetch(`/api/giai-thuong/giai-thuong-bai-bao-hoi-nghi?year=${award.year}`, {
-                method: 'DELETE',
-            });
-
-            if (response.ok) {
-                await fetchAwards();  // Refetch the data after successfully deleting an award
-            }
-        } catch (error) {
-            console.error('Failed to delete award:', error);
-        }
-    };
-
-    const headers = ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích', 'Thao tác'];
-    const columns = ['recipients', 'award', 'organization', 'year', 'achievement'];
-    const { isLoggedIn, user } = useAuth();
-    const isAdmin = isLoggedIn && user?.role === 'admin';
 
     if (isLoading) {
         return <p>Loading data...</p>;
@@ -156,8 +150,8 @@ export default function BaiBaoKhac() {
                                         key={index}
                                         rowData={item}
                                         columns={columns}
-                                        onEdit={() => handleEdit(item)}
-                                        onDelete={() => handleDelete(item)}
+                                        onEdit={isAdmin ? () => handleEdit(item) : () => {}}
+                                        onDelete={isAdmin ? () => handleDelete(item) : () => {}}
                                     />
                                 ))
                             ) : (
@@ -181,6 +175,13 @@ export default function BaiBaoKhac() {
                     <PgControl currentPage={currentPage} totalPages={totalPages} onNextPage={handleNextPage} onPrevPage={handlePrevPage} />
                 </div>
             </div>
+
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleModalSubmit}
+                initialData={currentAward || undefined}
+            />
         </div>
     );
 }
