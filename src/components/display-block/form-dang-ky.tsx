@@ -10,6 +10,7 @@ export default function FormDangKy() {
         researchDirection: '',
         position: '',
         questions: '',
+        cv: null as File | null, // Thêm trường cho file CV
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -17,6 +18,14 @@ export default function FormDangKy() {
         setFormData(prevData => ({
             ...prevData,
             [name]: value
+        }));
+    };
+
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files ? e.target.files[0] : null;
+        setFormData(prevData => ({
+            ...prevData,
+            cv: file
         }));
     };
 
@@ -138,6 +147,18 @@ export default function FormDangKy() {
                         onChange={handleChange}
                         className="w-full p-2 border border-gray-300 rounded"
                         rows={4}
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-gray-700 mb-1" htmlFor="cv">CV (file PDF)</label>
+                    <input
+                        type="file"
+                        id="cv"
+                        name="cv"
+                        accept=".pdf"
+                        onChange={handleFileChange}
+                        className="w-full p-2 border border-gray-300 rounded"
                     />
                 </div>
 

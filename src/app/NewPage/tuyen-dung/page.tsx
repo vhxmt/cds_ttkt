@@ -5,10 +5,12 @@ import Image from 'next/image';
 import data from '@/data/tuyen-dung/tuyen-dung.json'; // Import JSON as default export
 import FormDangKy from '@/components/display-block/form-dang-ky';
 import Breadcrumb from "@/components/breadcrumb";
+import { useAuth } from '@/components/providers/AuthProvider';
 
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
 
@@ -47,6 +49,15 @@ export default function TuyenDungPage() {
                     </div>
 
                     {/* Danh sách các vị trí tuyển dụng */}
+                    {isAdmin && (
+                        <div className="flex mb-4 space-x-2">
+                                <a href="/NewPage/tuyen-dung/list"
+                                    className="px-4 py-2 bg-yellow-500 text-white rounded-lg shadow-md hover:bg-yellow-600 transition duration-300">
+                                    Xem danh sách ứng tuyển
+                                </a>
+                        </div>
+                    )}
+
                     <div className="bg-white rounded-lg shadow-md p-4 mb-8">
                         <h2 className="text-2xl font-semibold mb-4 text-gray-800">Danh sách các vị trí tuyển dụng</h2>
 
