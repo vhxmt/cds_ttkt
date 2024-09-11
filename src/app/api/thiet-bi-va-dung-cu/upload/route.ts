@@ -1,3 +1,4 @@
+// src/pages/api/thiet-bi-va-dung-cu/upload/route.tsx
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
@@ -20,18 +21,17 @@ async function nextRequestToIncomingMessage(req: NextRequest): Promise<IncomingM
     readable.push(Buffer.from(await req.arrayBuffer()));
     readable.push(null);
 
-    // Cast the readable stream to IncomingMessage
     (readable as any).headers = Object.fromEntries(req.headers);
     (readable as any).method = req.method;
     (readable as any).url = req.url;
 
-    return readable as unknown as IncomingMessage;
+    return readable as IncomingMessage;
 }
 
 export async function POST(req: NextRequest) {
     const form = new IncomingForm({
-        uploadDir,
-        keepExtensions: true,
+        uploadDir, // The directory where the files will be uploaded
+        keepExtensions: true, // Keep file extensions
     });
 
     // Convert NextRequest to IncomingMessage
