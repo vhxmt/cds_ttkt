@@ -9,14 +9,6 @@
       "imageUrl": "/image/nhan-luc/can-bo/Screenshot 2024-09-05 110557.jpg"
     },
     {
-      "id": "2024-09-05T04:58:59.967Z",
-      "name": "TS. Nguyễn Quốc Minh",
-      "title": "Phó trưởng khoa Điện",
-      "mail": "email3@example.com",
-      "tel": "555-555-555",
-      "imageUrl": "/path-to-image-3.png"
-    },
-    {
       "id": "2024-09-05T05:58:19.967Z",
       "name": "TS. Trần Văn Tài",
       "title": "Giảng viên",
@@ -103,6 +95,22 @@
       "mail": "new.email@example.com",
       "tel": "000-000-000",
       "imageUrl": "/path-to-new-image.png"
+    },
+    {
+      "id": "2024-09-12T01:58:50.853Z",
+      "name": "Lê Văn Sơn",
+      "title": "123",
+      "mail": "levansonyb2003@gmail.com",
+      "tel": "0123",
+      "imageUrl": "/image/nhan-luc/cuu-sinh-vien/231ce442d4b6ddea005595700.png"
+    },
+    {
+      "id": "2024-09-12T02:10:55.219Z",
+      "name": "Lê Văn Sơn",
+      "title": "123",
+      "mail": "levansonyb2003@gmail.com",
+      "tel": "0123",
+      "imageUrl": "/image/nhan-luc/cuu-sinh-vien/01481ee9bc09aa8503a247100.png"
     }
   ]
 }

@@ -15,7 +15,12 @@ const TableRow: React.FC<TableRowProps> = ({ rowData, columns, onEdit, onDelete 
     return (
         <tr className="text-left border-t">
             {columns.map((col, index) => (
-                <td key={index} className="p-2">{rowData[col]}</td>
+                <td
+                key={index}
+                className="border border-gray-300 px-4 py-2"
+                >
+                {rowData[col]}
+                </td>
             ))}
             {isAdmin && (
                 <td className="p-2">

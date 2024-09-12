@@ -1,32 +1,25 @@
 {
-  "awardData": [
+  "awards": [
     {
-      "recipients": "Updated Recipient",
-      "award": "New Award",
-      "organization": "New Organization",
-      "year": 2024,
-      "achievement": "New Achievement"
+      "recipients": "123",
+      "award": "123",
+      "organization": "123",
+      "year": "aaaa",
+      "achievement": "aaa"
     },
     {
-      "recipients": "New Recipient",
-      "award": "New Award",
-      "organization": "New Organization",
-      "year": 2024,
-      "achievement": "New Achievement"
+      "recipients": "123",
+      "award": "aaaa",
+      "organization": "aaa",
+      "year": "aaa",
+      "achievement": "aaaa"
     },
     {
-      "recipients": "New Recipient",
-      "award": "New Award",
-      "organization": "New Organization",
-      "year": 2024,
-      "achievement": "New Achievement"
-    },
-    {
-      "recipients": "New Recipient",
-      "award": "New Award",
-      "organization": "New Organization",
-      "year": 2024,
-      "achievement": "New Achievement"
+      "recipients": "123",
+      "award": "aaaa",
+      "organization": "aaa",
+      "year": "aaa",
+      "achievement": "aaa"
     }
   ]
 }

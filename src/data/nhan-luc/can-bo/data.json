@@ -1,14 +1,6 @@
 {
   "staffData": [
     {
-      "id": "2024-09-05T04:58:39.967Z",
-      "name": "TS. Nguyễn Vũ Thanh",
-      "title": "Trưởng khoa Điện",
-      "mail": "email1@example.com",
-      "tel": "123-456-789",
-      "imageUrl": "/image/nhan-luc/can-bo/Screenshot 2024-09-05 110557.jpg"
-    },
-    {
       "id": "2024-09-05T04:58:59.967Z",
       "name": "TS. Nguyễn Quốc Minh",
       "title": "Phó trưởng khoa Điện",
@@ -103,6 +95,14 @@
       "mail": "agh@xcv",
       "tel": "12312312312",
       "imageUrl": "/path-to-default-image.png"
+    },
+    {
+      "id": "2024-09-12T01:46:23.957Z",
+      "name": "Lê Văn Sơn",
+      "title": "123",
+      "mail": "levansonyb2003@gmail.com",
+      "tel": "0123",
+      "imageUrl": "/image/nhan-luc/can-bo/935d0f8afef2c266172695400.png"
     }
   ]
 }

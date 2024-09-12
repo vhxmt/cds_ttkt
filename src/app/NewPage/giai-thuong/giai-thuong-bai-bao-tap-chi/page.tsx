@@ -1,5 +1,4 @@
 // src/app/giai-thuong/giai-thuong-khac/page.tsx
-// src/app/giai-thuong/giai-thuong-khac/page.tsx
 'use client'
 import { useState } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
@@ -60,7 +59,7 @@ export default function BaiBaoKhac() {
     };
     // Define table headers and columns
     const headers = [
-        'Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích','Thao tác'
+        'Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích'
     ];
 
     const columns = [
