@@ -36,27 +36,35 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(data);
 }
 
-// POST method to add a new tool (to any of the columns)
+// POST method to add a new tool
 export async function POST(req: NextRequest) {
-    const body = await req.json();
-    const { section, newTool } = body;  // Ensure these fields are extracted correctly
+    try {
+        const body = await req.json();
+        const { section, newTool } = body;  // Extract section and newTool from the request body
 
-    // Validate the request
-    if (!section || !newTool || !['toolsTwoCol', 'toolOneCol'].includes(section)) {
-        return NextResponse.json({ message: 'Invalid request: Missing or incorrect section or newTool' }, { status: 400 });
+        // Validate that section and newTool are provided
+        if (!section || !newTool || !['toolsTwoCol', 'toolOneCol'].includes(section)) {
+            return NextResponse.json({ message: 'Invalid request: Missing section or newTool' }, { status: 400 });
+        }
+
+        const data = readData();
+
+        const newToolWithId = {
+            ...newTool,
+            id: new Date().toISOString(),  // Generate a new unique ID
+        };
+
+        // Add the new tool to the respective section
+        data[section].unshift(newToolWithId);
+        writeData(data);  // Write the updated data to the JSON file
+
+        return NextResponse.json({ message: 'Tool added successfully', tool: newToolWithId }, { status: 201 });
+    } catch (error) {
+        console.error('Error processing POST request:', error);
+        return NextResponse.json({ message: 'Server error' }, { status: 500 });
     }
-
-    const data = readData();
-    const newToolWithId = {
-        ...newTool,
-        id: new Date().toISOString(),  // Assign a new unique ID
-    };
-
-    data[section].unshift(newToolWithId);  // Add the new tool to the top of the respective section
-    writeData(data);
-
-    return NextResponse.json({ message: 'Tool added successfully', tool: newToolWithId }, { status: 201 });
 }
+
 
 
 // PUT method to edit an existing tool by ID

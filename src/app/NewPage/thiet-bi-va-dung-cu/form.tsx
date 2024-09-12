@@ -68,14 +68,14 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
         }
     
         const tool: Tool = {
-            id: initialData?.id || '',  // For PUT request, ID must be present
+            id: initialData?.id || '',  // Use existing ID if editing, otherwise empty for a new tool
             title,
-            imgSrc: imgSrc || initialData?.imgSrc,  // Keep existing image if no new one is uploaded
-            description: description || initialData?.description,  // Keep existing description if none provided
+            imgSrc: imgSrc || initialData?.imgSrc,  // Set the image URL from the uploaded image
+            description: description || initialData?.description,  // Use existing description if none provided
         };
     
         try {
-            const method = initialData?.id ? 'PUT' : 'POST';  // Use PUT for editing, POST for adding
+            const method = initialData?.id ? 'PUT' : 'POST';  // Determine if this is an add or edit
             const res = await fetch('/api/thiet-bi-va-dung-cu', {
                 method,
                 headers: {
@@ -83,13 +83,13 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
                 },
                 body: JSON.stringify({
                     section,  // Pass the section as required by the API
-                    newTool: tool,  // The API expects "newTool" in the POST request body
+                    newTool: tool,  // For POST requests
                 }),
             });
     
             const data = await res.json();
             if (res.ok) {
-                onSubmit(data.tool);  // Update the parent component with the updated tool
+                onSubmit(data.tool);  // Update the parent component with the new tool
                 onClose();  // Close the modal
             } else {
                 console.error('Failed to submit tool:', data.message);
@@ -97,7 +97,7 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
         } catch (error) {
             console.error('Submit error:', error);
         }
-    };    
+    };
 
     if (!isOpen) return null;
 
