@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['seee.hust.edu.vn'],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'seee.hust.edu.vn',
+            },
+        ],
     },
 };
 

@@ -1,28 +1,28 @@
-
-
 {
-    "blogPosts": [
-      {
-        "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-        "date": "12/5/2022",
-        "description": "A post about electric vehicle control techniques and innovations.",
-        "imageUrl": "/path-to-image-1.png",
-        "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
-      },
-      {
-        "title": "Cảm biến thông minh (Smart Sensor)",
-        "date": "28/4/2021",
-        "description": "A post about smart sensor technology.",
-        "imageUrl": "/path-to-image-2.png",
-        "href": "/blogs/smart-sensor"
-      },
-      {
-        "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
-        "date": "27/9/2020",
-        "description": "A post about power electronics and electrical drives.",
-        "imageUrl": "/path-to-image-3.png",
-        "href": "/blogs/power-electronics-electrical-drives-lab"
-        }
-    ]
+  "blogPosts": [
+    {
+      "id": "2024-09-05T15:10:35Z",
+      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
+      "date": "12/5/2024",
+      "description": "A post about electric vehicle control techniques and innovations.",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726121892930-Screenshot 2021-11-27 074800.jpg",
+      "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
+    },
+    {
+      "id": "2024-09-05T11:20:25Z",
+      "title": "Cảm biến thông minh (Smart Sensor)",
+      "date": "28/4/2021",
+      "description": "A post about smart sensor technology.",
+      "imageUrl": "/path-to-image-2.png",
+      "href": "/blogs/smart-sensor"
+    },
+    {
+      "id": "2024-09-05T10:15:30Z",
+      "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
+      "date": "27/9/2020",
+      "description": "A post about power electronics and electrical drives.",
+      "imageUrl": "/path-to-image-3.png",
+      "href": "/blogs/power-electronics-electrical-drives-lab"
+    }
+  ]
 }
-  

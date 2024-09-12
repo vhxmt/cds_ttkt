@@ -1,37 +1,45 @@
-// src/app/NewPage/thiet-bi-va-dung-cu/form.tsx
 import React, { useState, useEffect } from 'react';
 
-interface Tool {
-    id?: string;
+interface BlogPost {
+    id: string;
     title: string;
-    imgSrc?: string;  // Make imgSrc optional
-    description?: string;  // Make description optional
+    date: string;
+    description: string;
+    imageUrl?: string; // The uploaded image's URL will be here, optional
+    href: string;
 }
 
-interface FormProps {
+interface BlogFormModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (tool: Tool) => void;
-    initialData?: Tool;
-    section: string;
+    onSubmit: (post: BlogPost) => void;
+    initialData?: BlogPost;
 }
 
-const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initialData, section }) => {
+const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
     const [title, setTitle] = useState('');
+    const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
     const [file, setFile] = useState<File | null>(null);
-    const [imgSrc, setImgSrc] = useState('');
+    const [href, setHref] = useState('');
     const [isUploading, setIsUploading] = useState(false);
+    const [imgSrc, setImgSrc] = useState<string | undefined>(''); // Image URL after upload
 
-    // Initialize form values if editing an existing tool
     useEffect(() => {
         if (initialData) {
-            setTitle(initialData.title || '');
-            setDescription(initialData.description || '');
-            setImgSrc(initialData.imgSrc || '');
+            setTitle(initialData.title);
+            setDate(initialData.date);
+            setDescription(initialData.description);
+            setHref(initialData.href);
+            setImgSrc(initialData.imageUrl);
+        } else {
+            setTitle('');
+            setDate('');
+            setDescription('');
+            setHref('');
+            setImgSrc('');
         }
     }, [initialData]);
-
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
@@ -42,14 +50,14 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
             setIsUploading(true);
 
             try {
-                const res = await fetch('/api/thiet-bi-va-dung-cu/upload', {
+                const res = await fetch('/api/blogs/dien-tu-dong-hoa/upload', {
                     method: 'POST',
                     body: formData,
                 });
 
                 const data = await res.json();
                 if (res.ok) {
-                    setImgSrc(data.imageUrl); // Automatically load and display the uploaded image
+                    setImgSrc(data.imageUrl); 
                 } else {
                     console.error('Image upload failed:', data.message);
                 }
@@ -66,68 +74,59 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
             alert('Please provide at least a title.');
             return;
         }
-    
-        const tool: Tool = {
-            id: initialData?.id || '',  // For PUT request, ID must be present
+
+        const newPost: BlogPost = {
+            id: initialData?.id || '', // ID is present for editing
             title,
-            imgSrc: imgSrc || initialData?.imgSrc,  // Keep existing image if no new one is uploaded
-            description: description || initialData?.description,  // Keep existing description if none provided
+            date: date || new Date().toLocaleDateString(),
+            description,
+            imageUrl: imgSrc || initialData?.imageUrl, // Use uploaded image or existing image
+            href,
         };
-    
-        try {
-            const method = initialData?.id ? 'PUT' : 'POST';  // Use PUT for editing, POST for adding
-            const res = await fetch('/api/thiet-bi-va-dung-cu', {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    section,  // Pass the section as required by the API
-                    newTool: tool,  // The API expects "newTool" in the POST request body
-                }),
-            });
-    
-            const data = await res.json();
-            if (res.ok) {
-                onSubmit(data.tool);  // Update the parent component with the updated tool
-                onClose();  // Close the modal
-            } else {
-                console.error('Failed to submit tool:', data.message);
-            }
-        } catch (error) {
-            console.error('Submit error:', error);
-        }
-    };    
+
+        onSubmit(newPost);
+        onClose();
+    };
 
     if (!isOpen) return null;
 
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Tool' : 'Add Tool'} - {section}</h3>
+                <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Blog Post' : 'Add Blog Post'}</h3>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Title <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700">Title</label>
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md"
+                        className="mt-1 block w-full border border-gray-300 rounded-md"
                         required
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Description (Optional)</label>
-                    <textarea
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md"
+                    <label className="block text-sm font-medium text-gray-700">Date</label>
+                    <input
+                        type="text"
+                        value={date}
+                        onChange={(e) => setDate(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md"
                     />
                 </div>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Upload Image (Optional)</label>
+                    <label className="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea
+                        value={description}
+                        onChange={(e) => setDescription(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md h-24"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Upload Image</label>
                     <input type="file" onChange={handleFileChange} className="mt-1 block w-full" />
                 </div>
 
@@ -137,12 +136,22 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
                     </div>
                 )}
 
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Link URL</label>
+                    <input
+                        type="text"
+                        value={href}
+                        onChange={(e) => setHref(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md"
+                    />
+                </div>
+
                 <div className="flex justify-end space-x-2">
                     <button
                         onClick={handleSubmit}
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
                     >
-                        {initialData ? 'Save Changes' : 'Add Tool'}
+                        {initialData ? 'Save Changes' : 'Add Post'}
                     </button>
                     <button
                         onClick={onClose}
@@ -156,4 +165,4 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
     );
 };
 
-export default ToolFormModal;
+export default BlogFormModal;
