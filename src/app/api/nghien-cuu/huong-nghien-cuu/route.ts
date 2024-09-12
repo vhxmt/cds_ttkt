@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
         }
 
         const newNews: RelatedNews = body.news;
-        area.relatedNews.push(newNews);
+        area.relatedNews.unshift(newNews);
         writeData(data);
         return NextResponse.json(data, { status: 201 });
     } else {

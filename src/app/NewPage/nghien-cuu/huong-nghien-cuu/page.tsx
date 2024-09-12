@@ -41,10 +41,10 @@ export default function HuongNghienCuu() {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu');
             const data = await response.json();
             setResearchData(data);
-
+    
             if (data.researchAreas.length > 0) {
                 const index = data.researchAreas.findIndex(
-                    (area) => area.name === previousSelectedAreaName
+                    (area: ResearchArea) => area.name === previousSelectedAreaName // Explicitly define the type here
                 );
                 setSelectedAreaIndex(index >= 0 ? index : 0); // Set back to the previous area if it exists
             }
@@ -52,6 +52,7 @@ export default function HuongNghienCuu() {
             console.error('Error fetching data:', error);
         }
     };
+    
 
     useEffect(() => {
         fetchData();

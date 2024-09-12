@@ -34,6 +34,12 @@
           "title": "add new",
           "description": "here",
           "link": ""
+        },
+        {
+          "id": 0.49903867020394865,
+          "title": "adfadf",
+          "description": "adfadfa",
+          "link": ""
         }
       ]
     },
@@ -45,6 +51,24 @@
           "id": 0.8612688442568994,
           "title": "fff",
           "description": "ddd",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "name": "adfafd",
+      "description": "adfsaf",
+      "relatedNews": [
+        {
+          "id": 0.17242386509557917,
+          "title": "fff",
+          "description": "fff",
+          "link": ""
+        },
+        {
+          "id": 0.3952998649681745,
+          "title": "adfad",
+          "description": "fadfa",
           "link": ""
         }
       ]
