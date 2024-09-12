@@ -6,6 +6,8 @@ import cooperationEventData from "@/data/hop-tac/cooperationEventData.json";
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
+import PgControl from "@/components/display-block/PgControl";
+import {useState} from "react";
 
 const { domesticCooperation } = cooperationData;
 const { cooperationEventData: newsData } = cooperationEventData;
@@ -26,6 +28,31 @@ const handleDelete = (item: { imageSrc: string; title: string; date: string }) =
 
 export default function NewsPage() {
     const isAdmin = true; // Change based on actual user status
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const newsPerPage = 5; // Số lượng tin tức trên mỗi trang
+
+    // Tính tổng số trang
+    const totalPages = Math.ceil(newsData.length / newsPerPage);
+
+    // Lấy danh sách tin tức cho trang hiện tại
+    const currentNews = newsData.slice(
+        (currentPage - 1) * newsPerPage,
+        currentPage * newsPerPage
+    );
+
+    // Chuyển sang trang tiếp theo
+    const onNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Quay lại trang trước
+    const onPrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     return (
         <div className="max-w-6xl mx-auto p-4">
@@ -55,6 +82,14 @@ export default function NewsPage() {
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
+
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={onNextPage}
+                        onPrevPage={onPrevPage}
+                    />
+
                     {/* Cooperation Section */}
                     <CooperationSection
                         title={domesticCooperation.title}

@@ -3,31 +3,23 @@ import { useState, useEffect } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider'; // Import hook to check admin rights
-
-interface ResearchArea {
-    name: string;
-    highlight?: boolean;
-    description?: string;
-    relatedNews?: RelatedNews[];
-}
-
-interface RelatedNews {
-    id: number;
-    title: string;
-    description: string;
-    link: string;
-}
-
+import ResearchAreaForm, { ResearchArea } from './form-huong-nghien-cuu';
+import RelatedNewsForm, { RelatedNews } from './form-tin-tuc-lien-quan';
+import PgControl from '@/components/display-block/PgControl';
 interface ResearchData {
     title: string;
     researchAreas: ResearchArea[];
-    description: string;
-    relatedNews: RelatedNews[];
 }
 
 export default function HuongNghienCuu() {
     const [researchData, setResearchData] = useState<ResearchData | null>(null);
     const [selectedAreaIndex, setSelectedAreaIndex] = useState<number>(0);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5; // Số tin tức mỗi trang
+    const [editAreaIndex, setEditAreaIndex] = useState<number | null>(null);
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isNewsFormVisible, setIsNewsFormVisible] = useState(false);
+    const [editNewsIndex, setEditNewsIndex] = useState<number | null>(null);
 
     const fetchData = async () => {
         try {
@@ -36,6 +28,7 @@ export default function HuongNghienCuu() {
             setResearchData(data);
             if (data.researchAreas.length > 0) {
                 setSelectedAreaIndex(0);
+                setCurrentPage(1); // Reset page khi dữ liệu thay đổi
             }
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -53,62 +46,55 @@ export default function HuongNghienCuu() {
         return <div>Loading...</div>;
     }
 
-    // Safeguard against undefined researchAreas
-    const { title, researchAreas = [] } = researchData;
+    const { title, researchAreas = [] } = researchData || {};
     const selectedArea = researchAreas[selectedAreaIndex] || { name: '', description: '', relatedNews: [] };
+    const totalPages = Math.ceil(selectedArea.relatedNews.length / itemsPerPage);
 
-    const handleAreaClick = (index: number) => {
-        setSelectedAreaIndex(index);
-    };
+    const currentNews = selectedArea.relatedNews.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
 
-    const handleAddResearchAreas = async () => {
-        const newArea = {
-            name: "New Research Area",
-            description: "Description of new research area",
-            relatedNews: [],
-        };
-
-        try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ type: 'area', area: newArea }),
-            });
-
-            if (response.ok) {
-                await fetchData(); // Refetch data after adding new area
-            } else {
-                console.error('Failed to add new area:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding new area:', error);
+    const handleNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
         }
     };
 
-    const handleEdit = async (index: number) => {
-        const updatedArea = {
-            ...researchAreas[index],
-            name: "Updated Research Area",
-        };
+    const handlePrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+    const handleAreaClick = (index: number) => {
+        setSelectedAreaIndex(index);
+        setCurrentPage(1);
+    };
+
+    const handleSubmitArea = async (area: ResearchArea) => {
+        const method = editAreaIndex !== null ? 'PUT' : 'POST';
+        const url = '/api/nghien-cuu/huong-nghien-cuu';
+        const body = editAreaIndex !== null
+            ? { areaName: researchAreas[editAreaIndex].name, area }
+            : { type: 'area', area };
 
         try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'PUT',
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName: researchAreas[index].name, area: updatedArea }),
+                body: JSON.stringify(body),
             });
 
             if (response.ok) {
-                await fetchData(); // Refetch data after updating the area
+                await fetchData();
+                setIsFormVisible(false);
             } else {
-                console.error('Failed to update area');
+                console.error('Failed to submit area');
             }
         } catch (error) {
-            console.error('Error updating area:', error);
+            console.error('Error submitting area:', error);
         }
     };
 
@@ -125,7 +111,7 @@ export default function HuongNghienCuu() {
             });
 
             if (response.ok) {
-                await fetchData(); // Refetch data after deleting the area
+                await fetchData();
             } else {
                 console.error('Failed to delete area:', response.statusText);
             }
@@ -134,26 +120,40 @@ export default function HuongNghienCuu() {
         }
     };
 
-    const handleEditNews = async (id: number) => {
-        // Implement the logic to edit related news via API
-        console.log("Edit related news with ID:", id);
+    const handleAddResearchAreas = () => {
+        setEditAreaIndex(null);
+        setIsFormVisible(true);
     };
 
-    const handleDeleteNews = async (id: number) => {
-        const areaName = selectedArea.name; // Get the name of the currently selected area
-    
+    const handleEdit = (index: number) => {
+        setEditAreaIndex(index);
+        setIsFormVisible(true);
+    };
+
+    const handleAddNews = () => {
+        setEditNewsIndex(null);
+        setIsNewsFormVisible(true);
+    };
+
+    const handleEditNews = (newsIndex: number) => {
+        setEditNewsIndex(newsIndex);
+        setIsNewsFormVisible(true);
+    };
+
+    const handleDeleteNews = async (newsId: number) => {
+        const areaName = selectedArea.name;
+
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName, newsId: id }), // Send the correct area name and news ID
+                body: JSON.stringify({ areaName, newsId }),
             });
-    
+
             if (response.ok) {
-                await fetchData(); // Refetch the data after deleting the news
-                // Ensure the currently selected area remains selected after data refresh
+                await fetchData();
                 setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
             } else {
                 console.error('Failed to delete news:', response.statusText);
@@ -162,35 +162,35 @@ export default function HuongNghienCuu() {
             console.error('Error deleting news:', error);
         }
     };
+    if (!researchData) {
+        return <div>Loading...</div>;
+    }
+    const handleSubmitNews = async (news: RelatedNews) => {
+        const method = editNewsIndex !== null ? 'PUT' : 'POST';
+        const url = '/api/nghien-cuu/huong-nghien-cuu';
+        const areaName = selectedArea.name;
+        const body = editNewsIndex !== null
+            ? { areaName, newsId: selectedArea.relatedNews[editNewsIndex].id, news }
+            : { type: 'news', areaName, news };
 
-    const handleAddNews = async () => {
-        const newNews = {
-            id: Math.max(...(selectedArea.relatedNews?.map(news => news.id) || [0]), 0) + 1,
-            title: "New Related News",
-            description: "Description of the new related news",
-            link: "#",
-        };
-    
-        const areaName = selectedArea.name; // Get the name of the currently selected area
-    
         try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ type: 'news', areaName, news: newNews }), // Send the correct area name
+                body: JSON.stringify(body),
             });
-    
+
             if (response.ok) {
-                await fetchData(); // Refetch the data after adding the news
-                // Ensure the currently selected area remains selected after data refresh
+                await fetchData();
+                setIsNewsFormVisible(false);
                 setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
             } else {
-                console.error('Failed to add new news:', response.statusText);
+                console.error('Failed to submit news:', response.statusText);
             }
         } catch (error) {
-            console.error('Error adding new news:', error);
+            console.error('Error submitting news:', error);
         }
     };
 
@@ -255,7 +255,7 @@ export default function HuongNghienCuu() {
                         )}
                     </div>
                     <div className="space-y-6">
-                        {selectedArea.relatedNews?.map((news) => (
+                        {currentNews.map((news, index) => (
                             <div key={news.id} className="flex justify-between items-center">
                                 <div>
                                     <h4 className="font-bold">{news.title}</h4>
@@ -266,10 +266,10 @@ export default function HuongNghienCuu() {
                                         Chi tiết &gt;&gt;
                                     </a>
                                     {isAdmin && (
-                                        <>
+                                        <div className="flex space-x-2">
                                             <button
                                                 className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                                onClick={() => handleEditNews(news.id)}
+                                                onClick={() => handleEditNews(index)}
                                             >
                                                 Sửa
                                             </button>
@@ -279,12 +279,32 @@ export default function HuongNghienCuu() {
                                             >
                                                 Xóa
                                             </button>
-                                        </>
+                                        </div>
                                     )}
                                 </div>
                             </div>
                         ))}
                     </div>
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={handleNextPage}
+                        onPrevPage={handlePrevPage}
+                    />
+                    {isFormVisible && (
+                        <ResearchAreaForm
+                            researchArea={editAreaIndex !== null ? researchAreas[editAreaIndex] : null}
+                            onSubmit={handleSubmitArea}
+                            onClose={() => setIsFormVisible(false)}
+                        />
+                    )}
+                    {isNewsFormVisible && (
+                        <RelatedNewsForm
+                            relatedNews={editNewsIndex !== null ? selectedArea.relatedNews[editNewsIndex] : null}
+                            onSubmit={handleSubmitNews}
+                            onClose={() => setIsNewsFormVisible(false)}
+                        />
+                    )}
                 </div>
             </div>
         </div>

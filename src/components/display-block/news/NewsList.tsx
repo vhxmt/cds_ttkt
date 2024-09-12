@@ -44,11 +44,7 @@ const NewsList: React.FC<NewsListProps> = ({ news, isAdmin, onEdit, onDelete }) 
                         <button
                             key={page}
                             onClick={() => handleClick(page + 1)}
-                            className={`px-3 py-1 rounded ${
-                                currentPage === page + 1 ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
-                            }`}
                         >
-                            {page + 1}
                         </button>
                     ))}
                 </div>
