@@ -2,10 +2,14 @@
 import { useState } from 'react';
 import data from '@/data/tuyen-dung/list/data.json';
 import Breadcrumb from "@/components/breadcrumb";
+import PgControl from '@/components/display-block/PgControl'; // Import component phân trang
 
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCV, setSelectedCV] = useState<string | null>(null);
+    const [filter, setFilter] = useState<string>(''); // Trạng thái bộ lọc
+    const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
+    const applicantsPerPage = 5; // Số lượng ứng viên trên mỗi trang
 
     const openModal = (cv: string) => {
         setSelectedCV(cv);
@@ -13,7 +17,34 @@ export default function TuyenDungPage() {
     };
     const closeModal = () => setIsModalOpen(false);
 
-    const applicants = data;
+    // Lấy danh sách các vị trí đăng ký duy nhất
+    const uniquePositions = Array.from(new Set(data.map(applicant => applicant.viTriDangKy)));
+
+    // Lọc ứng viên theo vị trí đăng ký
+    const filteredApplicants = filter ? data.filter(applicant => applicant.viTriDangKy === filter) : data;
+
+    // Tính toán tổng số trang
+    const totalPages = Math.ceil(filteredApplicants.length / applicantsPerPage);
+
+    // Lấy ứng viên cho trang hiện tại
+    const currentApplicants = filteredApplicants.slice(
+        (currentPage - 1) * applicantsPerPage,
+        currentPage * applicantsPerPage
+    );
+
+    // Chuyển sang trang tiếp theo
+    const onNextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    // Quay lại trang trước
+    const onPrevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
 
     return (
         <div className="max-w-6xl mx-auto p-4 mt-6">
@@ -21,8 +52,29 @@ export default function TuyenDungPage() {
 
             <h1 className="text-2xl font-bold mb-6">Danh sách ứng tuyển</h1>
 
+            {/* Bộ lọc vị trí đăng ký */}
+            <div className="mb-6">
+                <label htmlFor="positionFilter" className="mr-2 font-semibold">Lọc theo vị trí đăng ký:</label>
+                <select
+                    id="positionFilter"
+                    className="border border-gray-300 rounded px-2 py-1"
+                    value={filter}
+                    onChange={(e) => {
+                        setFilter(e.target.value);
+                        setCurrentPage(1); // Reset về trang đầu khi thay đổi bộ lọc
+                    }}
+                >
+                    <option value="">Tất cả vị trí</option>
+                    {uniquePositions.map((position, index) => (
+                        <option key={index} value={position}>
+                            {position}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
             <div className="grid grid-cols-1 gap-6">
-                {applicants.map((applicant, index) => (
+                {currentApplicants.map((applicant, index) => (
                     <div key={index} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
                         <h2 className="text-xl font-semibold mb-4">{applicant.hoTen}</h2>
 
@@ -67,9 +119,16 @@ export default function TuyenDungPage() {
                             Xem CV
                         </button>
                     </div>
-
                 ))}
             </div>
+
+            {/* Component phân trang */}
+            <PgControl
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onNextPage={onNextPage}
+                onPrevPage={onPrevPage}
+            />
 
             {/* Modal hiển thị CV */}
             {isModalOpen && selectedCV && (
