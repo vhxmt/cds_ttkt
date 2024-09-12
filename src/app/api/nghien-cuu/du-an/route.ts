@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }
 
     const projects = readData();
-    projects.push(newProject);
+    projects.unshift(newProject);
     writeData(projects);
 
     return NextResponse.json({ message: 'Project added successfully', project: newProject }, { status: 201 });

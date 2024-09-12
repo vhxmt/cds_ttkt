@@ -4,59 +4,48 @@
     {
       "name": "Hệ thống điện và năng lượng",
       "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
-      "relatedNews": []
+      "relatedNews": [
+        {
+          "id": 5,
+          "title": "New Related News",
+          "description": "Description of the new related news",
+          "link": "#"
+        }
+      ]
     },
     {
       "name": "Lưới điện thông minh",
       "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
       "relatedNews": [
         {
-          "id": 2,
-          "title": "Hội thảo về lưới điện tương lai",
-          "description": "Tham gia hội thảo về tương lai của lưới điện.",
-          "link": "#"
-        },
-        {
-          "id": 3,
+          "id": 15,
           "title": "New Related News",
           "description": "Description of the new related news",
           "link": "#"
-        },
+        }
+      ]
+    },
+    {
+      "name": "nesw",
+      "description": "news",
+      "relatedNews": [
         {
-          "id": 4,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
+          "id": 0.6400398445551874,
+          "title": "add new",
+          "description": "here",
+          "link": ""
+        }
+      ]
+    },
+    {
+      "name": "àdafafd",
+      "description": "adfafda",
+      "relatedNews": [
         {
-          "id": 5,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 6,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 7,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 8,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        },
-        {
-          "id": 9,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
+          "id": 0.8612688442568994,
+          "title": "fff",
+          "description": "ddd",
+          "link": ""
         }
       ]
     }

@@ -56,7 +56,7 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
 
         case 'POST':
             const newPatent: Patent = body;
-            data.patents.push(newPatent);
+            data.patents.unshift(newPatent);
             writeData(data);
             res.status(201).json({ message: 'Patent added successfully', patent: newPatent });
             break;
