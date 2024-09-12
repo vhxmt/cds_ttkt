@@ -1,11 +1,19 @@
 {
   "blogPosts": [
     {
+      "title": "adasd",
+      "date": "adasd",
+      "description": "ádasd",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726131358881-Screenshot 2021-11-27 074800.jpg",
+      "href": "",
+      "id": "2024-09-12T08:57:42.637Z"
+    },
+    {
       "id": "2024-09-05T15:10:35Z",
       "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2024",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726121892930-Screenshot 2021-11-27 074800.jpg",
+      "date": "12/5/2023",
+      "description": "A post about electric vehicle control techniques and innovations",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130411357-tmp.jpg",
       "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
     },
     {
@@ -13,7 +21,7 @@
       "title": "Cảm biến thông minh (Smart Sensor)",
       "date": "28/4/2021",
       "description": "A post about smart sensor technology.",
-      "imageUrl": "/path-to-image-2.png",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130419131-Screenshot 2022-11-06 211051.jpg",
       "href": "/blogs/smart-sensor"
     },
     {
@@ -21,7 +29,7 @@
       "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
       "date": "27/9/2020",
       "description": "A post about power electronics and electrical drives.",
-      "imageUrl": "/path-to-image-3.png",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130427003-COLOR.jpg",
       "href": "/blogs/power-electronics-electrical-drives-lab"
     }
   ]

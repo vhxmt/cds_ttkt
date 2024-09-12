@@ -11,10 +11,10 @@ import BlogFormModal from './BlogFormModal';
 export interface BlogPost {
     id: string;
     title: string;
-    date: string;
-    description: string;
-    imageUrl: string;
-    href: string;
+    date?: string;
+    description?: string;
+    imageUrl?: string;
+    href?: string;
 }
 
 export default function DienTuDongHoa() {
@@ -55,26 +55,31 @@ export default function DienTuDongHoa() {
 
     const handleSubmit = async (post: BlogPost) => {
         const method = post.id ? 'PUT' : 'POST';
-        try {
-            const res = await fetch('/api/blogs/dien-tu-dong-hoa', {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: post.id,
-                    updatedPost: post,
-                }),
-            });
-            if (res.ok) {
-                fetchData(); 
-            } else {
-                console.error('Failed to submit post');
-            }
-        } catch (error) {
-            console.error('Error submitting post:', error);
+        const url = '/api/blogs/dien-tu-dong-hoa';
+    
+        // Ensure that optional fields can be left empty
+        const bodyContent = post.id
+            ? { id: post.id, updatedPost: post } // For edit (PUT request)
+            : { newPost: { ...post, id: undefined } }; // For adding a new post (POST request)
+    
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bodyContent),
+        });
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error submitting post:', errorData.message);
+            return;
         }
+    
+        fetchData(); // Refresh blog posts
+        setIsModalOpen(false); // Close the modal after submission
     };
+    
 
     const handleDelete = async (id: string) => {
         try {

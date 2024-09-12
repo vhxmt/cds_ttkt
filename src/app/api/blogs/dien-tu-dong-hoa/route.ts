@@ -37,25 +37,37 @@ export async function GET(req: NextRequest) {
 
 // **POST** method to add a new blog post
 export async function POST(req: NextRequest) {
-    const body = await req.json();
-    const { newPost } = body;
+    try {
+        const body = await req.json();
+        const { newPost } = body;
 
-    if (!newPost || !newPost.title || !newPost.date || !newPost.description || !newPost.imageUrl || !newPost.href) {
-        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        // Check if the title field is present
+        if (!newPost || !newPost.title) {
+            return NextResponse.json({ message: 'Invalid request. Title is required.' }, { status: 400 });
+        }
+
+        const data = readData();
+
+        // Generate a new ID if it's missing or empty
+        const newPostWithId = {
+            ...newPost,
+            id: new Date().toISOString(), // Generate an ID based on the current date and time
+        };
+
+        // Add the new post at the start of the list
+        data.blogPosts.unshift(newPostWithId);
+        writeData(data); // Write the updated data to the JSON file
+
+        return NextResponse.json({ message: 'Blog post added successfully', post: newPostWithId }, { status: 201 });
+    } catch (error) {
+        console.error('Error processing POST request:', error);
+        return NextResponse.json({ message: 'Server error' }, { status: 500 });
     }
-
-    const data = readData();
-
-    const newPostWithId = {
-        ...newPost,
-        id: new Date().toISOString(), // ID is based on creation date
-    };
-
-    data.blogPosts.unshift(newPostWithId);
-    writeData(data);
-
-    return NextResponse.json({ message: 'Blog post added successfully', post: newPostWithId }, { status: 201 });
 }
+
+
+
+
 
 // **PUT** method to edit an existing blog post by ID
 export async function PUT(req: NextRequest) {
