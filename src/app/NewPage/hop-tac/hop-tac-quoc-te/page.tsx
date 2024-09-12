@@ -7,7 +7,7 @@ import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 
-const { domesticCooperation } = cooperationData;
+const { internationalCooperation } = cooperationData;
 const { cooperationEventData: newsData } = cooperationEventData;
 
 const handleAdd = () => {
@@ -57,8 +57,8 @@ export default function NewsPage() {
                     />
                     {/* Cooperation Section */}
                     <CooperationSection
-                        title={domesticCooperation.title}
-                        items={domesticCooperation.items}
+                        title={internationalCooperation.title}
+                        items={internationalCooperation.items}
                     />
                 </div>
             </div>

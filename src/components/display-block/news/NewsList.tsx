@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import NewsItem from '@/components/display-block/news/NewsItem';
 
 interface News {
+    id: string; // Add the id field
     imageSrc: string;
     title: string;
     date: string;
@@ -29,7 +30,7 @@ const NewsList: React.FC<NewsListProps> = ({ news, isAdmin, onEdit, onDelete }) 
         <div className="mb-8">
             {paginatedNews.map((item, index) => (
                 <NewsItem
-                    key={index}
+                    key={item.id} // Change to use item.id
                     imageSrc={item.imageSrc}
                     title={item.title}
                     date={item.date}
