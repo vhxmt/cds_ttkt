@@ -24,8 +24,8 @@ export default function ContactForm({ initialData, onSubmit, onClose, refreshDat
     const [formData, setFormData] = useState<ContactData>(initialData);
     const [banner, setBanner] = useState<File | null>(null); // For file uploads
     const [isUploading, setIsUploading] = useState<boolean>(false); // Track the file upload status
-    const [bannerPath, setBannerPath] = useState<string>(initialData.bannerImageSrc); // For preview
 
+    // Update form data for text fields
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -34,55 +34,52 @@ export default function ContactForm({ initialData, onSubmit, onClose, refreshDat
         }));
     };
 
-    const handleBannerChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Handle banner file change (file is stored, but not uploaded yet)
+    const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            setBanner(file);
+            setBanner(file); // Set the file, but don't upload it yet
+        }
+    };
 
-            // Handle the file upload immediately
-            const formDataToSend = new FormData();
-            formDataToSend.append('banner', file);
+    // Handle form submission (file upload happens here)
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
 
-            setIsUploading(true); // Mark as uploading
+        try {
+            setIsUploading(true);
 
-            try {
-                const response = await fetch('/api/lien-he/thong-tin-lien-he/upload', {
+            let updatedBannerPath = formData.bannerImageSrc;
+
+            // Upload the banner file if a new one is selected
+            if (banner) {
+                const formDataToSend = new FormData();
+                formDataToSend.append('file', banner);
+                formDataToSend.append('folderPath', 'image/lien-he/thong-tin-lien-he'); // Pass the folder path
+                formDataToSend.append('oldFilePath', formData.bannerImageSrc); // Pass the old image path
+
+                const response = await fetch('/api/upload', {
                     method: 'POST',
                     body: formDataToSend,
                 });
 
                 const data = await response.json();
                 if (response.ok) {
-                    setBannerPath(data.filePath); // Update the banner path for preview and store it
+                    updatedBannerPath = data.filePath; // Get the new file path
                 } else {
                     console.error('Banner upload failed:', data.message);
+                    return;
                 }
-            } catch (error) {
-                console.error('Error uploading banner:', error);
-            } finally {
-                setIsUploading(false); // Mark as upload finished
-            }
-        }
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        try {
-            // Ensure the form isn't submitted until the file upload is done
-            if (isUploading) {
-                alert('Please wait for the file upload to complete');
-                return;
             }
 
             // Submit the form data including the updated banner path
-            const formDataToSend = new FormData();
-            formDataToSend.append('contactInfo', JSON.stringify({ ...formData, bannerImageSrc: bannerPath }));
+            const formDataToSubmit = new FormData();
+            formDataToSubmit.append('contactInfo', JSON.stringify({ ...formData, bannerImageSrc: updatedBannerPath }));
 
             // Call the API to update the JSON file
             const response = await fetch('/api/lien-he/thong-tin-lien-he', {
                 method: 'PUT',
-                body: formDataToSend,
+                body: formDataToSubmit,
             });
 
             if (response.ok) {
@@ -94,6 +91,8 @@ export default function ContactForm({ initialData, onSubmit, onClose, refreshDat
             }
         } catch (error) {
             console.error('Error submitting form:', error);
+        } finally {
+            setIsUploading(false);
         }
     };
 
@@ -172,11 +171,6 @@ export default function ContactForm({ initialData, onSubmit, onClose, refreshDat
                     <div className="mb-4">
                         <label className="block mb-1">Banner Image</label>
                         <input type="file" name="banner" accept="image/*" onChange={handleBannerChange} />
-                        {bannerPath && (
-                            <div className="mt-2">
-                                <img src={bannerPath} alt={formData.bannerAltText} className="w-full rounded-lg" />
-                            </div>
-                        )}
                     </div>
 
                     <div className="flex justify-end space-x-2">

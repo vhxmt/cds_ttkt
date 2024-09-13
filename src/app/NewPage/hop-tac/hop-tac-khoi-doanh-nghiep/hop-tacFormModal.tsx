@@ -14,7 +14,12 @@ interface CooperationEventFormModalProps {
     initialData?: CooperationEvent | null;
 }
 
-const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
+const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
+    isOpen,
+    onClose,
+    onSubmit,
+    initialData,
+}) => {
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [file, setFile] = useState<File | null>(null);
@@ -33,46 +38,55 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({ i
         }
     }, [initialData]);
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Handle file selection but don't upload immediately
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
-            setFile(e.target.files[0]);
+            setFile(e.target.files[0]); // Store the file for uploading later
+        }
+    };
 
-            const formData = new FormData();
-            formData.append('file', e.target.files[0]);
+    // Handle form submission (upload image if needed and submit form)
+    const handleSubmit = async () => {
+        if (!title) {
+            alert('Please provide at least a title.');
+            return;
+        }
 
+        let updatedImageSrc = imgSrc;
+
+        if (file) {
             setIsUploading(true);
 
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folderPath', 'image/hop-tac/hop-tac-khoi-doanh-nghiep'); // Universal path
+
             try {
-                const res = await fetch('/api/hop-tac/hop-tac-khoi-doanh-nghiep/upload', {
+                const res = await fetch('/api/upload', {
                     method: 'POST',
                     body: formData,
                 });
 
                 const data = await res.json();
                 if (res.ok) {
-                    setImgSrc(data.imageUrl); // Save the image URL to the state
+                    updatedImageSrc = data.filePath; // Get new image URL
                 } else {
                     console.error('Image upload failed:', data.message);
+                    return;
                 }
             } catch (err) {
                 console.error('Upload error:', err);
+                return;
             } finally {
                 setIsUploading(false);
             }
-        }
-    };
-
-    const handleSubmit = () => {
-        if (!title) {
-            alert('Please provide at least a title.');
-            return;
         }
 
         const newEvent: CooperationEvent = {
             id: initialData?.id || '',
             title,
             date: date || new Date().toLocaleDateString(),
-            imageSrc: imgSrc || initialData?.imageSrc || '',
+            imageSrc: updatedImageSrc || '',
         };
 
         onSubmit(newEvent); // Submit the new event with updated image URL
@@ -84,7 +98,9 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({ i
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Cooperation Event' : 'Add Cooperation Event'}</h3>
+                <h3 className="text-xl font-semibold mb-4">
+                    {initialData ? 'Edit Cooperation Event' : 'Add Cooperation Event'}
+                </h3>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Title</label>
@@ -122,8 +138,9 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({ i
                     <button
                         onClick={handleSubmit}
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                        disabled={isUploading}
                     >
-                        {initialData ? 'Save Changes' : 'Add Event'}
+                        {isUploading ? 'Uploading...' : initialData ? 'Save Changes' : 'Add Event'}
                     </button>
                     <button
                         onClick={onClose}
