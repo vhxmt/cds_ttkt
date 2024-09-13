@@ -1,11 +1,10 @@
-// src/app/NewPage/thiet-bi-va-dung-cu/form.tsx
 import React, { useState, useEffect } from 'react';
 
 interface Tool {
     id?: string;
     title: string;
-    imgSrc?: string;  // Make imgSrc optional
-    description?: string;  // Make description optional
+    imgSrc?: string;
+    description?: string;
 }
 
 interface FormProps {
@@ -20,44 +19,18 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [file, setFile] = useState<File | null>(null);
-    const [imgSrc, setImgSrc] = useState('');
     const [isUploading, setIsUploading] = useState(false);
 
-    // Initialize form values if editing an existing tool
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title || '');
             setDescription(initialData.description || '');
-            setImgSrc(initialData.imgSrc || '');
         }
     }, [initialData]);
 
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
-
-            const formData = new FormData();
-            formData.append('file', e.target.files[0]);
-
-            setIsUploading(true);
-
-            try {
-                const res = await fetch('/api/thiet-bi-va-dung-cu/upload', {
-                    method: 'POST',
-                    body: formData,
-                });
-
-                const data = await res.json();
-                if (res.ok) {
-                    setImgSrc(data.imageUrl); // Automatically load and display the uploaded image
-                } else {
-                    console.error('Image upload failed:', data.message);
-                }
-            } catch (err) {
-                console.error('Upload error:', err);
-            } finally {
-                setIsUploading(false);
-            }
         }
     };
 
@@ -66,37 +39,47 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
             alert('Please provide at least a title.');
             return;
         }
-    
-        const tool: Tool = {
-            id: initialData?.id || '',  // Use existing ID if editing, otherwise empty for a new tool
-            title,
-            imgSrc: imgSrc || initialData?.imgSrc,  // Set the image URL from the uploaded image
-            description: description || initialData?.description,  // Use existing description if none provided
-        };
-    
-        try {
-            const method = initialData?.id ? 'PUT' : 'POST';  // Determine if this is an add or edit
-            const res = await fetch('/api/thiet-bi-va-dung-cu', {
-                method,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    section,  // Pass the section as required by the API
-                    newTool: tool,  // For POST requests
-                }),
-            });
-    
-            const data = await res.json();
-            if (res.ok) {
-                onSubmit(data.tool);  // Update the parent component with the new tool
-                onClose();  // Close the modal
-            } else {
-                console.error('Failed to submit tool:', data.message);
+
+        let imgSrc = initialData?.imgSrc || '';
+
+        // Upload the image if a new one is selected
+        if (file) {
+            setIsUploading(true);
+
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folderPath', 'image/thiet-bi-va-dung-cu'); // Universal folder path
+
+            try {
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    imgSrc = data.filePath; // Get new image URL
+                } else {
+                    console.error('Image upload failed:', data.message);
+                    return;
+                }
+            } catch (err) {
+                console.error('Upload error:', err);
+                return;
+            } finally {
+                setIsUploading(false);
             }
-        } catch (error) {
-            console.error('Submit error:', error);
         }
+
+        const tool: Tool = {
+            id: initialData?.id || '',
+            title,
+            imgSrc,
+            description,
+        };
+
+        onSubmit(tool);
+        onClose();
     };
 
     if (!isOpen) return null;
@@ -107,7 +90,9 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
                 <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Tool' : 'Add Tool'} - {section}</h3>
 
                 <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700">Title <span className="text-red-500">*</span></label>
+                    <label className="block text-sm font-medium text-gray-700">
+                        Title <span className="text-red-500">*</span>
+                    </label>
                     <input
                         type="text"
                         value={title}
@@ -131,18 +116,13 @@ const ToolFormModal: React.FC<FormProps> = ({ isOpen, onClose, onSubmit, initial
                     <input type="file" onChange={handleFileChange} className="mt-1 block w-full" />
                 </div>
 
-                {imgSrc && (
-                    <div className="mb-4">
-                        <img src={imgSrc} alt="Uploaded" className="w-full h-auto rounded-md" />
-                    </div>
-                )}
-
                 <div className="flex justify-end space-x-2">
                     <button
                         onClick={handleSubmit}
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                        disabled={isUploading}
                     >
-                        {initialData ? 'Save Changes' : 'Add Tool'}
+                        {isUploading ? 'Uploading...' : initialData ? 'Save Changes' : 'Add Tool'}
                     </button>
                     <button
                         onClick={onClose}

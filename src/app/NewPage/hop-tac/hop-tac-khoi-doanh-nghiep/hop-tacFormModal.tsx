@@ -24,17 +24,14 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
     const [date, setDate] = useState('');
     const [file, setFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
-    const [imgSrc, setImgSrc] = useState<string | undefined>(undefined);
 
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
             setDate(initialData.date);
-            setImgSrc(initialData.imageSrc);
         } else {
             setTitle('');
             setDate('');
-            setImgSrc('');
         }
     }, [initialData]);
 
@@ -45,14 +42,14 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
         }
     };
 
-    // Handle form submission (upload image if needed and submit form)
+    // Handle form submission (file upload happens here)
     const handleSubmit = async () => {
         if (!title) {
             alert('Please provide at least a title.');
             return;
         }
 
-        let updatedImageSrc = imgSrc;
+        let updatedImageSrc = initialData?.imageSrc || '';
 
         if (file) {
             setIsUploading(true);
@@ -98,9 +95,7 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
     return (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
             <div className="bg-white p-6 rounded-lg w-full max-w-md">
-                <h3 className="text-xl font-semibold mb-4">
-                    {initialData ? 'Edit Cooperation Event' : 'Add Cooperation Event'}
-                </h3>
+                <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Cooperation Event' : 'Add Cooperation Event'}</h3>
 
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Title</label>
@@ -127,12 +122,6 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
                     <label className="block text-sm font-medium text-gray-700">Upload Image</label>
                     <input type="file" onChange={handleFileChange} className="mt-1 block w-full" />
                 </div>
-
-                {imgSrc && (
-                    <div className="mb-4">
-                        <img src={imgSrc} alt="Uploaded" className="w-full h-auto rounded-md" />
-                    </div>
-                )}
 
                 <div className="flex justify-end space-x-2">
                     <button

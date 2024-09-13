@@ -1,44 +1,36 @@
 {
   "blogPosts": [
     {
-      "title": "test",
-      "date": "27/9/2002",
-      "description": "tét",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726205672575-Screenshot 2023-02-23 233630.jpg",
-      "href": "https://github.com/vhxmt/cds_ttkt/graphs/contributors",
-      "id": "2024-09-13T05:34:37.578Z"
+      "title": "fsdfsfsf",
+      "date": "adfafda",
+      "description": "adfafd",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244572063-image_2024-09-13_232245255.png",
+      "href": "",
+      "id": "2024-09-13T16:22:52.095Z"
     },
     {
-      "title": "adasd",
-      "date": "adasd",
-      "description": "ádasd",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726131358881-Screenshot 2021-11-27 074800.jpg",
+      "title": "ầdfafadf",
+      "date": "adfafda",
+      "description": "sfdadfafdafd",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244558633-Screenshot 2022-11-06 210921.jpg",
       "href": "",
-      "id": "2024-09-12T08:57:42.637Z"
+      "id": "2024-09-13T16:22:38.664Z"
+    },
+    {
+      "title": "ádfaf",
+      "date": "adfafda",
+      "description": "fasdfafdad",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244464441-image_2024-09-13_232102474.png",
+      "href": "",
+      "id": "2024-09-13T16:21:04.472Z"
     },
     {
       "id": "2024-09-05T15:10:35Z",
       "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
       "date": "12/5/2023",
       "description": "A post about electric vehicle control techniques and innovations",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130411357-tmp.jpg",
+      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244538036-Homescreen.jpg",
       "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
-    },
-    {
-      "id": "2024-09-05T11:20:25Z",
-      "title": "Cảm biến thông minh (Smart Sensor)",
-      "date": "28/4/2021",
-      "description": "A post about smart sensor technology.",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130419131-Screenshot 2022-11-06 211051.jpg",
-      "href": "/blogs/smart-sensor"
-    },
-    {
-      "id": "2024-09-05T10:15:30Z",
-      "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
-      "date": "27/9/2020",
-      "description": "A post about power electronics and electrical drives.",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726130427003-COLOR.jpg",
-      "href": "/blogs/power-electronics-electrical-drives-lab"
     }
   ]
 }

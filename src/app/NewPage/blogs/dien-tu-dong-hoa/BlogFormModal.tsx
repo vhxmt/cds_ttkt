@@ -5,7 +5,7 @@ interface BlogPost {
     title: string;
     date: string;
     description: string;
-    imageUrl?: string; // The uploaded image's URL will be here, optional
+    imageUrl?: string;
     href: string;
 }
 
@@ -40,39 +40,50 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
             setImgSrc('');
         }
     }, [initialData]);
-    const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+
+    // Handle file selection (do not upload immediately)
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files.length > 0) {
             setFile(e.target.files[0]);
+        }
+    };
 
-            const formData = new FormData();
-            formData.append('file', e.target.files[0]);
+    // Handle form submission (upload file and save form data)
+    const handleSubmit = async () => {
+        if (!title) {
+            alert('Please provide at least a title.');
+            return;
+        }
 
+        let updatedImgSrc = imgSrc;
+
+        // Upload the file if a new one is selected
+        if (file) {
             setIsUploading(true);
 
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folderPath', 'image/blog/dien-tu-dong-hoa'); // Universal path
+
             try {
-                const res = await fetch('/api/blogs/dien-tu-dong-hoa/upload', {
+                const res = await fetch('/api/upload', {
                     method: 'POST',
                     body: formData,
                 });
 
                 const data = await res.json();
                 if (res.ok) {
-                    setImgSrc(data.imageUrl); 
+                    updatedImgSrc = data.filePath; // Get new image URL
                 } else {
                     console.error('Image upload failed:', data.message);
+                    return;
                 }
             } catch (err) {
                 console.error('Upload error:', err);
+                return;
             } finally {
                 setIsUploading(false);
             }
-        }
-    };
-
-    const handleSubmit = async () => {
-        if (!title) {
-            alert('Please provide at least a title.');
-            return;
         }
 
         const newPost: BlogPost = {
@@ -80,7 +91,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
             title,
             date: date || new Date().toLocaleDateString(),
             description,
-            imageUrl: imgSrc || initialData?.imageUrl, // Use uploaded image or existing image
+            imageUrl: updatedImgSrc, // Use uploaded image or existing image
             href,
         };
 
@@ -130,12 +141,6 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
                     <input type="file" onChange={handleFileChange} className="mt-1 block w-full" />
                 </div>
 
-                {imgSrc && (
-                    <div className="mb-4">
-                        <img src={imgSrc} alt="Uploaded" className="w-full h-auto rounded-md" />
-                    </div>
-                )}
-
                 <div className="mb-4">
                     <label className="block text-sm font-medium text-gray-700">Link URL</label>
                     <input
@@ -150,8 +155,9 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
                     <button
                         onClick={handleSubmit}
                         className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                        disabled={isUploading}
                     >
-                        {initialData ? 'Save Changes' : 'Add Post'}
+                        {isUploading ? 'Uploading...' : initialData ? 'Save Changes' : 'Add Post'}
                     </button>
                     <button
                         onClick={onClose}
