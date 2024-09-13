@@ -3,7 +3,7 @@ import { useState } from 'react';
 
 interface StaffFormProps {
     initialData?: Staff;
-    onSubmit: (staff: Staff, imageFile?: File) => Promise<void>;
+    onSubmit: (staff: Staff) => Promise<void>;
     onCancel: () => void;
 }
 
@@ -22,6 +22,8 @@ export default function StaffForm({ initialData, onSubmit, onCancel }: StaffForm
     const [mail, setMail] = useState(initialData?.mail || '');
     const [tel, setTel] = useState(initialData?.tel || '');
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [imageUrl, setImageUrl] = useState(initialData?.imageUrl || '');
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files && e.target.files[0]) {
@@ -29,19 +31,50 @@ export default function StaffForm({ initialData, onSubmit, onCancel }: StaffForm
         }
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit(
-            {
-                id: initialData?.id || '', // Ensure the id is passed along
+        setIsSubmitting(true);
+        
+        try {
+            let uploadedImageUrl = imageUrl;
+
+            // If a new image is selected, upload it using the universal upload API
+            if (imageFile) {
+                const formData = new FormData();
+                formData.append('file', imageFile);
+                formData.append('folderPath', 'image/nhan-luc/can-bo'); // Set the folder path for staff images
+                
+                // Include the old image URL if present, to delete the old image
+                if (initialData?.imageUrl) {
+                    formData.append('oldFilePath', initialData.imageUrl);
+                }
+
+                const res = await fetch('/api/upload', {
+                    method: 'POST',
+                    body: formData,
+                });
+
+                const data = await res.json();
+                if (res.ok) {
+                    uploadedImageUrl = data.filePath; // Set the new image URL
+                } else {
+                    console.error('Image upload failed:', data.message);
+                    return;
+                }
+            }
+
+            // Submit the updated staff data
+            await onSubmit({
+                id: initialData?.id || '', // Keep the original ID
                 name,
                 title,
                 mail,
                 tel,
-                imageUrl: initialData?.imageUrl || '',
-            },
-            imageFile || undefined
-        );
+                imageUrl: uploadedImageUrl, // Use the new image URL or existing one
+            });
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -99,8 +132,9 @@ export default function StaffForm({ initialData, onSubmit, onCancel }: StaffForm
                 <button
                     type="submit"
                     className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    disabled={isSubmitting}
                 >
-                    Submit
+                    {isSubmitting ? 'Submitting...' : 'Submit'}
                 </button>
                 <button
                     type="button"
