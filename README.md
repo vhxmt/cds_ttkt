@@ -1,4 +1,5 @@
 ## Getting Started
+1st, install NodeJS
 
 First, run the development server:
 

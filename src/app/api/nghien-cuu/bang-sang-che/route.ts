@@ -92,8 +92,6 @@ export async function DELETE(req: Request) {
 
     try {
         const data = readData();
-
-        // Filter out the patent to delete
         const updatedPatents = data.patents.filter(p => p.stt !== parseInt(patentId));
 
         if (updatedPatents.length === data.patents.length) {
@@ -103,7 +101,7 @@ export async function DELETE(req: Request) {
         // Reorder the remaining patents' stt
         const reorderedPatents = updatedPatents.map((patent, index) => ({
             ...patent,
-            stt: index + 1, // Reassign stt values sequentially starting from 1
+            stt: index + 1, 
         }));
 
         // Save the updated list

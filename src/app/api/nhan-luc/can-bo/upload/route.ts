@@ -30,9 +30,8 @@ async function nextRequestToIncomingMessage(req: NextRequest): Promise<IncomingM
 
 export async function POST(req: NextRequest) {
     const form = new IncomingForm({
-        uploadDir,          // The directory where the files will be uploaded
-        keepExtensions: true, // Keep file extensions
-        // No need for the filename option, the default behavior will retain the original filename
+        uploadDir,          
+        keepExtensions: true,
     });
 
     // Convert NextRequest to IncomingMessage
