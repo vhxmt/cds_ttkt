@@ -1,15 +1,7 @@
 {
-  "headers": [
-    "STT", 
-    "Tên Phòng thí nghiệm", 
-    "Địa điểm hiện tại", 
-    "Trưởng nhóm nghiên cứu", 
-    "Thông tin liên hệ", 
-    "Mã bưu chính"
-  ],
   "labCategories": [
     {
-      "title": "A. Thuộc lĩnh vực Điện tử viễn thông",
+      "title": "Thuộc lĩnh vực Điện tử viễn thông",
       "data": [
         {
           "id": 1,
@@ -17,15 +9,23 @@
           "location": "Địa điểm A",
           "leader": "Trưởng nhóm A",
           "contactInfo": "Thông tin A",
-          "postalCode": "ABC123"
+          "postalCode": "ABC1234"
+        },
+        {
+          "id": 2,
+          "name": "ádasd",
+          "location": "ádsad",
+          "leader": "ádasd",
+          "contactInfo": "ádad",
+          "postalCode": "ádasd"
         }
       ]
     },
     {
-      "title": "B. Thuộc lĩnh vực Điện - Tự động hóa",
+      "title": "Thuộc lĩnh vực Điện - Tự động hóa",
       "data": [
         {
-          "id": 2,
+          "id": 1,
           "name": "Phòng thí nghiệm B",
           "location": "Địa điểm B",
           "leader": "Trưởng nhóm B",
@@ -33,6 +33,10 @@
           "postalCode": "ABC123"
         }
       ]
+    },
+    {
+      "title": "ádasd",
+      "data": []
     }
   ]
 }
