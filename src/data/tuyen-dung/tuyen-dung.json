@@ -26,12 +26,6 @@
           "imageSrc": "/image/nhan-luc/Contemporary_Computer_Lab.jpg"
         }
       ]
-    },
-    "menuItems": [
-      {
-        "label": "Tuyển dụng",
-        "href": "/tuyen-dung"
-      }
-    ]
+    }
   }
   
