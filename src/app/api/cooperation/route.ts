@@ -3,7 +3,6 @@ import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Path to the JSON file
 const filePath = path.join(process.cwd(), 'src/data/cooperations.json');
 
 // Helper function to read the JSON data
