@@ -156,17 +156,6 @@ export default function Home() {
                 items={cooperationData.domesticCooperation.items}
             />
 
-            {isAdmin && (
-                <div className="flex justify-end mb-4">
-                    <button
-                        onClick={() => setIsCooperationFormOpen(true)}
-                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                    >
-                        Edit Domestic Cooperation
-                    </button>
-                </div>
-            )}
-
             {/* International Cooperation Section */}
             <CooperationSection
                 title={cooperationData.internationalCooperation.title}
@@ -179,7 +168,7 @@ export default function Home() {
                         onClick={() => setIsCooperationFormOpen(true)}
                         className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
                     >
-                        Edit International Cooperation
+                        Edit Cooperation
                     </button>
                 </div>
             )}
