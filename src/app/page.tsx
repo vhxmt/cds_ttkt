@@ -2,20 +2,20 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import CooperationSection from '@/components/frame/CooperationSection';
-import cooperationData from '@/data/cooperations.json';
-import HomePageForm from './HomePageForm'; // Import the popup form component
+import HomePageForm from './HomePageForm';
+import CooperationForm from './CooperationForm'; // Import the cooperation form component
 import { useAuth } from "@/components/providers/AuthProvider";
-
-const { domesticCooperation, internationalCooperation } = cooperationData;
 
 export default function Home() {
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const [homePageData, setHomePageData] = useState<any>(null);
+    const [cooperationData, setCooperationData] = useState<any>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [isFormOpen, setIsFormOpen] = useState(false); // State for opening the form
+    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isCooperationFormOpen, setIsCooperationFormOpen] = useState(false); // New state for cooperation form
 
     useEffect(() => {
         const fetchHomePageData = async () => {
@@ -25,7 +25,22 @@ export default function Home() {
                     throw new Error('Failed to fetch home page data');
                 }
                 const data = await response.json();
-                setHomePageData(data.HomePageData); 
+                setHomePageData(data.HomePageData);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'An unknown error occurred');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        const fetchCooperationData = async () => {
+            try {
+                const response = await fetch('/api/cooperation');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch cooperation data');
+                }
+                const data = await response.json();
+                setCooperationData(data);
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'An unknown error occurred');
             } finally {
@@ -34,6 +49,7 @@ export default function Home() {
         };
 
         fetchHomePageData();
+        fetchCooperationData();
     }, []);
 
     // Handle form submission
@@ -47,7 +63,7 @@ export default function Home() {
 
             if (res.ok) {
                 setHomePageData(updatedData);
-                setIsFormOpen(false); // Close the form on success
+                setIsFormOpen(false);
             } else {
                 console.error('Failed to update home page data');
             }
@@ -56,11 +72,38 @@ export default function Home() {
         }
     };
 
+    // Handle cooperation form submission
+    const handleCooperationSubmit = async (updatedData: any) => {
+        try {
+            const res = await fetch('/api/cooperation', {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(updatedData),
+            });
+
+            if (res.ok) {
+                setCooperationData(updatedData);
+                setIsCooperationFormOpen(false);
+            } else {
+                console.error('Failed to update cooperation data');
+            }
+        } catch (error) {
+            console.error('Error updating cooperation data:', error);
+        }
+    };
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
-    // Split StrategicGoalsItems into individual lines
-    const strategicGoalsItems = homePageData.StrategicGoalsItems.split('\n');
+    // Ensure that homePageData exists before accessing properties
+    if (!homePageData) return <p>Error: Home page data is missing or invalid.</p>;
+
+    const strategicGoalsItems = homePageData?.StrategicGoalsItems ? homePageData.StrategicGoalsItems.split('\n') : [];
+
+    // Ensure that cooperationData is not null or undefined before accessing its properties
+    if (!cooperationData || !cooperationData.domesticCooperation || !cooperationData.internationalCooperation) {
+        return <p>Error: Cooperation data is missing or invalid.</p>;
+    }
 
     return (
         <main className="relative min-h-screen bg-gray-100 dark:bg-white">
@@ -107,21 +150,54 @@ export default function Home() {
                 )}
             </div>
 
+            {/* Domestic Cooperation Section */}
             <CooperationSection
-                title={domesticCooperation.title}
-                items={domesticCooperation.items}
-            />
-            <CooperationSection
-                title={internationalCooperation.title}
-                items={internationalCooperation.items}
+                title={cooperationData.domesticCooperation.title}
+                items={cooperationData.domesticCooperation.items}
             />
 
-            {/* Render the popup form if it's open */}
+            {isAdmin && (
+                <div className="flex justify-end mb-4">
+                    <button
+                        onClick={() => setIsCooperationFormOpen(true)}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    >
+                        Edit Domestic Cooperation
+                    </button>
+                </div>
+            )}
+
+            {/* International Cooperation Section */}
+            <CooperationSection
+                title={cooperationData.internationalCooperation.title}
+                items={cooperationData.internationalCooperation.items}
+            />
+
+            {isAdmin && (
+                <div className="flex justify-end mb-4">
+                    <button
+                        onClick={() => setIsCooperationFormOpen(true)}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    >
+                        Edit International Cooperation
+                    </button>
+                </div>
+            )}
+
+            {/* Render the popup forms if they are open */}
             {isFormOpen && (
                 <HomePageForm
                     initialData={homePageData}
                     onSubmit={handleFormSubmit}
                     onCancel={() => setIsFormOpen(false)}
+                />
+            )}
+
+            {isCooperationFormOpen && (
+                <CooperationForm
+                    initialData={cooperationData}
+                    onSubmit={handleCooperationSubmit}
+                    onCancel={() => setIsCooperationFormOpen(false)}
                 />
             )}
         </main>
