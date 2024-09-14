@@ -101,29 +101,6 @@ export default function CongBoKhoaHoc() {
                 <SideMenu />
                 <div className="w-3/4 p-4 border-l border-gray-300">
                     {/* Search Bar */}
-                    <div className="flex items-center mb-6">
-                        <input
-                            type="text"
-                            placeholder="Tìm kiếm..."
-                            className="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none"
-                        />
-                        <button className="bg-gray-200 p-2 rounded-r-lg">
-                            <svg
-                                className="h-6 w-6 text-gray-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-4.35-4.35M4.75 10.5a5.75 5.75 0 1111.5 0 5.75 5.75 0 01-11.5 0z"
-                                ></path>
-                            </svg>
-                        </button>
-                    </div>
 
                     <div className="flex p-4 border-l border-gray-300">
                         <div className="flex-none w-1/2 p-4">
@@ -160,7 +137,16 @@ export default function CongBoKhoaHoc() {
                             />
                         </div>
                     </div>
-
+                    {isAdmin && (
+                        <div className="flex justify-end mt-4">
+                            <button
+                                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                                onClick={handleAdd}
+                            >
+                                Thêm
+                            </button>
+                        </div>
+                    )}
                     {/* Publications List */}
                     <div className="space-y-6">
                         {currentItems.map(article => (
@@ -213,16 +199,6 @@ export default function CongBoKhoaHoc() {
                         onPrevPage={handlePrevPage}
                     />
 
-                    {isAdmin && (
-                        <div className="flex justify-end mt-4">
-                            <button
-                                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                                onClick={handleAdd}
-                            >
-                                Thêm
-                            </button>
-                        </div>
-                    )}
                 </div>
             </div>
         </div>

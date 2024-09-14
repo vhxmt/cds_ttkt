@@ -137,7 +137,7 @@ export default function NewsPage() {
                       {newsItem.title}
                     </a>
                   </h3>
-                  <img src={newsItem.image} alt={newsItem.title} className="w-full h-20 mb-2" />
+
                   <p className="text-gray-700 mb-4">{newsItem.description}</p>
                   {isAdmin && (
                       <div className="flex space-x-2">
