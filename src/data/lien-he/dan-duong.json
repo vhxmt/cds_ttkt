@@ -5,37 +5,32 @@
       "data": [
         {
           "id": 1,
-          "name": "Phòng thí nghiệm A",
-          "location": "Địa điểm A",
-          "leader": "Trưởng nhóm A",
-          "contactInfo": "Thông tin A",
-          "postalCode": "ABC1234"
+          "name": "àdaf",
+          "location": "adfafdafd",
+          "leader": "âf",
+          "contactInfo": "adsfa",
+          "postalCode": "âff"
         },
         {
           "id": 2,
-          "name": "ádasd",
-          "location": "ádsad",
-          "leader": "ádasd",
-          "contactInfo": "ádad",
-          "postalCode": "ádasd"
+          "name": "àdadfa",
+          "location": "adfadsfadf",
+          "leader": "adfads",
+          "contactInfo": "fadfadfa",
+          "postalCode": "ấdfafdadfffff"
+        },
+        {
+          "name": "âf",
+          "location": "àdadf",
+          "leader": "adfadf",
+          "contactInfo": "ádfadf",
+          "postalCode": "adfadf",
+          "id": 3
         }
       ]
     },
     {
       "title": "Thuộc lĩnh vực Điện - Tự động hóa",
-      "data": [
-        {
-          "id": 1,
-          "name": "Phòng thí nghiệm B",
-          "location": "Địa điểm B",
-          "leader": "Trưởng nhóm B",
-          "contactInfo": "Thông tin B",
-          "postalCode": "ABC123"
-        }
-      ]
-    },
-    {
-      "title": "ádasd",
       "data": []
     }
   ]

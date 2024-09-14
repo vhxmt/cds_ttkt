@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Breadcrumb from '@/components/breadcrumb';
 import SideMenu from '@/components/display-block/SideMenu';
 import { useAuth } from '@/components/providers/AuthProvider';
-import LabForm, { Lab } from './LabForm'; // Import the LabForm
+import LabForm, { Lab } from './LabForm'; 
 
 // Define the types for lab data and categories
 interface LabCategory {
@@ -40,61 +40,57 @@ export default function DanDuong() {
         fetchLabs();
     }, []);
 
-    // Handle adding a new category
-    const handleAddCategory = async () => {
-        if (!newCategoryTitle.trim()) {
-            alert('Please enter a valid category title.');
-            return;
+// Handle adding a new category
+const handleAddCategory = async () => {
+    if (!newCategoryTitle.trim()) {
+        alert('Please enter a valid category title.');
+        return;
+    }
+
+    try {
+        const response = await fetch('/api/lien-he/dan-duong', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ categoryTitle: newCategoryTitle }), // Pass only the category title
+        });
+
+        if (response.ok) {
+            setNewCategoryTitle(''); // Clear the input
+            fetchLabs(); // Refresh the labs
+        } else {
+            console.error('Failed to add new category');
         }
+    } catch (error) {
+        console.error('Error adding new category:', error);
+    }
+};
 
-        const newCategory: LabCategory = {
-            title: newCategoryTitle,
-            data: [],
-        };
+// Handle deleting a category
+const handleDeleteCategory = async (categoryTitle: string) => {
+    const confirmed = confirm(`Are you sure you want to delete the category "${categoryTitle}"?`);
+    if (!confirmed) return;
 
-        try {
-            const response = await fetch('/api/lien-he/dan-duong', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(newCategory),
-            });
+    try {
+        const response = await fetch('/api/lien-he/dan-duong', {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ categoryTitle }),  // Pass the category title to delete
+        });
 
-            if (response.ok) {
-                setNewCategoryTitle(''); // Clear the input
-                fetchLabs(); // Refresh the labs
-            } else {
-                console.error('Failed to add new category');
-            }
-        } catch (error) {
-            console.error('Error adding new category:', error);
+        if (response.ok) {
+            fetchLabs(); // Refresh the labs
+        } else {
+            console.error('Failed to delete category');
         }
-    };
+    } catch (error) {
+        console.error('Error deleting category:', error);
+    }
+};
 
-    // Handle deleting a category
-    const handleDeleteCategory = async (categoryTitle: string) => {
-        const confirmed = confirm(`Are you sure you want to delete the category "${categoryTitle}"?`);
-        if (!confirmed) return;
-
-        try {
-            const response = await fetch('/api/lien-he/dan-duong', {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ categoryTitle }),
-            });
-
-            if (response.ok) {
-                fetchLabs(); // Refresh the labs
-            } else {
-                console.error('Failed to delete category');
-            }
-        } catch (error) {
-            console.error('Error deleting category:', error);
-        }
-    };
 
     // Handle adding a new lab
     const handleAddLab = (categoryTitle: string) => {

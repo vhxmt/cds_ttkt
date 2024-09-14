@@ -8,7 +8,7 @@ interface LabFormProps {
 }
 
 export interface Lab {
-    id: string;
+    id: number;
     name: string;
     location: string;
     leader: string;
@@ -25,15 +25,16 @@ export default function LabForm({ initialData, onSubmit, onCancel }: LabFormProp
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const newLab = {
-            id: initialData?.id || `${Date.now()}`, // Generate ID if adding new lab
+        const newLab: Omit<Lab, 'id'> | Lab = {
             name,
             location,
             leader,
             contactInfo,
             postalCode,
+            ...(initialData?.id && { id: initialData.id }), 
         };
-        onSubmit(newLab);
+    
+        onSubmit(newLab as Lab); // Submit the lab
     };
 
     return (

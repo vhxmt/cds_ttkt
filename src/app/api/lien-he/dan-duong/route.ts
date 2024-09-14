@@ -44,16 +44,33 @@ export async function GET() {
     return NextResponse.json(data);
 }
 
-// POST: Add a new lab or update a lab
+// POST: Add a new lab or a new category
 export async function POST(req: NextRequest) {
     try {
         const { lab, categoryTitle } = await req.json();
 
+        const data = readData();
+
+        // If only categoryTitle is provided, add a new category
+        if (categoryTitle && !lab) {
+            const existingCategory = data.labCategories.find(cat => cat.title === categoryTitle);
+
+            if (existingCategory) {
+                return NextResponse.json({ message: 'Category already exists' }, { status: 400 });
+            }
+
+            const newCategory = { title: categoryTitle, data: [] }; // New empty category
+            data.labCategories.push(newCategory);
+            writeData(data);
+
+            return NextResponse.json(newCategory, { status: 201 });
+        }
+
+        // If lab and categoryTitle are provided, add a new lab
         if (!lab || !categoryTitle) {
             return NextResponse.json({ message: 'Missing lab data or category' }, { status: 400 });
         }
 
-        const data = readData();
         const category = data.labCategories.find(cat => cat.title === categoryTitle);
 
         if (!category) {
@@ -106,47 +123,74 @@ export async function PUT(req: NextRequest) {
     }
 }
 
-// DELETE: Remove a lab by ID from the given category
+// DELETE: Remove a lab by ID or delete an entire category
 export async function DELETE(req: NextRequest) {
     try {
-        const idParam = req.nextUrl.searchParams.get('id'); // Get the lab id from query params
-        if (!idParam) {
-            return NextResponse.json({ message: 'Lab ID is required' }, { status: 400 });
-        }
-        const labId = parseInt(idParam); // Convert the id to a number
-        if (isNaN(labId)) {
-            return NextResponse.json({ message: 'Invalid lab ID' }, { status: 400 });
+        const idParam = req.nextUrl.searchParams.get('id'); // Get the lab ID from query params
+        let categoryTitle: string | null = null;
+
+        // Only attempt to parse the body if it's needed (for category deletion)
+        if (req.method === 'DELETE' && !idParam) {
+            try {
+                const body = await req.json();
+                categoryTitle = body?.categoryTitle;
+            } catch (error) {
+                // Ignore the error if no body is present, as it's optional
+            }
         }
 
         const data = readData();
 
-        let labFound = false; // Track if the lab was found and deleted
-
-        // Iterate over categories to find and remove the lab
-        data.labCategories = data.labCategories.map((category) => {
-            const filteredData = category.data.filter(lab => lab.id !== labId); // Remove lab by ID
-
-            if (filteredData.length !== category.data.length) {
-                labFound = true;
+        // Handle deleting a single lab by ID
+        if (idParam) {
+            const labId = parseInt(idParam);
+            if (isNaN(labId)) {
+                return NextResponse.json({ message: 'Invalid lab ID' }, { status: 400 });
             }
 
-            // Reassign ids sequentially to avoid gaps
-            const updatedData = filteredData.map((lab, index) => ({
-                ...lab,
-                id: index + 1,
-            }));
+            let labFound = false;
 
-            return { ...category, data: updatedData };
-        });
+            // Iterate over categories to find and remove the lab
+            data.labCategories = data.labCategories.map((category) => {
+                const filteredData = category.data.filter(lab => lab.id !== labId); // Remove lab by ID
 
-        if (!labFound) {
-            return NextResponse.json({ message: 'Lab not found' }, { status: 404 });
+                if (filteredData.length !== category.data.length) {
+                    labFound = true;
+                }
+
+                // Reassign IDs sequentially to avoid gaps
+                const updatedData = filteredData.map((lab, index) => ({
+                    ...lab,
+                    id: index + 1,
+                }));
+
+                return { ...category, data: updatedData };
+            });
+
+            if (!labFound) {
+                return NextResponse.json({ message: 'Lab not found' }, { status: 404 });
+            }
+
+            writeData(data); // Save the updated data
+            return NextResponse.json({ message: 'Lab deleted successfully' });
         }
 
-        writeData(data); // Save the updated data
-        return NextResponse.json({ message: 'Lab deleted successfully' });
+        // Handle deleting the entire category
+        if (categoryTitle) {
+            const updatedCategories = data.labCategories.filter(category => category.title !== categoryTitle);
+
+            if (updatedCategories.length === data.labCategories.length) {
+                return NextResponse.json({ message: 'Category not found' }, { status: 404 });
+            }
+
+            data.labCategories = updatedCategories; // Update categories after deletion
+            writeData(data); // Save the updated data
+
+            return NextResponse.json({ message: 'Category deleted successfully' });
+        }
     } catch (error) {
-        console.error('Error deleting lab:', error);
+        console.error('Error processing DELETE request:', error);
         return NextResponse.json({ message: 'Internal Server Error' }, { status: 500 });
     }
 }
+
