@@ -48,12 +48,12 @@ export default function NewsPage() {
     }, []);
 
     const handleAdd = () => {
-        setCurrentNews(undefined); // Clear the current news to add a new one
+        setCurrentNews(undefined); 
         setIsModalOpen(true);
     };
 
     const handleEdit = (item: CooperationEvent) => {
-        setCurrentNews(item); // Set current item for editing
+        setCurrentNews(item); 
         setIsModalOpen(true);
     };
 
@@ -63,7 +63,7 @@ export default function NewsPage() {
                 method: 'DELETE',
             });
             if (res.ok) {
-                fetchNewsData(); // Refresh the list after deletion
+                fetchNewsData(); 
             } else {
                 console.error('Failed to delete news item');
             }
@@ -73,7 +73,7 @@ export default function NewsPage() {
     };
 
     const handleSubmit = async (event: CooperationEvent) => {
-        const isEdit = !!event.id; // Check if we are editing an existing event (PUT) or adding a new one (POST)
+        const isEdit = !!event.id; 
         const method = isEdit ? 'PUT' : 'POST';
         const url = '/api/hop-tac/hop-tac-khoi-han-lam';
         
@@ -120,30 +120,30 @@ export default function NewsPage() {
 
                     {/* News List */}
                     <NewsList
-                        news={paginatedNews} // Chỉ truyền những sự kiện trong trang hiện tại
+                        news={paginatedNews}
                         isAdmin={isAdmin}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
                     
-                    {/* Conditionally render CooperationSection if the modal is not open */}
-                    {!isModalOpen && (
-                        <CooperationSection
-                            title={domesticCooperation.title}
-                            items={domesticCooperation.items}
-                        />
-                    )}
-                    {/* Pagination Control */}
                     <PgControl
                         currentPage={currentPage}
                         totalPages={Math.ceil(newsData.length / itemsPerPage)}
                         onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
                         onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     />
+
+                    {!isModalOpen && (
+                        <CooperationSection
+                            title={domesticCooperation.title}
+                            items={domesticCooperation.items}
+                        />
+                    )}
+
+                    
                 </div>
             </div>
 
-            {/* Form Modal for Adding/Editing */}
             <CooperationEventFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

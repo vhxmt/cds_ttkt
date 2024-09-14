@@ -30,7 +30,10 @@ export default function CongBoKhoaHoc() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-    const [yearRange, setYearRange] = useState({ from: 1980, to: 2024 });
+    const [yearRange, setYearRange] = useState({ from: 1980, to: new Date().getFullYear() });
+    const [filterApplied, setFilterApplied] = useState(false); // New state for when filters are applied
+    const [appliedFilters, setAppliedFilters] = useState<string[]>([]); // To hold applied filter
+    const [appliedYearRange, setAppliedYearRange] = useState({ from: 1980, to: new Date().getFullYear() }); // To hold applied year range
     const [error, setError] = useState<string | null>(null);
     
     const [currentArticle, setCurrentArticle] = useState<Article | null>(null); // Define currentArticle state
@@ -85,10 +88,17 @@ export default function CongBoKhoaHoc() {
         }));
     };
 
-    // Filter articles based on the selected filters and year range
+    // Apply filters when the "Lọc" button is clicked
+    const applyFilters = () => {
+        setAppliedFilters(selectedFilters);
+        setAppliedYearRange(yearRange);
+        setFilterApplied(true); // Set filter applied to true
+    };
+
+    // Filter articles based on the applied filters and year range
     const filteredArticles = articles.filter(article => {
-        const matchesFilter = selectedFilters.length === 0 || selectedFilters.includes(article.type);
-        const matchesYearRange = article.releaseYear >= yearRange.from && article.releaseYear <= yearRange.to;
+        const matchesFilter = appliedFilters.length === 0 || appliedFilters.includes(article.type);
+        const matchesYearRange = article.releaseYear >= appliedYearRange.from && article.releaseYear <= appliedYearRange.to;
         return matchesFilter && matchesYearRange;
     });
 
@@ -157,6 +167,7 @@ export default function CongBoKhoaHoc() {
                                         type="checkbox"
                                         id={filter.id}
                                         onChange={() => handleFilterChange(filter.id)}
+                                        checked={selectedFilters.includes(filter.id)} // Keep the checkboxes checked when selected
                                     />
                                     <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
                                 </div>
@@ -183,6 +194,16 @@ export default function CongBoKhoaHoc() {
                         </div>
                     </div>
 
+                    {/* "Lọc" button */}
+                    <div className="flex justify-end mt-4">
+                        <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                            onClick={applyFilters}
+                        >
+                            Lọc
+                        </button>
+                    </div>
+
                     {isAdmin && (
                         <div className="flex justify-end mt-4">
                             <button
@@ -195,7 +216,7 @@ export default function CongBoKhoaHoc() {
                     )}
 
                     <div className="space-y-6">
-                        {currentItems.map(article => (
+                        {filteredArticles.map(article => (
                             <div key={article.id} className="flex space-x-4 border-b pb-4">
                                 <div className="flex flex-col justify-between w-full">
                                     <div>
@@ -245,7 +266,6 @@ export default function CongBoKhoaHoc() {
                     onSubmit={handleFormSubmit}
                     onCancel={() => setShowForm(false)}
                 />
-            
             )}
         </div>
     );

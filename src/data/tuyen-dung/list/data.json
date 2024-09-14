@@ -1,24 +1,31 @@
-[
-  {
-    "hoTen": "Nguyen Van A",
-    "soDienThoai": "0987654321",
-    "email": "nguyenvana@example.com",
-    "noiTotNghiep": "Trường Đại học XYZ",
-    "donViCongTac": "Viện ABC",
-    "dinhHuongNghienCuu": "Trí tuệ nhân tạo",
-    "viTriDangKy": "Giảng viên",
-    "cauHoiThacMac": "Không có",
-    "cv": "CV_nguyenvanA.pdf"
-  },
-  {
-    "hoTen": "Tran Thi B",
-    "soDienThoai": "0981234567",
-    "email": "tranthib@example.com",
-    "noiTotNghiep": "Trường Đại học XYZ",
-    "donViCongTac": "Viện ABC",
-    "dinhHuongNghienCuu": "Khoa học dữ liệu",
-    "viTriDangKy": "Nghiên cứu viên",
-    "cauHoiThacMac": "Có quy trình xét duyệt như thế nào?",
-    "cv": "CV_tranthiB.pdf"
-  }
-]
+{
+  "RecruitData": [
+    {
+      "hoTen": "Nguyen Van A",
+      "soDienThoai": "0987654321",
+      "email": "nguyenvana@example.com",
+      "dinhHuongNghienCuu": "Trí tuệ nhân tạo",
+      "viTriDangKy": "Giảng viên",
+      "cauHoiThacMac": "Không có",
+      "ngayDangKy": "2024-09-01 19:59:31"
+    },
+    {
+      "hoTen": "Tran Thi B",
+      "soDienThoai": "0981234567",
+      "email": "tranthib@example.com",
+      "dinhHuongNghienCuu": "Khoa học dữ liệu",
+      "viTriDangKy": "Nghiên cứu viên",
+      "cauHoiThacMac": "Có quy trình xét duyệt như thế nào?",
+      "ngayDangKy": "2024-08-26 19:59:31"
+    },
+    {
+      "hoTen": "àdafda",
+      "soDienThoai": "fadfa",
+      "email": "adfadf@ffff",
+      "dinhHuongNghienCuu": "adfafd",
+      "viTriDangKy": "àdafd",
+      "cauHoiThacMac": "àdadfa",
+      "ngayDangKy": "2024-09-14T20:03:26.941Z"
+    }
+  ]
+}

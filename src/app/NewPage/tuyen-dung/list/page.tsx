@@ -7,7 +7,6 @@ import PgControl from '@/components/display-block/PgControl'; // Import componen
 export default function TuyenDungPage() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedCV, setSelectedCV] = useState<string | null>(null);
-    const [filter, setFilter] = useState<string>(''); // Trạng thái bộ lọc
     const [currentPage, setCurrentPage] = useState(1); // Trang hiện tại
     const applicantsPerPage = 5; // Số lượng ứng viên trên mỗi trang
 
@@ -17,17 +16,11 @@ export default function TuyenDungPage() {
     };
     const closeModal = () => setIsModalOpen(false);
 
-    // Lấy danh sách các vị trí đăng ký duy nhất
-    const uniquePositions = Array.from(new Set(data.map(applicant => applicant.viTriDangKy)));
-
-    // Lọc ứng viên theo vị trí đăng ký
-    const filteredApplicants = filter ? data.filter(applicant => applicant.viTriDangKy === filter) : data;
-
     // Tính toán tổng số trang
-    const totalPages = Math.ceil(filteredApplicants.length / applicantsPerPage);
+    const totalPages = Math.ceil(data.RecruitData.length / applicantsPerPage);
 
     // Lấy ứng viên cho trang hiện tại
-    const currentApplicants = filteredApplicants.slice(
+    const currentApplicants = data.RecruitData.slice(
         (currentPage - 1) * applicantsPerPage,
         currentPage * applicantsPerPage
     );
@@ -52,27 +45,7 @@ export default function TuyenDungPage() {
 
             <h1 className="text-2xl font-bold mb-6">Danh sách ứng tuyển</h1>
 
-            {/* Bộ lọc vị trí đăng ký */}
-            <div className="mb-6">
-                <label htmlFor="positionFilter" className="mr-2 font-semibold">Lọc theo vị trí đăng ký:</label>
-                <select
-                    id="positionFilter"
-                    className="border border-gray-300 rounded px-2 py-1"
-                    value={filter}
-                    onChange={(e) => {
-                        setFilter(e.target.value);
-                        setCurrentPage(1); // Reset về trang đầu khi thay đổi bộ lọc
-                    }}
-                >
-                    <option value="">Tất cả vị trí</option>
-                    {uniquePositions.map((position, index) => (
-                        <option key={index} value={position}>
-                            {position}
-                        </option>
-                    ))}
-                </select>
-            </div>
-
+            {/* Hiển thị danh sách ứng viên */}
             <div className="grid grid-cols-1 gap-6">
                 {currentApplicants.map((applicant, index) => (
                     <div key={index} className="bg-white shadow-md rounded-lg p-6 border border-gray-200">
@@ -88,19 +61,6 @@ export default function TuyenDungPage() {
                         </div>
 
                         <div className="flex space-x-4 mb-4">
-                            {applicant.noiTotNghiep && (
-                                <div className="flex-1">
-                                    <p><strong>Nơi tốt nghiệp:</strong> {applicant.noiTotNghiep}</p>
-                                </div>
-                            )}
-                            {applicant.donViCongTac && (
-                                <div className="flex-1">
-                                    <p><strong>Đơn vị công tác:</strong> {applicant.donViCongTac}</p>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="flex space-x-4 mb-4">
                             <div className="flex-1">
                                 <p><strong>Vị trí đăng ký:</strong> {applicant.viTriDangKy}</p>
                             </div>
@@ -111,13 +71,7 @@ export default function TuyenDungPage() {
 
                         <p><strong>Câu hỏi thắc mắc:</strong> {applicant.cauHoiThacMac}</p>
 
-                        {/* Nút tải CV */}
-                        <button
-                            className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                            onClick={() => openModal(applicant.cv)}
-                        >
-                            Xem CV
-                        </button>
+                        {/* Nút xem chi tiết nếu cần thêm */}
                     </div>
                 ))}
             </div>
@@ -149,11 +103,7 @@ export default function TuyenDungPage() {
                             </svg>
                         </button>
 
-                        <iframe
-                            src={`/cv/${selectedCV}`}
-                            className="w-full h-[500px]"
-                            title="CV"
-                        ></iframe>
+                        {/* Xử lý hiển thị CV nếu cần */}
                     </div>
                 </div>
             )}

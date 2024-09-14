@@ -10,7 +10,7 @@ import CooperationEventFormModal from './hop-tacFormModal';
 
 // Define the types for the cooperation event
 interface CooperationEvent {
-    id: string; // Ensure id is always a string
+    id: string;
     title: string;
     date: string;
     imageSrc: string;
@@ -22,11 +22,10 @@ export default function NewsPage() {
     const [newsData, setNewsData] = useState<CooperationEvent[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentNews, setCurrentNews] = useState<CooperationEvent | undefined>();
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 3; 
 
-    const [currentPage, setCurrentPage] = useState(1); // Current page
-    const itemsPerPage = 3; // Number of events per page
-
-    const isAdmin = true; // Change based on actual user status
+    const isAdmin = true; 
 
     // Fetch news data from API
     const fetchNewsData = async () => {
@@ -126,6 +125,12 @@ export default function NewsPage() {
                         onDelete={handleDelete}
                     />
                     
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={Math.ceil(newsData.length / itemsPerPage)}
+                        onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
+                        onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    />
                     {/* Conditionally render CooperationSection if the modal is not open */}
                     {!isModalOpen && (
                         <CooperationSection
@@ -134,12 +139,7 @@ export default function NewsPage() {
                         />
                     )}
                     {/* Pagination Control */}
-                    <PgControl
-                        currentPage={currentPage}
-                        totalPages={Math.ceil(newsData.length / itemsPerPage)}
-                        onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
-                        onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-                    />
+                    
                 </div>
             </div>
 
