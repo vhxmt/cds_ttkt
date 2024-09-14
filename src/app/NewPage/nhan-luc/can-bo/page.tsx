@@ -7,7 +7,7 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-nhan-luc'; 
+import StaffForm from './form-can-bo'; 
 
 interface Staff {
     id: string; 

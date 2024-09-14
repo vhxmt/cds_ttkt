@@ -63,7 +63,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
 
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('folderPath', 'image/blogs/dien-tu-dong-hoa'); // Universal path
+            formData.append('folderPath', 'image/blogs/dien-tu-dong-hoa-cntt'); // Universal path
 
             try {
                 const res = await fetch('/api/upload', {

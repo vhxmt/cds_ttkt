@@ -103,14 +103,6 @@
       "mail": "new.email@example.com",
       "tel": "000-000-000",
       "imageUrl": "/path-to-new-image.png"
-    },
-    {
-      "id": "2024-09-05T11:06:22.097Z",
-      "name": "àdadfa",
-      "title": "adfadf",
-      "mail": "agh@xcv",
-      "tel": "12312312312",
-      "imageUrl": "/path-to-default-image.png"
     }
   ]
 }

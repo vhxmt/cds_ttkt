@@ -14,7 +14,7 @@
       "title": "Phó trưởng khoa Điện",
       "mail": "email3@example.com",
       "tel": "555-555-555",
-      "imageUrl": "/image/nhan-luc/can-bo/1725548560900_TRINH_Phu_Quang.jpg"
+      "imageUrl": "/image/nhan-luc/sinh-vien-tien-si/1726310626548-image .png"
     },
     {
       "id": "2024-09-05T05:58:19.967Z",
@@ -103,14 +103,6 @@
       "mail": "new.email@example.com",
       "tel": "000-000-000",
       "imageUrl": "/path-to-new-image.png"
-    },
-    {
-      "id": "2024-09-05T11:06:22.097Z",
-      "name": "àdadfa",
-      "title": "adfadf",
-      "mail": "agh@xcv",
-      "tel": "12312312312",
-      "imageUrl": "/path-to-default-image.png"
     }
   ]
 }
