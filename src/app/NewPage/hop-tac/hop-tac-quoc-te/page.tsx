@@ -15,7 +15,7 @@ interface CooperationEvent {
     imageSrc: string;
 }
 
-const { domesticCooperation } = cooperationData;
+const { internationalCooperation } = cooperationData;
 
 export default function NewsPage() {
     const [newsData, setNewsData] = useState<CooperationEvent[]>([]);
@@ -123,8 +123,8 @@ export default function NewsPage() {
                     {/* Conditionally render CooperationSection if the modal is not open */}
                     {!isModalOpen && (
                         <CooperationSection
-                            title={domesticCooperation.title}
-                            items={domesticCooperation.items}
+                            title={internationalCooperation.title}
+                            items={internationalCooperation.items}
                         />
                     )}
                 </div>

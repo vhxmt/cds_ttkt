@@ -1,5 +1,13 @@
 {
-    "awardData" : [
+  "awardData": [
+    {
+      "id": "2024-09-14T14:40:46.024Z",
+      "recipients": "adfadf",
+      "award": "adfadsf",
+      "organization": "àdad",
+      "year": 2023,
+      "achievement": "ádfadf"
+    },
     {
       "recipients": "H.Sarnago, O.Lucia, D.Menzi, J.W.Kolar",
       "award": "Giải thưởng Bài báo hay nhất",
@@ -9,4 +17,3 @@
     }
   ]
 }
-  
