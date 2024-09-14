@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import CooperationSection from "@/components/frame/CooperationSection";
 import cooperationData from "@/data/cooperations.json";
+import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
@@ -21,6 +22,9 @@ export default function NewsPage() {
     const [newsData, setNewsData] = useState<CooperationEvent[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentNews, setCurrentNews] = useState<CooperationEvent | undefined>();
+
+    const [currentPage, setCurrentPage] = useState(1); // Current page
+    const itemsPerPage = 3; // Number of events per page
 
     const isAdmin = true; // Change based on actual user status
 
@@ -93,7 +97,9 @@ export default function NewsPage() {
         fetchNewsData(); 
         setIsModalOpen(false); 
     };
-    
+
+    // Get paginated news
+    const paginatedNews = newsData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className="max-w-6xl mx-auto p-4">
@@ -114,12 +120,12 @@ export default function NewsPage() {
 
                     {/* News List */}
                     <NewsList
-                        news={newsData}
+                        news={paginatedNews} // Chỉ truyền những sự kiện trong trang hiện tại
                         isAdmin={isAdmin}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
-
+                    
                     {/* Conditionally render CooperationSection if the modal is not open */}
                     {!isModalOpen && (
                         <CooperationSection
@@ -127,6 +133,13 @@ export default function NewsPage() {
                             items={domesticCooperation.items}
                         />
                     )}
+                    {/* Pagination Control */}
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={Math.ceil(newsData.length / itemsPerPage)}
+                        onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
+                        onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    />
                 </div>
             </div>
 
@@ -140,3 +153,4 @@ export default function NewsPage() {
         </div>
     );
 }
+
