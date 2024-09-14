@@ -6,7 +6,7 @@ import Breadcrumb from '@/components/breadcrumb';
 import {useAuth} from "@/components/providers/AuthProvider";
 
 // Destructure the imported JSON
-const { courseLibrary, upcomingCourses } = eventData;
+const { upcomingCourses } = eventData;
 
 // Các hàm xử lý cho nút thêm, sửa, xóa (hiện tại là hàm trống)
 const handleAdd = () => {
@@ -70,7 +70,7 @@ export default function NewsPage() {
                                 )}
                             </header>
                             {upcomingCourses.map((course, index) => (
-                                <div key={index} className="p-6 max-w-2xl mx-auto bg-gray-100 shadow-md rounded-lg mb-6">
+                                <div key={index} className="p-6 max-w-4xl mx-auto bg-gray-100 shadow-md rounded-lg mb-6">
                                     <h2 className="text-2xl font-semibold mb-4 font-inter">
                                         {course.date}: {course.name}
                                     </h2>
@@ -109,48 +109,7 @@ export default function NewsPage() {
                             ))}
                         </div>
 
-                        {/* Ô Kho khóa học */}
-                        <div className="flex-1 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
-                            <header className="flex items-center mb-4">
-                                <h1 className="text-2xl font-semibold">Kho khóa học</h1>
-                                {isAdmin && (
-                                    <button
-                                        className="ml-auto bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                                        onClick={handleAdd}
-                                    >
-                                        Thêm
-                                    </button>
-                                )}
-                            </header>
-                            {courseLibrary.map((course, index) => (
-                                <div key={index} className="p-6 max-w-2xl mx-auto bg-gray-100 shadow-md rounded-lg mb-6">
-                                    <h2 className="text-lg font-semibold mb-4 font-inter">
-                                        {course.name}:
-                                    </h2>
-                                    <a href={course.link} className="text-blue-600 hover:underline">
-                                        {course.link}
-                                    </a>
-                                    <div className="flex space-x-2 mt-4">
-                                        {isAdmin && (
-                                            <>
-                                                <button
-                                                    className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"
-                                                    onClick={() => handleEdit()}
-                                                >
-                                                    Sửa
-                                                </button>
-                                                <button
-                                                    className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-                                                    onClick={() => handleDelete()}
-                                                >
-                                                    Xóa
-                                                </button>
-                                            </>
-                                        )}
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
+
                     </div>
                 </div>
             </div>
