@@ -1,3 +1,4 @@
+// src/app/NewPage/giai-thuong/giai-thuong-bai-bao-hoi-nghi/page.tsx
 'use client';
 import { useState, useEffect, useCallback } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
@@ -5,7 +6,7 @@ import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
 import TableHeader from '@/components/display-block/TableHeader';
 import TableRow from '@/components/display-block/TableRow';
-import Modal from './form';  // Import the Modal component
+import Modal from '../form';  // Import the Modal component
 import { useAuth } from "@/components/providers/AuthProvider";
 
 interface Award {
