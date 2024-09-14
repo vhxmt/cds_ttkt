@@ -83,53 +83,6 @@ export default function NewsPage() {
           <SideMenu currentSection="Tin tức/Sự kiện" />
           <div className="flex-1">
             <Banner src={banner.src} alt={banner.alt} />
-            <div className="flex justify-between items-center mb-4">
-              <h1 className="text-2xl font-semibold">SEEE Tin tức & Sự kiện</h1>
-              {isAdmin && (
-                  <button
-                      onClick={handleAdd}
-                      className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-                  >
-                    Thêm Tin Tức
-                  </button>
-              )}
-            </div>
-            <div className="flex space-x-4 mb-4">
-              <div className="flex-1 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
-                <header className="flex items-center mb-4">
-                  <h1 className="text-2xl font-semibold">Tin tức mới nhất</h1>
-                </header>
-                <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                  {featuredNews.map((newsItem, index) => (
-                      <li key={index}>
-                        <a href={newsItem.link} className="text-blue-600 hover:underline">
-                          {newsItem.title}
-                        </a>
-                      </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="flex-1 p-4 border border-gray-200 rounded-lg shadow-sm bg-white">
-                <header className="flex items-center mb-4">
-                  <h1 className="text-2xl font-semibold">Sự kiện sắp diễn ra</h1>
-                </header>
-                <div className="space-y-4">
-                  {events.map((event, index) => (
-                      <div key={index} className="p-4 border border-gray-200 rounded-lg bg-gray-50">
-                        <h3 className="text-lg font-semibold mb-2">
-                          <a href={event.link} className="text-blue-600 hover:underline">
-                            {event.title}
-                          </a>
-                        </h3>
-                        <p className="text-gray-700 mb-4">{event.description}</p>
-                        <a href={event.link} className="text-blue-600 hover:underline">
-                          Chi tiết
-                        </a>
-                      </div>
-                  ))}
-                </div>
-              </div>
-            </div>
             {newsList.map((newsItem) => (
                 <div key={newsItem.id} className="bg-white p-4 border border-gray-200 rounded-lg shadow-sm mb-4">
                   <h3 className="text-lg font-semibold mb-2">
