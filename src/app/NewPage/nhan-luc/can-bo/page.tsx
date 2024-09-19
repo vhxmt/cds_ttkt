@@ -7,10 +7,10 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-can-bo'; 
+import StaffForm from './form-can-bo';
 
 interface Staff {
-    id: string; 
+    id: string;
     name: string;
     title: string;
     mail: string;
@@ -187,6 +187,7 @@ export default function NewsPage() {
                                         imageUrl={staff.imageUrl}
                                         onEdit={() => handleEdit(staff)}
                                         onDelete={() => handleDelete(staff)}
+                                        id={staff.id}
                                         isAdmin={isAdmin}
                                     />
                                 </div>

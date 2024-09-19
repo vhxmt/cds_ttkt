@@ -1,39 +1,197 @@
 {
-    "banner": {
-      "src": "/image/banner/banner.png",
-      "alt": "Banner"
+  "banner": {
+    "src": "/image/banner/banner.png",
+    "alt": "Banner"
+  },
+  "featuredNews": [
+    {
+      "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+      "link": "https://seee.hust.edu.vn/asset-page/-/asset_publisher/3YpEUUuUWBB6/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024"
+    }
+  ],
+  "events": [
+    {
+      "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+      "description": "Cơ hội gặp gỡ và giao lưu với CTO của tập đoàn ebm-papst, đối tác của FPT Software tại Talkshow Powering the Future: Electronics Driving Global Industries. 15:00 - 17:00 ngày 01/08/2024 (thứ 5)",
+      "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/talkshow-powering-the-future-electronics-driving-global-industries"
+    }
+  ],
+  "additionalNews": [
+    {
+      "id": "1",
+      "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
+      "description": "Trường Điện - Điện tử dự kiến phối hợp với Tạp chí Tự động hóa ngày nay tổ chức Trường hè quốc gia lần thứ Nhất về Điện tử công suất (VSSPE’24) tại Toà C7, Đại học Bách Khoa Hà Nội, từ ngày 9 -...",
+      "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/gioi-thieu-truong-he-quoc-gia-lan-thu-nhat-ve-ien-tu-cong-suat?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
+      "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
     },
-    "featuredNews": [
-      {
-        "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
-        "link": "https://seee.hust.edu.vn/asset-page/-/asset_publisher/3YpEUUuUWBB6/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024"
-      }
+    {
+      "id": "2",
+      "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+      "description": "Lễ bảo vệ đồ án tốt nghiệp là một sự kiện có ý nghĩa đặc biệt. Tại buổi bảo vệ, các sinh viên trình bày đồ án, giới thiệu sản phẩm và trả lời các câu hỏi từ Hội đồng bảo vệ. Đây dịp để sinh viên...",
+      "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
+      "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
+    }
+  ],
+  "notifications": [
+    {
+      "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
+      "imageUrl": "https://seee.hust.edu.vn/theme-viendien-theme/images/file_system/large/article.png",
+      "links": [
+        {
+          "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
+          "url": "https://seee.hust.edu.vn/thong-bao/-/asset_publisher/Bj3gdzTv2Jui/content/gioi-thieu-truong-he-quoc-gia-lan-thu-nhat-ve-ien-tu-cong-suat"
+        },
+        {
+          "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+          "url": "https://seee.hust.edu.vn/thong-bao/-/asset_publisher/Bj3gdzTv2Jui/content/talkshow-powering-the-future-electronics-driving-global-industries"
+        },
+        {
+          "title": "THÔNG TIN TUYỂN DỤNG | HITACHI ENERGY VIỆT NAM",
+          "url": "https://seee.hust.edu.vn/thong-bao/-/asset_publisher/Bj3gdzTv2Jui/content/thong-tin-tuyen-dung-hitachi-energy-viet-nam"
+        },
+        {
+          "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+          "url": "https://seee.hust.edu.vn/thong-bao/-/asset_publisher/Bj3gdzTv2Jui/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024"
+        },
+        {
+          "title": "THÔNG TIN TUYỂN DỤNG CÔNG TY CỔ PHẦN THIẾT BỊ ĐO ĐIỆN EMIC",
+          "url": "https://seee.hust.edu.vn/thong-bao/-/asset_publisher/Bj3gdzTv2Jui/content/thong-tin-tuyen-dung-cong-ty-co-phan-thiet-bi-o-ien-emic"
+        }
+      ],
+      "viewAllUrl": "https://seee.hust.edu.vn/tin-tuc"
+    }
+  ],
+  "events": [
+    {
+      "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+      "url": "https://seee.hust.edu.vn/su-kien/-/asset_publisher/KvUuH2HsmjYk/content/talkshow-powering-the-future-electronics-driving-global-industries"
+    },
+    {
+      "title": "Kế hoạch phát bằng và hồ sơ tốt nghiệp kỳ 2023.1B Trường Điện - Điện tử",
+      "url": "https://seee.hust.edu.vn/su-kien/-/asset_publisher/KvUuH2HsmjYk/content/ke-hoach-phat-bang-va-ho-so-tot-nghiep-ky-2023-1b-truong-ien-ien-tu"
+    },
+    {
+      "title": " BÁCH KHOA HÀ NỘI ĐẶT MỤC TIÊU ĐẦU RA CHUẨN QUỐC TẾ CHO NGÀNH VI MẠCH BÁN DẪN ",
+      "url": "https://seee.hust.edu.vn/su-kien/-/asset_publisher/KvUuH2HsmjYk/content/bach-khoa-ha-noi-at-muc-tieu-au-ra-chuan-quoc-te-cho-nganh-vi-mach-ban-dan"
+    },
+    {
+      "title": " Hội thảo Digital Sovereignty or digital colony? - Time to act! ",
+      "url": "https://seee.hust.edu.vn/su-kien/-/asset_publisher/KvUuH2HsmjYk/content/hoi-thao-digital-sovereignty-or-digital-colony-time-to-act-"
+    }
+  ],
+  "newsData": [
+    {
+      "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+      "imageUrl": "https://seee.hust.edu.vn/theme-viendien-theme/images/file_system/large/article.png",
+      "links": [
+        {
+          "title": "THÔNG TIN TUYỂN DỤNG | HITACHI ENERGY VIỆT NAM",
+          "url": "#"
+        },
+        {
+          "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+          "url": "#"
+        },
+        {
+          "title": "THÔNG TIN TUYỂN DỤNG CÔNG TY CỔ PHẦN THIẾT BỊ ĐO ĐIỆN EMIC",
+          "url": "#"
+        },
+        {
+          "title": "Thông báo đăng ký nguyện vọng giáo viên hướng dẫn đồ án môn học, thực tập tốt nghiệp...",
+          "url": "#"
+        },
+        {
+          "title": "Thông báo về Đồ án môn học, TTTN và Đồ án tốt nghiệp kỳ 2023.2",
+          "url": "#"
+        },
+        {
+          "title": "Danh sách hội đồng cấp Trường - SVNCKH 2024",
+          "url": "#"
+        },
+        {
+          "title": "Kế hoạch phát bằng và hồ sơ tốt nghiệp kỳ 2023.1B Trường Điện - Điện tử",
+          "url": "#"
+        },
+        {
+          "title": "Thông báo số 3 - Gia hạn đăng ký SV NCKH năm học 2023-2024",
+          "url": "#"
+        },
+        {
+          "title": "BÁCH KHOA HÀ NỘI ĐẶT MỤC TIÊU ĐẦU RA CHUẨN QUỐC TẾ CHO NGÀNH VI MẠCH BÁN DẪN",
+          "url": "#"
+        }
+      ],
+      "viewAllUrl": "https://seee.hust.edu.vn/tin-tuc"
+    }
+  ],
+  "studentsNewsData": [
+    {
+      "title": "Phòng nghiên cứu LSP, Trường Điện - Điện tử nhận tài trợ từ công ty NT",
+      "url": "#"
+    },
+    {
+      "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
+      "url": "#"
+    },
+    {
+      "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
+      "url": "#"
+    },
+    {
+      "title": "THÔNG TIN TUYỂN DỤNG | HITACHI ENERGY VIỆT NAM",
+      "url": "#"
+    },
+    {
+      "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
+      "url": "#"
+    }
+  ],
+  "sections": [
+    {
+      "title": "SEE IDOL at SEEE - Gặp mặt tài năng SEEE 2024",
+      "imageUrl": "https://seee.hust.edu.vn/theme-viendien-theme/images/file_system/large/article.png",
+      "links": [
+        {
+          "title": "SEEE Lab Tour cho học sinh lớp 10 Toán -Tin của trường THPT Tạ Quang Bửu",
+          "url": "https://seee.hust.edu.vn/tuyen-sinh1/-/asset_publisher/3YpEUUuUWBB6/content/seee-lab-tour-cho-hoc-sinh-lop-10-toan-tin-cua-truong-thpt-ta-quang-buu"
+        },
+        {
+          "title": "TỌA ĐÀM TRỰC TUYẾN “TƯ VẤN TUYỂN SINH TRƯỜNG ĐIỆN - ĐIỆN TỬ",
+          "url": "https://seee.hust.edu.vn/tuyen-sinh1/-/asset_publisher/3YpEUUuUWBB6/content/toa-am-truc-tuyen-tu-van-tuyen-sinh-truong-ien-ien-tu"
+        },
+        {
+          "title": "Trường ĐH BKHN thông báo hoãn kỳ thi đánh giá tư duy ngày 15/07/2021",
+          "url": "https://seee.hust.edu.vn/tuyen-sinh1/-/asset_publisher/3YpEUUuUWBB6/content/truong-h-bkhn-thong-bao-hoan-ky-thi-anh-gia-tu-duy-ngay-15-07-2021"
+        },
+        {
+          "title": "Trường ĐH BKHN công bố thông tin tuyển sinh chính quy năm 2021",
+          "url": "https://seee.hust.edu.vn/tuyen-sinh1/-/asset_publisher/3YpEUUuUWBB6/content/truong-h-bkhn-cong-bo-thong-tin-tuyen-sinh-chinh-quy-nam-2021"
+        }
+      ],
+      "viewAllUrl": "https://seee.hust.edu.vn/tin-tuc"
+    }
+  ],
 
-    ],
-    "events": [
-      {
-        "title": "TALKSHOW Powering the Future: Electronics Driving Global Industries",
-        "description": "Cơ hội gặp gỡ và giao lưu với CTO của tập đoàn ebm-papst, đối tác của FPT Software tại Talkshow Powering the Future: Electronics Driving Global Industries. 15:00 - 17:00 ngày 01/08/2024 (thứ 5)",
-        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/talkshow-powering-the-future-electronics-driving-global-industries"
-      }
-
-    ],
-    "additionalNews": [
-      {
-        "id": "1",
-        "title": "GIỚI THIỆU TRƯỜNG HÈ QUỐC GIA LẦN THỨ NHẤT VỀ ĐIỆN TỬ CÔNG SUẤT",
-        "description": "Trường Điện - Điện tử dự kiến phối hợp với Tạp chí Tự động hóa ngày nay tổ chức Trường hè quốc gia lần thứ Nhất về Điện tử công suất (VSSPE’24) tại Toà C7, Đại học Bách Khoa Hà Nội, từ ngày 9 -...",
-        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/gioi-thieu-truong-he-quoc-gia-lan-thu-nhat-ve-ien-tu-cong-suat?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
-        "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
-      },
-      {
-        "id": "2",
-        "title": "LỄ TỐT NGHIỆP VÀ NGÀY HỘI TUYỂN DỤNG THÁNG 7-2024",
-        "description": "Lễ bảo vệ đồ án tốt nghiệp là một sự kiện có ý nghĩa đặc biệt. Tại buổi bảo vệ, các sinh viên trình bày đồ án, giới thiệu sản phẩm và trả lời các câu hỏi từ Hội đồng bảo vệ. Đây dịp để sinh viên...",
-        "link": "https://seee.hust.edu.vn/tin-tuc-thong-bao/-/asset_publisher/tA0yFmHEow5o/content/le-tot-nghiep-va-ngay-hoi-tuyen-dung-thang-7-2024?inheritRedirect=false&amp;redirect=https%3A%2F%2Fseee.hust.edu.vn%2Ftin-tuc-thong-bao%3Fp_p_id%3D101_INSTANCE_tA0yFmHEow5o%26p_p_lifecycle%3D0%26p_p_state%3Dnormal%26p_p_mode%3Dview%26p_p_col_id%3Dcolumn-1%26p_p_col_pos%3D1%26p_p_col_count%3D2",
-        "image": "https://seee.hust.edu.vn/theme-viendien-theme/images/common/history.png"
-      }
-
-    ]
-  }
-  
+  "tuyendung": [
+    {
+      "title": "[SAMSUNG - SEEE] Thông tin tuyển dụng sinh viên tốt nghiệp đại học & thực tập",
+      "url": "https://seee.hust.edu.vn/tuyen-dung/-/asset_publisher/3YpEUUuUWBB6/content/-samsung-seee-thong-tin-tuyen-dung-sinh-vien-tot-nghiep-ai-hoc-thuc-tap"
+    },
+    {
+      "title": "Tuyển dụng Kỹ sư thiết kế và phát triển ô tô Nissan",
+      "url": "https://seee.hust.edu.vn/tuyen-dung/-/asset_publisher/3YpEUUuUWBB6/content/tuyen-dung-ky-su-thiet-ke-va-phat-trien-o-to-nissan"
+    },
+    {
+      "title": "Tuyển dụng Kĩ Sư Giải Pháp Tích Hợp Phần Mềm - Công Ty TNHH Thiết Bị Viễn Thông ANSV",
+      "url": "https://seee.hust.edu.vn/tuyen-dung/-/asset_publisher/3YpEUUuUWBB6/content/tuyen-dung-ki-su-giai-phap-tich-hop-phan-mem"
+    },
+    {
+      "title": "Trường Điện - Điện tử, Đại học Bách khoa Hà Nội tuyển dụng Giảng viên và Cán bộ kĩ thuật",
+      "url": "https://seee.hust.edu.vn/tuyen-dung/-/asset_publisher/3YpEUUuUWBB6/content/truong-ien-ien-tu-ai-hoc-bach-khoa-ha-noi-tuyen-dung-giang-vien-va-can-bo-ki-thuat"
+    },
+    {
+      "title": "[Samsung RnD - SVMC]_Tuyển dụng Kỹ sư lập trình Q4.2022",
+      "url": "https://seee.hust.edu.vn/tuyen-dung/-/asset_publisher/3YpEUUuUWBB6/content/-samsung-rnd-svmc-_tuyen-dung-ky-su-lap-trinh-q4-2022"
+    }
+  ]
+}

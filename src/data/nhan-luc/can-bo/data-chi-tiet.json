@@ -1,0 +1,114 @@
+{
+  "1": {
+    "id": "1",
+    "image" : "/image/nhan-luc/can-bo/nguyen-huu-thanh.png",
+    "ho_ten": "Nguyễn Hữu Thanh",
+    "nam_sinh": 1971,
+    "gioi_tinh": "Nam",
+    "trinh_do_dao_tao": {
+      "trinh_do": "TS",
+      "nam": 2002,
+      "noi_cap_bang": "CHLB Đức"
+    },
+    "chuc_danh": {
+      "ten": "Phó giáo sư",
+      "nam_bo_nhiem": 2010
+    },
+    "nganh_chuyen_nganh": {
+      "nganh": "Điện – Điện tử - Tự động hóa",
+      "chuyen_nganh": "Kỹ thuật viễn thông"
+    },
+    "chuc_vu_hien_tai": {
+      "chuc_vu": "Viện trưởng",
+      "don_vi_cong_tac": "Viện Điện tử - Viễn thông, Trường ĐHBK Hà Nội"
+    },
+    "chuc_vu_cao_nhat": {
+      "chuc_vu": "Viện trưởng",
+      "thanh_vien_hoi_dong": {
+        "ten_hoi_dong": "Hội đồng Giáo sư cơ sở",
+        "cac_nam_tham_gia": [
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2022
+        ],
+        "co_so_dao_tao": "Đại học Bách khoa Hà Nội",
+        "hoi_dong": [
+          {
+            "nam": 2015,
+            "nganh": "Điện – Điện tử - Viễn thông – CNTT"
+          },
+          {
+            "nam": 2020,
+            "nganh": "Điện – Điện tử"
+          },
+          {
+            "nam": 2022,
+            "nganh": "Điện – Điện tử - Viễn thông – CNTT"
+          }
+        ]
+      }
+    },
+    "bai_bao_khoa_hoc": {
+      "bai_bao_tap_chi": [
+        {
+          "ten_bai": "On Profiling, Benchmarking and Behavioral Analysis of SDN Architecture under DDoS Attacks",
+          "tac_gia": "Nguyen Huu Thanh, Nguyen Ngoc Tuan, Dang Anh Khoa, Le Cong Tuan, Nguyen Trung Kien, Nguyen Xuan Dung, Ngo Quynh Thu, Florian Wamser",
+          "tap_chi": "Journal of Network and Systems Management",
+          "so": "Volume 31, issue 2",
+          "thang": "April 2023",
+          "doi": "10.1007/s10922-023-09732-5",
+          "phan_loai": "Q2",
+          "impact_factor": 2.198
+        },
+        {
+          "ten_bai": "An Effective Foveated 360° Image Assessment Based on Graph Convolution Network",
+          "tac_gia": "Truong Thu Huong, Do Thu Ha, Huyen T. T. Tran, Ngo Duc Viet, Bui Duy Tien, Nguyen Huu Thanh, Truong Cong Thang, Pham Ngoc Nam",
+          "tap_chi": "IEEE Access",
+          "so": "Volume 10, pp. 98165-98178",
+          "thang": "Sept. 2022",
+          "doi": "10.1109/ACCESS.2022.3204766",
+          "phan_loai": "Q1",
+          "impact_factor": 3.476
+        },
+        {
+          "ten_bai": "Retina-based quality assessment of tile-coded 360-degree videos",
+          "tac_gia": "Nguyen Viet Hung, Pham Ngoc Nam, Truong Cong Thang, Bui Duy Tien, Nguyen Huu Thanh, Truong Thu Huong",
+          "tap_chi": "EAI Endorsed Transactions on Industrial Networks and Intelligent Systems",
+          "so": "vol. 9, no. 32, p. e2",
+          "thang": "June 2022",
+          "doi": "10.4108/eetinis.v9i32.1058"
+        },
+        {
+          "ten_bai": "Energy-Aware Service Function Chain Embedding in EdgeCloud Environments for IoT Applications",
+          "tac_gia": "Nguyen Huu Thanh, Nguyen Trung Kien, Ngo Van Hoa, Truong Thu Huong, Florian Wamser, Tobias Hossfeld",
+          "tap_chi": "IEEE Internet of Things Journal",
+          "doi": "10.1109/JIOT.2021.3064986",
+          "phan_loai": "Q1",
+          "impact_factor": 9.936
+        }
+      ],
+      "bai_bao_hoi_thao_quoc_te": [
+        {
+          "ten_bai": "Traffic-Adaptive Scheme for SDN Control Plane with Containerized Architecture",
+          "tac_gia": "Dang Anh Khoa, Nguyen Trung Kiem, Nguyen Trung Kien, Nguyen Ngoc Tuan, Nguyen Huu Thanh",
+          "hoi_thao": "International Conference on Ubiquitous Information Management and Communication 2023",
+          "thang": "January 2023",
+          "dia_diem": "Seoul, Korea",
+          "doi": "10.1109/IMCOM56909.2023.10035625"
+        },
+        {
+          "ten_bai": "Enhancing CNF performance for 5G core network using SR-IOV in Kubernetes",
+          "tac_gia": "Dinh Tam Nguyen, Ngoc Lam Dao, Van Thuyet Tran, Khac Thuan Lang, Thanh Tu Pham, Phi Hung Nguyen, Cong Dan Pham, Tuan Anh Pham, Duc Hai Nguyen, Huu Thanh Nguyen",
+          "hoi_thao": "24th International Conference on Advanced Communications Technology (ICACT 2022)",
+          "thang": "February 2022",
+          "dia_diem": "Phoenix Pyeongchang, Korea",
+          "doi": "10.23919/ICACT53585.2022.9728817"
+        }
+      ]
+    }
+  }
+}
