@@ -1,3 +1,4 @@
+// src/utils/blogs/crudUtils.ts
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
@@ -16,17 +17,22 @@ export const writeData = (filePath: string, data: BlogPost[]): void => {
     fs.writeFileSync(filePath, jsonData, 'utf8');
 };
 
-// Delete image file
+// Updated deleteImage function with enhanced logging
 export const deleteImage = (imageFolderPath: string, imageUrl: string) => {
-    const imageName = path.basename(imageUrl);
-    const fullPath = path.join(imageFolderPath, imageName);
+    const imageName = path.basename(imageUrl); // Extract the file name from the URL
+    const fullPath = path.join(imageFolderPath, imageName); // Construct the full path to the file
+
+    // Log the full path of the image being deleted for debugging
+    console.log(`Attempting to delete image: ${fullPath}`);
+
     if (fs.existsSync(fullPath)) {
-        fs.unlinkSync(fullPath);
+        fs.unlinkSync(fullPath); // Delete the file
         console.log(`Deleted image: ${imageName}`);
     } else {
-        console.log(`Image not found: ${imageName}`);
+        console.log(`Image not found: ${fullPath}`);
     }
 };
+
 
 // Get all blog posts
 export const getAllItems = (filePath: string): NextResponse => {
@@ -62,53 +68,69 @@ export const addItem = async (req: NextRequest, filePath: string): Promise<NextR
 
 // Update an existing blog post
 export const updateItem = async (req: NextRequest, filePath: string, imageFolderPath: string): Promise<NextResponse> => {
-    const body = await req.json();
-    const { id, updatedPost } = body;
+    try {
+        const body = await req.json();
+        const { id, updatedPost } = body;
 
-    if (!id || !updatedPost || !updatedPost.title) {
-        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        if (!id || !updatedPost || !updatedPost.title) {
+            return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        }
+
+        const data = readData(filePath);
+        const postIndex = data.findIndex((post) => post.id === id);
+
+        if (postIndex === -1) {
+            return NextResponse.json({ message: 'Post not found' }, { status: 404 });
+        }
+
+        const oldPost = data[postIndex];
+
+        // Check if the image URL has changed and delete the old image
+        if (oldPost.imageUrl && oldPost.imageUrl !== updatedPost.imageUrl) {
+            deleteImage(imageFolderPath, oldPost.imageUrl); // Delete the old image
+        }
+
+        // Update the post with new data
+        data[postIndex] = { ...oldPost, ...updatedPost };
+        writeData(filePath, data);
+
+        return NextResponse.json({ message: 'Post updated successfully', post: updatedPost }, { status: 200 });
+    } catch (error) {
+        console.error('Error updating post:', error);
+        return NextResponse.json({ message: 'Server error' }, { status: 500 });
     }
-
-    const data = readData(filePath);
-    const postIndex = data.findIndex((post) => post.id === id);
-
-    if (postIndex === -1) {
-        return NextResponse.json({ message: 'Post not found' }, { status: 404 });
-    }
-
-    const oldPost = data[postIndex];
-    if (oldPost.imageUrl && oldPost.imageUrl !== updatedPost.imageUrl) {
-        deleteImage(imageFolderPath, oldPost.imageUrl); // Delete the old image
-    }
-
-    data[postIndex] = { ...oldPost, ...updatedPost };
-    writeData(filePath, data);
-
-    return NextResponse.json({ message: 'Post updated successfully', post: updatedPost }, { status: 200 });
 };
 
 // Delete a blog post by ID
 export const deleteItem = async (req: NextRequest, filePath: string, imageFolderPath: string): Promise<NextResponse> => {
-    const id = req.nextUrl.searchParams.get('id');
+    try {
+        const id = req.nextUrl.searchParams.get('id');
 
-    if (!id) {
-        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        if (!id) {
+            return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+        }
+
+        const data = readData(filePath);
+        const postIndex = data.findIndex((post) => post.id === id);
+
+        if (postIndex === -1) {
+            return NextResponse.json({ message: 'Post not found' }, { status: 404 });
+        }
+
+        const postToDelete = data[postIndex];
+
+        // Delete the image associated with the post, if it exists
+        if (postToDelete.imageUrl) {
+            deleteImage(imageFolderPath, postToDelete.imageUrl); // Delete the image
+        }
+
+        // Remove the post from the data
+        data.splice(postIndex, 1);
+        writeData(filePath, data);
+
+        return NextResponse.json({ message: 'Post deleted successfully' });
+    } catch (error) {
+        console.error('Error deleting post:', error);
+        return NextResponse.json({ message: 'Server error' }, { status: 500 });
     }
-
-    const data = readData(filePath);
-    const postIndex = data.findIndex((post) => post.id === id);
-
-    if (postIndex === -1) {
-        return NextResponse.json({ message: 'Post not found' }, { status: 404 });
-    }
-
-    const postToDelete = data[postIndex];
-    if (postToDelete.imageUrl) {
-        deleteImage(imageFolderPath, postToDelete.imageUrl); // Delete the image
-    }
-
-    data.splice(postIndex, 1); // Remove the post
-    writeData(filePath, data);
-
-    return NextResponse.json({ message: 'Post deleted successfully' });
 };
