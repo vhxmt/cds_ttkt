@@ -7,7 +7,7 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-nhan-luc'; 
+import StaffForm from '../form'; 
 
 interface Staff {
     id: string; 
@@ -156,7 +156,7 @@ export default function NewsPage() {
                 <SideMenu currentSection="Nhân lực" />
 
                 <div className="flex-1">
-                    <Banner src="/image/banner/banner.png" alt="Banner" />
+                    <Banner src="/banner.png" alt="Banner" />
 
                     {isFormVisible ? (
                         <StaffForm
