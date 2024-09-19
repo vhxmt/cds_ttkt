@@ -1,36 +1,20 @@
 {
   "blogPosts": [
     {
-      "title": "fsdfsfsf",
-      "date": "adfafda",
-      "description": "adfafd",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244572063-image_2024-09-13_232245255.png",
+      "title": "ádasdsadasda",
+      "date": "ádasdađâsd",
+      "description": "sdasdaádasd",
+      "imageUrl": "/image/blogs/dien-tu-dong-hoa/1726744641679-Homescreen.jpg",
       "href": "",
-      "id": "2024-09-13T16:22:52.095Z"
+      "id": "2024-09-19T11:06:26.590Z"
     },
     {
-      "title": "ầdfafadf",
-      "date": "adfafda",
-      "description": "sfdadfafdafd",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244558633-Screenshot 2022-11-06 210921.jpg",
-      "href": "",
-      "id": "2024-09-13T16:22:38.664Z"
-    },
-    {
-      "title": "ádfaf",
-      "date": "adfafda",
-      "description": "fasdfafdad",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244464441-image_2024-09-13_232102474.png",
-      "href": "",
-      "id": "2024-09-13T16:21:04.472Z"
-    },
-    {
-      "id": "2024-09-05T15:10:35Z",
       "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
       "date": "12/5/2023",
       "description": "A post about electric vehicle control techniques and innovations",
-      "imageUrl": "/image/blog/dien-tu-dong-hoa/1726244538036-Homescreen.jpg",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
+      "imageUrl": "/image/blogs/dien-tu-dong-hoa/1726744668562-TRINH_PhuQuang_Suppot_orateur.jpeg",
+      "href": "",
+      "id": "2024-09-19T11:06:06.068Z"
     }
   ]
 }
