@@ -1,49 +1,12 @@
 {
-  "blogPosts": [
+  "mainData": [
     {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/image/blogs/dien-tu-dong-hoa/1726307658367-z5827034542669_efc4deb45abfcd59e2c00fc75664f2ac.jpg",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles",
-      "id": "2024-09-14T09:54:18.416Z"
-    },
-    {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/image/blogs/dien-tu-dong-hoa/1726307650072-57f76e49c6acca2da20c7e3f47eff24c.jfif",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles",
-      "id": "2024-09-14T09:54:10.118Z"
-    },
-    {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/image/blogs/dien-tu-dong-hoa/1726307636639-image (1).png",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles",
-      "id": "2024-09-14T09:53:56.704Z"
-    },
-    {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/path-to-image-1.png",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
-    },
-    {
-      "title": "Cảm biến thông minh (Smart Sensor)",
-      "date": "28/4/2021",
-      "description": "A post about smart sensor technology.",
-      "imageUrl": "/path-to-image-2.png",
-      "href": "/blogs/smart-sensor"
-    },
-    {
-      "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
-      "date": "27/9/2020",
-      "description": "A post about power electronics and electrical drives.",
-      "imageUrl": "/path-to-image-3.png",
-      "href": "/blogs/power-electronics-electrical-drives-lab"
+      "id": "2024-09-20T08:58:45.469Z",
+      "title": "àdadf",
+      "date": "adfadf",
+      "description": "adfadf",
+      "imageUrl": "/image/blogs/dien-tu-vien-thong/1726822725367-Screenshot 2021-11-27 074800.jpg",
+      "href": ""
     }
   ]
 }

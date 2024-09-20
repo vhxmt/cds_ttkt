@@ -1,13 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-interface BlogPost {
-    id: string;
-    title: string;
-    date: string;
-    description: string;
-    imageUrl?: string;
-    href: string;
-}
+import { BlogPost } from '@/interfaces/blogs/interface';
 
 interface BlogFormModalProps {
     isOpen: boolean;
@@ -28,9 +20,9 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
-            setDate(initialData.date);
-            setDescription(initialData.description);
-            setHref(initialData.href);
+            setDate(initialData.date || '');
+            setDescription(initialData.description || '');
+            setHref(initialData.href || '');
             setImgSrc(initialData.imageUrl);
         } else {
             setTitle('');
@@ -63,7 +55,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
 
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('folderPath', 'image/blogs/dien-tu-dong-hoa'); // Universal path
+            formData.append('folderPath', 'image/blogs/dien-tu-vien-thong'); // Universal path
 
             try {
                 const res = await fetch('/api/upload', {

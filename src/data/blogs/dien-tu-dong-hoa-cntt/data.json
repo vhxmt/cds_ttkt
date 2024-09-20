@@ -1,33 +1,12 @@
 {
-  "blogPosts": [
+  "mainData": [
     {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/image/blogs/dien-tu-dong-hoa-cntt/1726319603582-banner-su-kien-thuong-nien.png",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles",
-      "id": "2024-09-14T13:13:23.644Z"
-    },
-    {
-      "title": "Nghiên cứu Xe điện/Control Technique and Innovation Laboratory for Electric Vehicles",
-      "date": "12/5/2022",
-      "description": "A post about electric vehicle control techniques and innovations.",
-      "imageUrl": "/path-to-image-1.png",
-      "href": "/blogs/control-technique-innovation-lab-electric-vehicles"
-    },
-    {
-      "title": "Cảm biến thông minh (Smart Sensor)",
-      "date": "28/4/2021",
-      "description": "A post about smart sensor technology.",
-      "imageUrl": "/path-to-image-2.png",
-      "href": "/blogs/smart-sensor"
-    },
-    {
-      "title": "Điện tử công suất và Truyền động điện (Power Electronics and Electrical Drives Laboratory)",
-      "date": "27/9/2020",
-      "description": "A post about power electronics and electrical drives.",
-      "imageUrl": "/path-to-image-3.png",
-      "href": "/blogs/power-electronics-electrical-drives-lab"
+      "id": "2024-09-20T08:52:34.916Z",
+      "title": "qeqwe",
+      "date": "qưeqwe",
+      "description": "qưeqweqwe",
+      "imageUrl": "/image/blogs/dien-tu-dong-hoa-cntt/1726822354873-layout.jpg",
+      "href": ""
     }
   ]
 }

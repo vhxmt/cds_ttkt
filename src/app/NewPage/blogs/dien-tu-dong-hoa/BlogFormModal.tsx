@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BlogPost } from '@/interfaces/blogs/interface';
 
-interface BlogPost {
-    id: string;
-    title: string;
-    date: string;
-    description: string;
-    imageUrl?: string;
-    href: string;
-}
 
 interface BlogFormModalProps {
     isOpen: boolean;
@@ -28,9 +21,9 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
-            setDate(initialData.date);
-            setDescription(initialData.description);
-            setHref(initialData.href);
+            setDate(initialData.date || '');
+            setDescription(initialData.description || '');
+            setHref(initialData.href || '');
             setImgSrc(initialData.imageUrl);
         } else {
             setTitle('');

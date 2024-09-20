@@ -13,7 +13,7 @@ export default function DienTuDongHoa() {
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
-    const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
+    const [mainData, setmainData] = useState<BlogPost[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentPost, setCurrentPost] = useState<BlogPost | null>(null);
@@ -24,7 +24,7 @@ export default function DienTuDongHoa() {
         try {
             const res = await fetch('/api/blogs/dien-tu-vien-thong');
             const data = await res.json();
-            setBlogPosts(data.blogPosts);
+            setmainData(data.mainData);
         } catch (error) {
             console.error('Failed to fetch blog posts:', error);
         }
@@ -108,7 +108,7 @@ export default function DienTuDongHoa() {
                     <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa</h2>
 
                     <div className="grid grid-cols-3 gap-4">
-                        {blogPosts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((post) => (
+                        {mainData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((post) => (
                             <PublicationCard
                                 key={post.id}
                                 date={post.date}
@@ -125,7 +125,7 @@ export default function DienTuDongHoa() {
 
                     <PgControl
                         currentPage={currentPage}
-                        totalPages={Math.ceil(blogPosts.length / itemsPerPage)}
+                        totalPages={Math.ceil(mainData.length / itemsPerPage)}
                         onNextPage={() => setCurrentPage((prev) => prev + 1)}
                         onPrevPage={() => setCurrentPage((prev) => prev - 1)}
                     />

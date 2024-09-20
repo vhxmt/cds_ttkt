@@ -8,12 +8,12 @@ import { BlogPost } from '@/interfaces/blogs/interface';
 export const readData = (filePath: string): BlogPost[] => {
     const fileData = fs.readFileSync(filePath, 'utf8');
     const parsedData = JSON.parse(fileData);
-    return parsedData?.blogPosts || []; // Ensure 'blogPosts' key is checked
+    return parsedData?.mainData || []; // Ensure 'mainData' key is checked
 };
 
 // Write data to the JSON file
 export const writeData = (filePath: string, data: BlogPost[]): void => {
-    const jsonData = JSON.stringify({ blogPosts: data }, null, 2); // 'blogPosts' key
+    const jsonData = JSON.stringify({ mainData: data }, null, 2); // 'mainData' key
     fs.writeFileSync(filePath, jsonData, 'utf8');
 };
 
@@ -38,7 +38,7 @@ export const deleteImage = (imageFolderPath: string, imageUrl: string) => {
 export const getAllItems = (filePath: string): NextResponse => {
     try {
         const data = readData(filePath);
-        return NextResponse.json({ blogPosts: data });
+        return NextResponse.json({ mainData: data });
     } catch (error) {
         console.error('Error reading data:', error);
         return NextResponse.json({ message: 'Error reading data' }, { status: 500 });
