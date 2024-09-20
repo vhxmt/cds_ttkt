@@ -1,5 +1,5 @@
 // src/interfaces/cong-bo-khoa-hoc/interface.ts
-interface Article {
+export interface mainData {
     id: number;
     title: string;
     releaseDay: string;

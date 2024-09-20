@@ -1,23 +1,12 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
 import SideMenu from '@/components/display-block/SideMenu';
 import filterData from '@/data/cong-bo-khoa-hoc/filters.json';
 import { useAuth } from "@/components/providers/AuthProvider";
-import ArticleForm from './ArticleForm'; // Import the ArticleForm component
-
-interface Article {
-    id: number;
-    title: string;
-    releaseDay: string;
-    releaseYear: number;
-    author: string;
-    conference: string;
-    url: string;
-    type: string; // Add the 'type' field
-}
+import ArticleForm from './ArticleForm'; 
+import { mainData } from '@/interfaces/cong-bo-khoa-hoc/interface'; 
 
 interface Filter {
     id: string;
@@ -26,39 +15,50 @@ interface Filter {
 
 export default function CongBoKhoaHoc() {
     const { filters } = filterData;
-    const [articles, setArticles] = useState<Article[]>([]);
+    const [mainData, setMainData] = useState<mainData[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
     const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
     const [yearRange, setYearRange] = useState({ from: 1980, to: new Date().getFullYear() });
-    const [filterApplied, setFilterApplied] = useState(false); // New state for when filters are applied
-    const [appliedFilters, setAppliedFilters] = useState<string[]>([]); // To hold applied filter
-    const [appliedYearRange, setAppliedYearRange] = useState({ from: 1980, to: new Date().getFullYear() }); // To hold applied year range
+    const [filterApplied, setFilterApplied] = useState(false);
+    const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
+    const [appliedYearRange, setAppliedYearRange] = useState({ from: 1980, to: new Date().getFullYear() });
     const [error, setError] = useState<string | null>(null);
-    
-    const [currentArticle, setCurrentArticle] = useState<Article | null>(null); // Define currentArticle state
-    const [showForm, setShowForm] = useState(false); // Define showForm state
+    const [currentMainData, setCurrentMainData] = useState<mainData | null>(null);
+    const [showForm, setShowForm] = useState(false);
 
-    const fetchArticles = async () => {
+    const fetchMainData = async () => {
         try {
             const res = await fetch('/api/cong-bo-khoa-hoc');
-            if (!res.ok) throw new Error('Failed to fetch articles');
+            if (!res.ok) throw new Error('Failed to fetch mainData');
             const data = await res.json();
-            setArticles(data.articles);
+            setMainData(data.mainData);
         } catch (err) {
-            setError('Error loading articles');
+            setError('Error loading mainData');
         }
     };
 
     useEffect(() => {
-        fetchArticles();
+        fetchMainData();
     }, []);
 
-    // Pagination logic
+    const applyFilters = () => {
+        setAppliedFilters(selectedFilters);
+        setAppliedYearRange(yearRange);
+        setFilterApplied(true);
+        setCurrentPage(1);
+    };
+
+    const filteredMainData = mainData.filter(mainData => {
+        const matchesFilter = appliedFilters.length === 0 || appliedFilters.includes(mainData.type);
+        const matchesYearRange = mainData.releaseYear >= appliedYearRange.from && mainData.releaseYear <= appliedYearRange.to;
+        return matchesFilter && matchesYearRange;
+    });
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = articles.slice(indexOfFirstItem, indexOfLastItem);
-    const totalPages = Math.ceil(articles.length / itemsPerPage);
+    const currentItems = filteredMainData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredMainData.length / itemsPerPage);
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -88,66 +88,46 @@ export default function CongBoKhoaHoc() {
         }));
     };
 
-    // Apply filters when the "Lọc" button is clicked
-    const applyFilters = () => {
-        setAppliedFilters(selectedFilters);
-        setAppliedYearRange(yearRange);
-        setFilterApplied(true); // Set filter applied to true
-    };
-
-    // Filter articles based on the applied filters and year range
-    const filteredArticles = articles.filter(article => {
-        const matchesFilter = appliedFilters.length === 0 || appliedFilters.includes(article.type);
-        const matchesYearRange = article.releaseYear >= appliedYearRange.from && article.releaseYear <= appliedYearRange.to;
-        return matchesFilter && matchesYearRange;
-    });
-
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const handleAdd = () => {
-        setCurrentArticle(null); // Clear the current article for new addition
-        setShowForm(true); // Show the form
+        setCurrentMainData(null);
+        setShowForm(true);
     };
 
     const handleEdit = (id: number) => {
-        const articleToEdit = articles.find(article => article.id === id);
-        setCurrentArticle(articleToEdit || null);
-        setShowForm(true); // Show the form
+        const mainDataToEdit = mainData.find(mainData => mainData.id === id);
+        setCurrentMainData(mainDataToEdit || null);
+        setShowForm(true);
     };
 
-    const handleFormSubmit = async (article: Article) => {
-        if (currentArticle) {
-            // Update the existing article
-            await fetch(`/api/cong-bo-khoa-hoc?id=${article.id}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(article),
-            });
-            setArticles(prev => prev.map(a => (a.id === article.id ? article : a)));
-        } else {
-            // Add a new article
-            await fetch('/api/cong-bo-khoa-hoc', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(article),
-            });
-            setArticles(prev => [...prev, article]);
-        }
-
+    const handleFormSubmit = async (mainData: mainData) => {
+        const url = currentMainData ? `/api/cong-bo-khoa-hoc?id=${mainData.id}` : '/api/cong-bo-khoa-hoc';
+        const method = currentMainData ? 'PUT' : 'POST';
+        
+        await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...mainData, id: String(mainData.id) }), // Ensure ID is sent as a string
+        });
+    
+        fetchMainData(); // Refresh the data after adding or updating
         setShowForm(false); // Close the form
     };
+    
+    
 
     const handleDelete = async (id: number) => {
         try {
             const res = await fetch(`/api/cong-bo-khoa-hoc?id=${id}`, { method: 'DELETE' });
             if (res.ok) {
-                setArticles(articles.filter(article => article.id !== id));
+                setMainData(mainData.filter(mainData => mainData.id !== id));
             } else {
-                console.error('Failed to delete article');
+                console.error('Failed to delete mainData');
             }
         } catch (error) {
-            console.error('Error deleting article:', error);
+            console.error('Error deleting mainData:', error);
         }
     };
 
@@ -167,7 +147,7 @@ export default function CongBoKhoaHoc() {
                                         type="checkbox"
                                         id={filter.id}
                                         onChange={() => handleFilterChange(filter.id)}
-                                        checked={selectedFilters.includes(filter.id)} // Keep the checkboxes checked when selected
+                                        checked={selectedFilters.includes(filter.id)}
                                     />
                                     <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
                                 </div>
@@ -216,15 +196,15 @@ export default function CongBoKhoaHoc() {
                     )}
 
                     <div className="space-y-6">
-                        {filteredArticles.map(article => (
-                            <div key={article.id} className="flex space-x-4 border-b pb-4">
+                        {currentItems.map(mainData => (
+                            <div key={mainData.id} className="flex space-x-4 border-b pb-4">
                                 <div className="flex flex-col justify-between w-full">
                                     <div>
-                                        <h4 className="font-bold text-lg">{article.title}</h4>
-                                        <p className="text-sm text-gray-600">{article.releaseDay}/{article.releaseYear}</p>
-                                        <p className="text-sm text-gray-600">{article.author}</p>
-                                        <p className="text-sm text-gray-600">{article.conference}</p>
-                                        <a href={article.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                        <h4 className="font-bold text-lg">{mainData.title}</h4>
+                                        <p className="text-sm text-gray-600">{mainData.releaseDay}/{mainData.releaseMonth}/{mainData.releaseYear}</p>
+                                        <p className="text-sm text-gray-600">{mainData.author}</p>
+                                        <p className="text-sm text-gray-600">{mainData.conference}</p>
+                                        <a href={mainData.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                                             Read more
                                         </a>
                                     </div>
@@ -232,13 +212,13 @@ export default function CongBoKhoaHoc() {
                                         <div className="flex space-x-2 mt-2">
                                             <button
                                                 className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                                onClick={() => handleEdit(article.id)}
+                                                onClick={() => handleEdit(mainData.id)}
                                             >
                                                 Sửa
                                             </button>
                                             <button
                                                 className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                                onClick={() => handleDelete(article.id)}
+                                                onClick={() => handleDelete(mainData.id)}
                                             >
                                                 Xóa
                                             </button>
@@ -261,8 +241,8 @@ export default function CongBoKhoaHoc() {
             {/* Render the form for adding or editing */}
             {showForm && (
                 <ArticleForm
-                    article={currentArticle}  
-                    filters={filters}         
+                    article={currentMainData}
+                    filters={filters}
                     onSubmit={handleFormSubmit}
                     onCancel={() => setShowForm(false)}
                 />
