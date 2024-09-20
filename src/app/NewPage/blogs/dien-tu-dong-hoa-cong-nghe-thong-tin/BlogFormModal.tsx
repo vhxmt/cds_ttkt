@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { BlogPost } from '@/interfaces/blogs/interface';
-// interface BlogPost {
-//     id: string;
-//     title: string;
-//     date: string;
-//     description: string;
-//     imageUrl?: string;
-//     href: string;
-// }
+import { mainData } from '@/interfaces/blogs/interface';
 
 interface BlogFormModalProps {
     isOpen: boolean;
     onClose: () => void;
-    onSubmit: (post: BlogPost) => void;
-    initialData?: BlogPost;
+    onSubmit: (post: mainData) => void;
+    initialData?: mainData;
 }
 
 const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit, initialData }) => {
@@ -86,7 +78,7 @@ const BlogFormModal: React.FC<BlogFormModalProps> = ({ isOpen, onClose, onSubmit
             }
         }
 
-        const newPost: BlogPost = {
+        const newPost: mainData = {
             id: initialData?.id || '', // ID is present for editing
             title,
             date: date || new Date().toLocaleDateString(),

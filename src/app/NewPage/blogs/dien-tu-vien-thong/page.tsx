@@ -7,16 +7,16 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import PublicationCard from '@/components/display-block/PublicationCard';
 import BlogFormModal from './BlogFormModal'; 
-import { BlogPost } from '@/interfaces/blogs/interface';
+import { mainData } from '@/interfaces/blogs/interface';
 
 export default function DienTuDongHoa() {
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
-    const [mainData, setmainData] = useState<BlogPost[]>([]);
+    const [mainData, setmainData] = useState<mainData[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [currentPost, setCurrentPost] = useState<BlogPost | null>(null);
+    const [currentPost, setCurrentPost] = useState<mainData | null>(null);
 
     const itemsPerPage = 3;
 
@@ -39,13 +39,13 @@ export default function DienTuDongHoa() {
         setIsModalOpen(true); 
     };
 
-    const handleEdit = (post: BlogPost) => {
+    const handleEdit = (post: mainData) => {
         setCurrentPost(post); 
         setIsModalOpen(true); 
     };
 
 
-    const handleSubmit = async (post: BlogPost) => {
+    const handleSubmit = async (post: mainData) => {
         const method = post.id ? 'PUT' : 'POST';
         const url = '/api/blogs/dien-tu-vien-thong';
     
