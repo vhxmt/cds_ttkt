@@ -1,6 +1,16 @@
 {
   "articles": [
     {
+      "id": 1726822992652,
+      "title": "adfaf",
+      "releaseDay": "adfaf",
+      "releaseYear": 2024,
+      "author": "àdadf",
+      "conference": "dfafdaf",
+      "url": "",
+      "type": "1"
+    },
+    {
       "id": 1,
       "title": "Tên bài báo 01",
       "releaseDay": "19/12",
