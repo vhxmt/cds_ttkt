@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { mainData } from '@/interfaces/cong-bo-khoa-hoc/interface'; // Updated the interface name
+import { mainData } from '@/interfaces/cong-bo-khoa-hoc/interface';
 
 interface Filter {
     id: string;
@@ -7,34 +7,39 @@ interface Filter {
 }
 
 interface mainDataFormProps {
-    mainData?: mainData; // Optional for new entries
-    filters: Filter[]; // Pass the filters as a prop
+    mainData?: mainData;
+    filters: Filter[];
     onSubmit: (mainData: mainData) => void;
     onCancel: () => void;
 }
 
 const MainDataForm: React.FC<mainDataFormProps> = ({ mainData, filters, onSubmit, onCancel }) => {
+    // Initialize the form state with default values or with the data to be edited
     const [formData, setFormData] = useState<mainData>({
-        id: mainData?.id || String(Date.now()),
+        id: mainData?.id || String(Date.now()), // Use string for ID
         title: mainData?.title || '',
-        releaseDay: mainData?.releaseDay || 1, // Default to 1
-        releaseMonth: mainData?.releaseMonth || 1, // Default to January
+        releaseDay: mainData?.releaseDay || 1,
+        releaseMonth: mainData?.releaseMonth || 1,
         releaseYear: mainData?.releaseYear || new Date().getFullYear(),
         author: mainData?.author || '',
         conference: mainData?.conference || '',
         url: mainData?.url || '',
-        type: mainData?.type || '1', // Default type
+        type: mainData?.type || '1',
     });
 
+    // Update the form state whenever the `mainData` prop changes
     useEffect(() => {
         if (mainData) {
             setFormData(mainData); // Load current data into form if editing
         }
-    }, [mainData]);
+    }, [mainData]); // Dependency array ensures this runs only when `mainData` changes
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({ ...prevData, [name]: name === 'releaseDay' || name === 'releaseMonth' ? Number(value) : value }));
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: name === 'releaseDay' || name === 'releaseMonth' ? Number(value) : value
+        }));
     };
 
     const handleSubmit = (e: React.FormEvent) => {

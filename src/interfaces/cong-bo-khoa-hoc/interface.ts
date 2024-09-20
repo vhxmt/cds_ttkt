@@ -1,8 +1,9 @@
 // src/interfaces/cong-bo-khoa-hoc/interface.ts
 export interface mainData {
-    id: number;
+    id: string;
     title: string;
-    releaseDay: string;
+    releaseDay: number;
+    releaseMonth: number;
     releaseYear: number;
     author: string;
     conference: string;

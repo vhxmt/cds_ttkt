@@ -96,20 +96,24 @@ export default function CongBoKhoaHoc() {
         setShowForm(true);
     };
 
-    const handleEdit = (id: number) => {
-        const mainDataToEdit = mainData.find(mainData => mainData.id === id);
-        setCurrentMainData(mainDataToEdit || null);
-        setShowForm(true);
+    const handleEdit = (id: string) => {
+        const mainDataToEdit = mainData.find((data) => data.id === id);
+        if (mainDataToEdit) {
+            setCurrentMainData(mainDataToEdit); // Set the data to be edited
+            setShowForm(true); // Open the form with the data loaded
+        }
     };
+    
+    
 
-    const handleFormSubmit = async (mainData: mainData) => {
-        const url = currentMainData ? `/api/cong-bo-khoa-hoc?id=${mainData.id}` : '/api/cong-bo-khoa-hoc';
+    const handleFormSubmit = async (data: mainData) => {
+        const url = currentMainData ? `/api/cong-bo-khoa-hoc?id=${data.id}` : '/api/cong-bo-khoa-hoc';
         const method = currentMainData ? 'PUT' : 'POST';
         
         await fetch(url, {
             method,
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ ...mainData, id: String(mainData.id) }), // Ensure ID is sent as a string
+            body: JSON.stringify({ ...data, id: String(data.id) }), // Ensure ID is sent as a string
         });
     
         fetchMainData(); // Refresh the data after adding or updating
@@ -117,8 +121,9 @@ export default function CongBoKhoaHoc() {
     };
     
     
+    
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         try {
             const res = await fetch(`/api/cong-bo-khoa-hoc?id=${id}`, { method: 'DELETE' });
             if (res.ok) {
@@ -241,7 +246,7 @@ export default function CongBoKhoaHoc() {
             {/* Render the form for adding or editing */}
             {showForm && (
                 <ArticleForm
-                    article={currentMainData}
+                    mainData={currentMainData}
                     filters={filters}
                     onSubmit={handleFormSubmit}
                     onCancel={() => setShowForm(false)}
