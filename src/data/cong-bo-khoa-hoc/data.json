@@ -1,31 +1,104 @@
 {
-    "articles": [
-      {
-        "id": 1,
-        "title": "Tên bài báo 1",
-        "date": "19/12/2022 12:00:00",
-        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien1.png"
-      },
-      {
-        "id": 2,
-        "title": "Tên bài báo 2",
-        "date": "19/12/2022 12:00:00",
-        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien2.png"
-      },
-      {
-        "id": 3,
-        "title": "Tên bài báo 3",
-        "date": "19/12/2022 12:00:00",
-        "imageUrl": "/image/tin-tuc-su-kien/su-kien/su-kien-thuong-nien/su-kien1.png"
-      }
-    ],
-    "filters": [
-      { "id": "books", "label": "Sách" },
-      { "id": "bookChapters", "label": "Chương sách" },
-      { "id": "domesticConferences", "label": "Hội thảo trong nước" },
-      { "id": "internationalConferences", "label": "Hội thảo quốc tế" },
-      { "id": "domesticJournals", "label": "Tạp chí trong nước" },
-      { "id": "internationalJournals", "label": "Tạp chí quốc tế" }
-    ]
-  }
-  
+  "articles": [
+    {
+      "id": 1,
+      "title": "Tên bài báo 01",
+      "releaseDay": "19/12",
+      "releaseYear": "2023",
+      "author": "Tác giả 1",
+      "conference": "Hội thảo quốc tế 1",
+      "url": "https://example.com/article1",
+      "type": "4"
+    },
+    {
+      "id": 2,
+      "title": "Tên bài báo 2",
+      "releaseDay": "10/05",
+      "releaseYear": "2023",
+      "author": "Tác giả 2",
+      "conference": "Hội thảo quốc tế 2",
+      "url": "https://example.com/article2",
+      "type": "4"
+    },
+    {
+      "id": 3,
+      "title": "Tên bài báo 3",
+      "releaseDay": "15/08",
+      "releaseYear": "2021",
+      "author": "Tác giả 3",
+      "conference": "Hội thảo trong nước 1",
+      "url": "https://example.com/article3",
+      "type": "3"
+    },
+    {
+      "id": 4,
+      "title": "Tên bài báo 4",
+      "releaseDay": "02/07",
+      "releaseYear": "2020",
+      "author": "Tác giả 4",
+      "conference": "Hội thảo quốc tế 3",
+      "url": "https://example.com/article4",
+      "type": "4"
+    },
+    {
+      "id": 5,
+      "title": "Tên bài báo 5",
+      "releaseDay": "20/11",
+      "releaseYear": "2022",
+      "author": "Tác giả 5",
+      "conference": "Hội thảo trong nước 2",
+      "url": "https://example.com/article5",
+      "type": "3"
+    },
+    {
+      "id": 6,
+      "title": "Tên bài báo 6",
+      "releaseDay": "01/01",
+      "releaseYear": "2021",
+      "author": "Tác giả 6",
+      "conference": "Tạp chí quốc tế",
+      "url": "https://example.com/article6",
+      "type": "6"
+    },
+    {
+      "id": 7,
+      "title": "Tên bài báo 7",
+      "releaseDay": "25/09",
+      "releaseYear": "2023",
+      "author": "Tác giả 7",
+      "conference": "Tạp chí trong nước",
+      "url": "https://example.com/article7",
+      "type": "5"
+    },
+    {
+      "id": 8,
+      "title": "Tên bài báo 8",
+      "releaseDay": "14/02",
+      "releaseYear": "2020",
+      "author": "Tác giả 8",
+      "conference": "Hội thảo quốc tế 4",
+      "url": "https://example.com/article8",
+      "type": "4"
+    },
+    {
+      "id": 9,
+      "title": "Tên bài báo 9",
+      "releaseDay": "30/06",
+      "releaseYear": "2019",
+      "author": "Tác giả 9",
+      "conference": "Hội thảo trong nước 3",
+      "url": "https://example.com/article9",
+      "type": "3"
+    },
+    {
+      "id": 10,
+      "title": "Tên bài báo 10",
+      "releaseDay": "05/05",
+      "releaseYear": "2022",
+      "author": "Tác giả 10",
+      "conference": "Tạp chí quốc tế",
+      "url": "https://example.com/article10",
+      "type": "6"
+    }
+  ]
+}

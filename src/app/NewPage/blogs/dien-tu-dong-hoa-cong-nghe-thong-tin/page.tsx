@@ -7,15 +7,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import PublicationCard from '@/components/display-block/PublicationCard';
 import BlogFormModal from './BlogFormModal'; 
-
-export interface BlogPost {
-    id: string;
-    title: string;
-    date?: string;
-    description?: string;
-    imageUrl?: string;
-    href?: string;
-}
+import { BlogPost } from '@/interfaces/blogs/interface';
 
 export default function DienTuDongHoa() {
     const { isLoggedIn, user } = useAuth();
@@ -113,7 +105,7 @@ export default function DienTuDongHoa() {
                         </div>
                     )}
 
-                    <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa - Công nghệ thông tin</h2>
+                    <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa</h2>
 
                     <div className="grid grid-cols-3 gap-4">
                         {blogPosts.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((post) => (

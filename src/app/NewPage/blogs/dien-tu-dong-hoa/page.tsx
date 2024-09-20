@@ -7,15 +7,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/providers/AuthProvider';
 import PublicationCard from '@/components/display-block/PublicationCard';
 import BlogFormModal from './BlogFormModal'; 
-
-export interface BlogPost {
-    id: string;
-    title: string;
-    date?: string;
-    description?: string;
-    imageUrl?: string;
-    href?: string;
-}
+import { BlogPost } from '@/interfaces/blogs/interface';
 
 export default function DienTuDongHoa() {
     const { isLoggedIn, user } = useAuth();

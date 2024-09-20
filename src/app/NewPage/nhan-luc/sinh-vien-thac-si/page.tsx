@@ -7,43 +7,43 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-sinh-vien-thac-si'; 
-
-interface Staff {
-    id: string; 
-    name: string;
-    title: string;
-    mail: string;
-    tel: string;
-    imageUrl: string;
-}
+import StaffForm from './form-sinh-vien-thac-si';
+import { Staff } from '@/interfaces/nhan-luc/interface';
 
 export default function NewsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const [staffData, setStaffData] = useState<Staff[]>([]);
     const [editingStaff, setEditingStaff] = useState<Staff | null>(null);
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
     const itemsPerPage = 5;
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
-    // Function to fetch staff data from the backend
     const fetchStaffData = async () => {
+        setIsLoading(true);
+        setHasError(false);
         try {
             const response = await fetch('/api/nhan-luc/sinh-vien-thac-si');
             if (response.ok) {
                 const data = await response.json();
-                setStaffData(data.staffData);
+                if (Array.isArray(data?.staffData)) {
+                    setStaffData(data.staffData);
+                } else {
+                    setHasError(true);
+                }
             } else {
-                console.error('Failed to fetch staff data');
+                setHasError(true);
             }
         } catch (error) {
-            console.error('Error fetching staff data:', error);
+            setHasError(true);
+        } finally {
+            setIsLoading(false);
         }
     };
 
     useEffect(() => {
-        // Initial fetch of staff data
         fetchStaffData();
     }, []);
 
@@ -51,7 +51,6 @@ export default function NewsPage() {
         try {
             let imageUrl = staff.imageUrl;
 
-            // Handle image upload if a new image is provided
             if (imageFile) {
                 const formData = new FormData();
                 formData.append('file', imageFile);
@@ -70,9 +69,7 @@ export default function NewsPage() {
                 }
             }
 
-            // Generate a random ID for new staff if not editing
             const id = editingStaff ? editingStaff.id : `${Date.now()}`;
-
             const method = editingStaff ? 'PUT' : 'POST';
             const url = editingStaff
                 ? `/api/nhan-luc/sinh-vien-thac-si?id=${editingStaff.id}`
@@ -89,8 +86,7 @@ export default function NewsPage() {
             if (response.ok) {
                 setIsFormVisible(false);
                 setEditingStaff(null);
-                // Refetch the staff data after submission
-                fetchStaffData();
+                fetchStaffData(); 
             } else {
                 console.error('Failed to submit staff data');
             }
@@ -106,8 +102,7 @@ export default function NewsPage() {
             });
 
             if (response.ok) {
-                // Refetch the staff data after deletion
-                fetchStaffData();
+                fetchStaffData(); 
             } else {
                 console.error('Failed to delete staff');
             }
@@ -177,20 +172,28 @@ export default function NewsPage() {
                                 )}
                             </div>
 
-                            {currentItems.map((staff) => (
-                                <div key={staff.id} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
-                                    <UserInfo
-                                        name={staff.name}
-                                        title={staff.title}
-                                        mail={staff.mail}
-                                        tel={staff.tel}
-                                        imageUrl={staff.imageUrl}
-                                        onEdit={() => handleEdit(staff)}
-                                        onDelete={() => handleDelete(staff)}
-                                        isAdmin={isAdmin}
-                                    />
-                                </div>
-                            ))}
+                            {isLoading ? (
+                                <p>Loading...</p>
+                            ) : hasError ? (
+                                <p>Error loading data. Please check the console for more details.</p>
+                            ) : currentItems.length > 0 ? (
+                                currentItems.map((staff) => (
+                                    <div key={staff.id} className="mb-4 p-4 border rounded-lg shadow-sm bg-white">
+                                        <UserInfo
+                                            name={staff.name}
+                                            title={staff.title}
+                                            mail={staff.mail}
+                                            tel={staff.tel}
+                                            imageUrl={staff.imageUrl}
+                                            onEdit={() => handleEdit(staff)}
+                                            onDelete={() => handleDelete(staff)}
+                                            isAdmin={isAdmin}
+                                        />
+                                    </div>
+                                ))
+                            ) : (
+                                <p>No data available</p>
+                            )}
 
                             <PgControl
                                 currentPage={currentPage}

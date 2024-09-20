@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import CooperationSection from "@/components/frame/CooperationSection";
 import cooperationData from "@/data/cooperations.json";
+import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
@@ -9,7 +10,7 @@ import CooperationEventFormModal from './hop-tacFormModal';
 
 // Define the types for the cooperation event
 interface CooperationEvent {
-    id: string; // Ensure id is always a string
+    id: string;
     title: string;
     date: string;
     imageSrc: string;
@@ -21,8 +22,10 @@ export default function NewsPage() {
     const [newsData, setNewsData] = useState<CooperationEvent[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentNews, setCurrentNews] = useState<CooperationEvent | undefined>();
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 3; 
 
-    const isAdmin = true; // Change based on actual user status
+    const isAdmin = true; 
 
     // Fetch news data from API
     const fetchNewsData = async () => {
@@ -93,7 +96,9 @@ export default function NewsPage() {
         fetchNewsData(); 
         setIsModalOpen(false); 
     };
-    
+
+    // Get paginated news
+    const paginatedNews = newsData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
     return (
         <div className="max-w-6xl mx-auto p-4">
@@ -114,12 +119,18 @@ export default function NewsPage() {
 
                     {/* News List */}
                     <NewsList
-                        news={newsData}
+                        news={paginatedNews} // Chỉ truyền những sự kiện trong trang hiện tại
                         isAdmin={isAdmin}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
                     />
-
+                    
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={Math.ceil(newsData.length / itemsPerPage)}
+                        onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
+                        onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                    />
                     {/* Conditionally render CooperationSection if the modal is not open */}
                     {!isModalOpen && (
                         <CooperationSection
@@ -127,6 +138,8 @@ export default function NewsPage() {
                             items={domesticCooperation.items}
                         />
                     )}
+                    {/* Pagination Control */}
+                    
                 </div>
             </div>
 
@@ -140,3 +153,4 @@ export default function NewsPage() {
         </div>
     );
 }
+

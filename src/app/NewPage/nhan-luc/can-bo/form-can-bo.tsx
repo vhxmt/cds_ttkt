@@ -1,19 +1,11 @@
 // src/app/NewPage/nhan-luc/can-bo/form-can-bo.tsx
 import { useState } from 'react';
+import { Staff } from '@/interfaces/nhan-luc/interface';
 
 interface StaffFormProps {
     initialData?: Staff;
     onSubmit: (staff: Staff) => Promise<void>;
     onCancel: () => void;
-}
-
-interface Staff {
-    id: string;
-    name: string;
-    title: string;
-    mail: string;
-    tel: string;
-    imageUrl: string;
 }
 
 export default function StaffForm({ initialData, onSubmit, onCancel }: StaffFormProps) {
