@@ -1,5 +1,6 @@
+// src/app/NewPage/hop-tacFormModal.tsx
 import React, { useState, useEffect } from 'react';
-import {CooperationEvent} from '@/interfaces/hop-tac/interface';
+import { CooperationEvent } from '@/interfaces/hop-tac/interface';
 
 interface CooperationEventFormModalProps {
     isOpen: boolean;
@@ -17,15 +18,18 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const [file, setFile] = useState<File | null>(null);
+    const [href, setHref] = useState(''); // New field for URL
     const [isUploading, setIsUploading] = useState(false);
 
     useEffect(() => {
         if (initialData) {
             setTitle(initialData.title);
             setDate(initialData.date);
+            setHref(initialData.href); // Initialize href with existing data
         } else {
             setTitle('');
             setDate('');
+            setHref(''); // Reset href
         }
     }, [initialData]);
 
@@ -38,8 +42,8 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
 
     // Handle form submission (file upload happens here)
     const handleSubmit = async () => {
-        if (!title) {
-            alert('Please provide at least a title.');
+        if (!title || !href) {
+            alert('Please provide at least a title and a link (href).');
             return;
         }
 
@@ -78,6 +82,7 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
             title,
             date: date || new Date().toLocaleDateString(),
             imageSrc: updatedImageSrc || '',
+            href, // Include href in the new event object
         };
 
         onSubmit(newEvent); // Submit the new event with updated image URL
@@ -109,6 +114,18 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
                         value={date}
                         onChange={(e) => setDate(e.target.value)}
                         className="mt-1 block w-full border border-gray-300 rounded-md"
+                    />
+                </div>
+
+                <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700">Link (href)</label> {/* Add a label for the href field */}
+                    <input
+                        type="text"
+                        value={href}
+                        onChange={(e) => setHref(e.target.value)}
+                        className="mt-1 block w-full border border-gray-300 rounded-md"
+                        placeholder="https://example.com" // Add a placeholder for clarity
+                        required
                     />
                 </div>
 

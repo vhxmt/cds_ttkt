@@ -7,6 +7,7 @@ interface News {
     imageSrc: string;
     title: string;
     date: string;
+    href: string; // Add href field for the link
 }
 
 interface NewsListProps {
@@ -21,10 +22,11 @@ const NewsList: React.FC<NewsListProps> = ({ news, isAdmin, onEdit, onDelete }) 
         <div className="mb-8">
             {news.map((item) => (
                 <NewsItem
-                    key={item.id} // Change to use item.id
+                    key={item.id} // Use item.id as the key
                     imageSrc={item.imageSrc}
                     title={item.title}
                     date={item.date}
+                    href={item.href} // Pass href prop to NewsItem
                     isAdmin={isAdmin}
                     onEdit={() => onEdit && onEdit(item)}
                     onDelete={() => onDelete && onDelete(item)}
