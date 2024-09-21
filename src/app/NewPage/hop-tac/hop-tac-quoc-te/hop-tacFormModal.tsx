@@ -1,11 +1,5 @@
 import React, { useState, useEffect } from 'react';
-
-interface CooperationEvent {
-    id?: string;
-    title: string;
-    date: string;
-    imageSrc: string;
-}
+import {CooperationEvent} from '@/interfaces/hop-tac/interface';
 
 interface CooperationEventFormModalProps {
     isOpen: boolean;

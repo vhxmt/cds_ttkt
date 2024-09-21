@@ -7,14 +7,7 @@ import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsList from '@/components/display-block/news/NewsList';
 import CooperationEventFormModal from './hop-tacFormModal';
-
-// Define the types for the cooperation event
-interface CooperationEvent {
-    id: string; // Ensure id is always a string
-    title: string;
-    date: string;
-    imageSrc: string;
-}
+import {CooperationEvent} from '@/interfaces/hop-tac/interface';
 
 const { domesticCooperation } = cooperationData;
 
