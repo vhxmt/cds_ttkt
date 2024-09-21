@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Award } from '@/interfaces/giai-thuong/interface';
 
 interface ModalProps {
     isOpen: boolean;
@@ -7,30 +8,28 @@ interface ModalProps {
     initialData?: Award;
 }
 
-interface Award {
-    id: string;
-    recipients: string;
-    award: string;
-    organization: string;
-    year: number;
-    achievement: string;
-}
-
 export default function Modal({ isOpen, onClose, onSubmit, initialData }: ModalProps) {
-    const [recipients, setRecipients] = useState('');
-    const [award, setAward] = useState('');
+    const [author, setAuthor] = useState(''); // Updated variable name to match `Award` interface
+    const [title, setTitle] = useState(''); // Updated variable name to match `Award` interface
     const [organization, setOrganization] = useState('');
     const [year, setYear] = useState(2023);
-    const [achievement, setAchievement] = useState('');
+    const [description, setDescription] = useState(''); // Updated variable name to match `Award` interface
 
     // When `initialData` changes (e.g., for editing), update the form fields
     useEffect(() => {
         if (initialData) {
-            setRecipients(initialData.recipients);
-            setAward(initialData.award);
+            setAuthor(initialData.author); // Set initial value for `author`
+            setTitle(initialData.title); // Set initial value for `title`
             setOrganization(initialData.organization);
             setYear(initialData.year);
-            setAchievement(initialData.achievement);
+            setDescription(initialData.description); // Set initial value for `description`
+        } else {
+            // Clear form when there's no initial data (e.g., for adding a new award)
+            setAuthor('');
+            setTitle('');
+            setOrganization('');
+            setYear(2023);
+            setDescription('');
         }
     }, [initialData]);
 
@@ -38,13 +37,13 @@ export default function Modal({ isOpen, onClose, onSubmit, initialData }: ModalP
         e.preventDefault();
         const awardData: Award = {
             id: initialData?.id || '',
-            recipients,
-            award,
+            author, // Use state variable for `author`
+            title, // Use state variable for `title`
             organization,
             year,
-            achievement
+            description // Use state variable for `description`
         };
-        onSubmit(awardData);
+        onSubmit(awardData); // Pass the correct `Award` object
     };
 
     if (!isOpen) return null;
@@ -55,21 +54,21 @@ export default function Modal({ isOpen, onClose, onSubmit, initialData }: ModalP
                 <h3 className="text-xl font-semibold mb-4">{initialData ? 'Edit Award' : 'Add Award'}</h3>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Recipients</label>
+                        <label className="block text-sm font-medium text-gray-700">Author</label>
                         <input
                             type="text"
-                            value={recipients}
-                            onChange={(e) => setRecipients(e.target.value)}
+                            value={author} // Use state variable for `author`
+                            onChange={(e) => setAuthor(e.target.value)}
                             className="mt-1 block w-full border border-black rounded-md"
                             required
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Award</label>
+                        <label className="block text-sm font-medium text-gray-700">Title</label>
                         <input
                             type="text"
-                            value={award}
-                            onChange={(e) => setAward(e.target.value)}
+                            value={title} // Use state variable for `title`
+                            onChange={(e) => setTitle(e.target.value)}
                             className="mt-1 block w-full border border-black rounded-md"
                             required
                         />
@@ -95,10 +94,10 @@ export default function Modal({ isOpen, onClose, onSubmit, initialData }: ModalP
                         />
                     </div>
                     <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Achievement</label>
+                        <label className="block text-sm font-medium text-gray-700">Description</label>
                         <textarea
-                            value={achievement}
-                            onChange={(e) => setAchievement(e.target.value)}
+                            value={description} // Use state variable for `description`
+                            onChange={(e) => setDescription(e.target.value)}
                             className="mt-1 block w-full border border-black rounded-md"
                             required
                         />

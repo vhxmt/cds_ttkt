@@ -1,21 +1,20 @@
 {
-  "awardData": [
+  "mainData": [
     {
-
-      "id": "2024-09-14T13:20:47.840Z",
-      "recipients": "adfadf",
-      "award": "adfadf",
-      "organization": "adfad",
-      "year": 2023,
-      "achievement": "adf"
+      "id": "2024-09-21T07:21:53.920Z",
+      "author": "ádasd",
+      "title": "ádasd",
+      "organization": "ádasd",
+      "year": 2024,
+      "description": "adsasd"
     },
     {
-      "id": "2024-09-12T09:00:55.844Z",
-      "recipients": "afafầdfa",
-      "award": "adfaf",
-      "organization": "adfa",
-      "year": 2023,
-      "achievement": "afdaf"
+      "id": "2024-09-20T16:28:16.112Z",
+      "author": "bbbbbbbbbb",
+      "title": "aaaaa",
+      "organization": "aaaaaaa",
+      "year": 2024,
+      "description": "aaaaaaaaaaaaaaaaaaaaa"
     }
   ]
 }

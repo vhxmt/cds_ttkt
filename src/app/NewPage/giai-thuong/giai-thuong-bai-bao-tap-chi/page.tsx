@@ -8,15 +8,7 @@ import TableHeader from '@/components/display-block/TableHeader';
 import TableRow from '@/components/display-block/TableRow';
 import Modal from '../form';  // Import the Modal component
 import { useAuth } from "@/components/providers/AuthProvider";
-
-interface Award {
-    id: string;
-    recipients: string;
-    award: string;
-    organization: string;
-    year: number;
-    achievement: string;
-}
+import { Award } from '@/interfaces/giai-thuong/interface'; 
 
 export default function BaiBaoKhac() {
     const [currentPage, setCurrentPage] = useState(1);
@@ -77,20 +69,30 @@ export default function BaiBaoKhac() {
     };
 
     const handleModalSubmit = async (award: Award) => {
+        // Log the data being submitted to check for missing fields
+        console.log("Submitting award:", award);
+    
         const method = award.id ? 'PUT' : 'POST';
         const url = award.id
             ? `/api/giai-thuong/giai-thuong-bai-bao-tap-chi?id=${award.id}`
             : '/api/giai-thuong/giai-thuong-bai-bao-tap-chi';
-
+    
         try {
             const response = await fetch(url, {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(award),
+                body: JSON.stringify({
+                    id: award.id,
+                    author: award.author,
+                    title: award.title,
+                    organization: award.organization,
+                    year: award.year,
+                    description: award.description,
+                }), // Ensure all required fields are included in the request body
             });
-
+    
             if (response.ok) {
                 await fetchAwards();  // Refetch the data after successfully adding or editing an award
                 setIsModalOpen(false);  // Close the modal after submission
@@ -101,15 +103,16 @@ export default function BaiBaoKhac() {
             console.error('Failed to submit award:', error);
         }
     };
+    
 
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const headers = isAdmin
-        ? ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích', 'Thao tác']
-        : ['Người nhận giải', 'Giải thưởng', 'Tổ chức', 'Năm', 'Thành tích'];
+        ? ['Tác giả', 'Tiêu đề', 'Tổ chức', 'Năm', 'Mô tả', 'Thao tác']
+        : ['Tác giả', 'Tiêu đề', 'Tổ chức', 'Năm', 'Mô tả'];
 
-    const columns = ['recipients', 'award', 'organization', 'year', 'achievement'];
+    const columns = ['author', 'title', 'organization', 'year', 'description']; // Updated to match new field names
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -138,7 +141,7 @@ export default function BaiBaoKhac() {
             <div className="flex space-x-4">
                 <SideMenu currentSection="Giải thưởng" />
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h3 className="text-xl font-semibold mb-2 text-center">Giải thưởng Bài báo Tạp chí</h3>
+                    <h3 className="text-xl font-semibold mb-2 text-center">Giải thưởng Bài báo Hội nghị</h3>
 
                     <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md">
                         <thead>

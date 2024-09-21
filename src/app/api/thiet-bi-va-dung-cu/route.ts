@@ -1,10 +1,11 @@
-// src/pages/api/tuyen-dung/route.ts
+// src/pages/api/thiet-bi-va-dung-cu/route.ts
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
 
-// Path to the JSON file for recruitment data
-const jsonFilePath = path.join(process.cwd(), 'src/data/tuyen-dung/tuyen-dung.json');
+// Path to the JSON file
+const jsonFilePath = path.join(process.cwd(), 'src/data/thiet-bi-va-dung-cu/data.json');
+const imageFolderPath = path.join(process.cwd(), 'public/image/thiet-bi-va-dung-cu');
 
 // Helper function to read the JSON file
 function readData() {
@@ -17,126 +18,108 @@ function writeData(data: any) {
     fs.writeFileSync(jsonFilePath, JSON.stringify(data, null, 2), 'utf8');
 }
 
-// POST method to add a new recruitment position with image upload
+// Helper function to delete the image file
+function deleteImage(imageUrl: string) {
+    const imageName = path.basename(imageUrl); // Extract the file name from the URL
+    const fullPath = path.join(imageFolderPath, imageName);
+    if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath); // Delete the file
+        console.log(`Deleted image: ${imageName}`);
+    } else {
+        console.log(`Image not found: ${imageName}`);
+    }
+}
+
+// GET method to fetch all tools data
+export async function GET(req: NextRequest) {
+    const data = readData();
+    return NextResponse.json(data);
+}
+
+// POST method to add a new tool
 export async function POST(req: NextRequest) {
     try {
-        const formData = await req.formData();
-        const newPosition = {
-            title: formData.get('title'),
-            description: formData.get('description'),
-            requirements: JSON.parse(formData.get('requirements') as string || '[]'),
-        };
+        const body = await req.json();
+        const { section, newTool } = body;  // Extract section and newTool from the request body
 
-        // Validate new position data
-        if (!newPosition.title || !newPosition.description || !newPosition.requirements) {
-            return NextResponse.json({ message: 'Invalid request: Missing position data' }, { status: 400 });
-        }
-
-        // Handle file upload
-        const file = formData.get('file') as File | null;
-        let imageUrl = '';
-
-        if (file) {
-            // Define the upload directory dynamically
-            const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'tuyen-dung');
-            if (!fs.existsSync(uploadDir)) {
-                fs.mkdirSync(uploadDir, { recursive: true });
-            }
-
-            const arrayBuffer = await file.arrayBuffer();
-            const buffer = Buffer.from(arrayBuffer);
-            const fileName = `${Date.now()}-${file.name}`;
-            const filePath = path.join(uploadDir, fileName);
-
-            fs.writeFileSync(filePath, buffer);
-            imageUrl = `/uploads/tuyen-dung/${fileName}`;
+        // Validate that section and newTool are provided
+        if (!section || !newTool || !['toolsTwoCol', 'toolOneCol'].includes(section)) {
+            return NextResponse.json({ message: 'Invalid request: Missing section or newTool' }, { status: 400 });
         }
 
         const data = readData();
 
-        // Add a unique ID and image URL to the new position
-        const newPositionWithId = {
-            ...newPosition,
-            id: String(Date.now()),
-            imageUrl,
+        const newToolWithId = {
+            ...newTool,
+            id: new Date().toISOString(),  // Generate a new unique ID
         };
 
-        data.recruitmentData.positions.push(newPositionWithId);
+        // Add the new tool to the respective section
+        data[section].unshift(newToolWithId);
+        writeData(data);  // Write the updated data to the JSON file
 
-        // Write the updated data to the JSON file
-        writeData(data);
-
-        return NextResponse.json({ message: 'Position added successfully', position: newPositionWithId }, { status: 201 });
+        return NextResponse.json({ message: 'Tool added successfully', tool: newToolWithId }, { status: 201 });
     } catch (error) {
         console.error('Error processing POST request:', error);
         return NextResponse.json({ message: 'Server error' }, { status: 500 });
     }
 }
 
-// PUT method to update an existing recruitment position with image upload
+
+
+// PUT method to edit an existing tool by ID
 export async function PUT(req: NextRequest) {
-    try {
-        const formData = await req.formData();
-        const id = formData.get('id');
-        const updatedPosition = {
-            title: formData.get('title'),
-            description: formData.get('description'),
-            requirements: JSON.parse(formData.get('requirements') as string || '[]'),
-        };
+    const body = await req.json();
+    const { section, id, updatedTool } = body;
 
-        if (!id || !updatedPosition.title || !updatedPosition.description) {
-            return NextResponse.json({ message: 'Invalid request: Missing ID or position data' }, { status: 400 });
-        }
-
-        const data = readData();
-        const positionIndex = data.recruitmentData.positions.findIndex((pos: any) => pos.id === id);
-
-        if (positionIndex === -1) {
-            return NextResponse.json({ message: 'Position not found' }, { status: 404 });
-        }
-
-        // Handle file upload
-        const file = formData.get('file') as File | null;
-        let imageUrl = data.recruitmentData.positions[positionIndex].imageUrl; // Keep the existing image URL
-
-        if (file) {
-            // Delete the old image if a new one is uploaded
-            const oldImage = imageUrl;
-            if (oldImage) {
-                const oldImagePath = path.join(process.cwd(), 'public', oldImage);
-                if (fs.existsSync(oldImagePath)) {
-                    fs.unlinkSync(oldImagePath);
-                }
-            }
-
-            // Upload the new image
-            const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'tuyen-dung');
-            if (!fs.existsSync(uploadDir)) {
-                fs.mkdirSync(uploadDir, { recursive: true });
-            }
-
-            const arrayBuffer = await file.arrayBuffer();
-            const buffer = Buffer.from(arrayBuffer);
-            const fileName = `${Date.now()}-${file.name}`;
-            const filePath = path.join(uploadDir, fileName);
-
-            fs.writeFileSync(filePath, buffer);
-            imageUrl = `/uploads/tuyen-dung/${fileName}`;
-        }
-
-        // Update the position with new data and image URL
-        data.recruitmentData.positions[positionIndex] = {
-            ...data.recruitmentData.positions[positionIndex],
-            ...updatedPosition,
-            imageUrl,
-        };
-
-        // Write the updated data to the JSON file
-        writeData(data);
-
-        return NextResponse.json({ message: 'Position updated successfully', position: data.recruitmentData.positions[positionIndex] }, { status: 200 });
-    } catch (error) {
-        console.error('Error processing PUT request:', error);
-        return NextResponse.json({ message: 'Server error' }, { status: 500 });
+    if (!section || !updatedTool || !id || !['toolsTwoCol', 'toolOneCol'].includes(section)) {
+        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
     }
+
+    const data = readData();
+    const toolIndex = data[section].findIndex((tool: any) => tool.id === id);
+
+    if (toolIndex === -1) {
+        return NextResponse.json({ message: 'Tool not found' }, { status: 404 });
+    }
+
+    // Delete old image if a new image has been uploaded
+    const oldTool = data[section][toolIndex];
+    if (oldTool.imgSrc && oldTool.imgSrc !== updatedTool.imgSrc) {
+        deleteImage(oldTool.imgSrc); // Delete the old image
+    }
+
+    data[section][toolIndex] = updatedTool;
+    writeData(data);
+
+    return NextResponse.json({ message: 'Tool updated successfully', tool: updatedTool }, { status: 200 });
+}
+
+// DELETE method to delete a tool by ID
+export async function DELETE(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const section = searchParams.get('section');
+    const id = searchParams.get('id');
+
+    if (!section || id === null || !['toolsTwoCol', 'toolOneCol'].includes(section)) {
+        return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
+    }
+
+    const data = readData();
+    const toolIndex = data[section].findIndex((tool: any) => tool.id === id);
+
+    if (toolIndex === -1) {
+        return NextResponse.json({ message: 'Tool not found' }, { status: 404 });
+    }
+
+    // Delete associated image file
+    const toolToDelete = data[section][toolIndex];
+    if (toolToDelete.imgSrc) {
+        deleteImage(toolToDelete.imgSrc);
+    }
+
+    data[section].splice(toolIndex, 1); // Remove the tool
+    writeData(data);
+
+    return NextResponse.json({ message: 'Tool deleted successfully' });
 }

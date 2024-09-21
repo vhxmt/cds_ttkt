@@ -1,6 +1,17 @@
 {
   "mainData": [
     {
+      "id": "2024-09-20T16:22:16.371Z",
+      "title": "bài báo 10",
+      "releaseDay": 1,
+      "releaseMonth": 1,
+      "releaseYear": 2024,
+      "author": "Quang",
+      "conference": "here",
+      "url": "",
+      "type": "1"
+    },
+    {
       "id": "2024-09-20T11:32:30.866Z",
       "title": "bài báo 3",
       "releaseDay": 31,
@@ -10,17 +21,6 @@
       "conference": "",
       "url": "",
       "type": "1"
-    },
-    {
-      "id": "2024-09-20T11:08:43.256Z",
-      "title": "bài báo 1",
-      "releaseDay": 1,
-      "releaseMonth": 1,
-      "releaseYear": 2024,
-      "author": "Quang",
-      "conference": "home",
-      "url": "",
-      "type": "6"
     }
   ]
 }
