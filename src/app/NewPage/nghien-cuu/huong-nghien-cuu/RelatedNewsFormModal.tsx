@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import {  RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
-interface RelatedNews {
-    id: number;
-    title: string;
-    description?: string;
-    link?: string;
-}
 
 interface RelatedNewsFormModalProps {
     isOpen: boolean;

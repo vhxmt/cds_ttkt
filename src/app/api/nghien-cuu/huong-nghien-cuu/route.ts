@@ -1,26 +1,10 @@
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
+import { ResearchData, ResearchArea, RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
 const filePath = path.join(process.cwd(), 'src/data/nghien-cuu/huong-nghien-cuu/data.json');
 
-interface ResearchArea {
-    name: string;
-    description?: string;
-    relatedNews: RelatedNews[];
-}
-
-interface RelatedNews {
-    id: number;
-    title: string;
-    description: string;
-    link: string;
-}
-
-interface ResearchData {
-    title: string;
-    researchAreas: ResearchArea[];
-}
 
 function readData(): ResearchData {
     const jsonData = fs.readFileSync(filePath, 'utf8');

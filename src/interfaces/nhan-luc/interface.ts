@@ -1,4 +1,4 @@
-// src/pages/api/nhan-luc/interface.ts
+// src/interfaces/nhan-luc/interface.ts
 
 export interface Staff {
     id: string;

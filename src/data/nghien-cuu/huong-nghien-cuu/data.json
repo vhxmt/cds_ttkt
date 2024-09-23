@@ -2,18 +2,6 @@
   "title": "Hướng nghiên cứu",
   "researchAreas": [
     {
-      "name": "Hệ thống điện và năng lượng",
-      "description": "Nghiên cứu về các hệ thống điện và năng lượng bao gồm thiết kế, phân phối và quản lý các hệ thống điện năng lượng.",
-      "relatedNews": [
-        {
-          "id": 5,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        }
-      ]
-    },
-    {
       "name": "Lưới điện thông minh",
       "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
       "relatedNews": [

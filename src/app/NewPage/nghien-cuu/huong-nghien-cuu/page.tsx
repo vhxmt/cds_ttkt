@@ -5,27 +5,8 @@ import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider';
 import ResearchAreaFormModal from './ResearchAreaFormModal';
 import RelatedNewsFormModal from './RelatedNewsFormModal';
+import { ResearchData, ResearchArea, RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
-interface ResearchArea {
-    name: string;
-    highlight?: boolean;
-    description?: string;
-    relatedNews?: RelatedNews[];
-}
-
-interface RelatedNews {
-    id: number;
-    title: string;
-    description: string;
-    link: string;
-}
-
-interface ResearchData {
-    title: string;
-    researchAreas: ResearchArea[];
-    description: string;
-    relatedNews: RelatedNews[];
-}
 
 export default function HuongNghienCuu() {
     const [researchData, setResearchData] = useState<ResearchData | null>(null);

@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { ResearchArea } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
-interface ResearchArea {
-    name: string;
-    description?: string;
-}
 
 interface ResearchAreaFormModalProps {
     isOpen: boolean;
