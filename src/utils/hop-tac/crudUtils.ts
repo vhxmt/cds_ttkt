@@ -53,7 +53,7 @@ export async function addEvent(req: NextRequest, subPath: string): Promise<NextR
         const body = await req.json();
         const { newEvent } = body;
 
-        if (!newEvent || !newEvent.title || !newEvent.date || !newEvent.imageSrc) {
+        if (!newEvent || !newEvent.title || !newEvent.date || !newEvent.imageSrc || !newEvent.href) {
             return NextResponse.json({ message: 'Invalid request: Missing fields' }, { status: 400 });
         }
 
@@ -79,7 +79,7 @@ export async function updateEvent(req: NextRequest, subPath: string): Promise<Ne
         const body = await req.json();
         const { id, updatedEvent } = body;
 
-        if (!id || !updatedEvent || !updatedEvent.title || !updatedEvent.date || !updatedEvent.imageSrc) {
+        if (!id || !updatedEvent || !updatedEvent.title || !updatedEvent.date || !updatedEvent.imageSrc || !updatedEvent.href) {
             return NextResponse.json({ message: 'Invalid request: Missing fields' }, { status: 400 });
         }
 
@@ -100,6 +100,7 @@ export async function updateEvent(req: NextRequest, subPath: string): Promise<Ne
             ...oldEvent,
             ...updatedEvent,
             imageSrc: updatedEvent.imageSrc || oldEvent.imageSrc,
+            href: updatedEvent.href || oldEvent.href,
         };
 
         writeData(subPath, data);

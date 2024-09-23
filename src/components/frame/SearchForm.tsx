@@ -1,13 +1,32 @@
 'use client';
 import React, { useState } from 'react';
 
-const SearchForm: React.FC = () => {
+interface SearchFormProps {
+  onSearchResults: (results: any[]) => void; // Function to handle search results
+}
+
+const SearchForm: React.FC<SearchFormProps> = ({ onSearchResults }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSearch = (e: React.FormEvent) => {
+  const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Add your search logic here or call an API
-    console.log('Searching for:', searchQuery);
+
+    if (!searchQuery.trim()) {
+      console.error('Search query is empty.');
+      return; // Avoid sending an empty query
+    }
+
+    try {
+      const response = await fetch(`/api/search?query=${encodeURIComponent(searchQuery)}`);
+      if (response.ok) {
+        const data = await response.json();
+        onSearchResults(data); // Pass search results to the parent component
+      } else {
+        console.error('Failed to fetch search results');
+      }
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+    }
   };
 
   return (
