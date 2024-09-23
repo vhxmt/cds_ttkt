@@ -7,28 +7,19 @@ import ResearchAreaFormModal from './ResearchAreaFormModal';
 import RelatedNewsFormModal from './RelatedNewsFormModal';
 import { ResearchData, ResearchArea, RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
-
 export default function HuongNghienCuu() {
     const [researchData, setResearchData] = useState<ResearchData | null>(null);
-    const [selectedAreaIndex, setSelectedAreaIndex] = useState<number>(0);
+    const [selectedAreaID, setSelectedAreaID] = useState<string | null>(null);
     const [isAreaModalOpen, setIsAreaModalOpen] = useState(false);
     const [isNewsModalOpen, setIsNewsModalOpen] = useState(false);
     const [currentArea, setCurrentArea] = useState<ResearchArea | undefined>(undefined);
     const [currentNews, setCurrentNews] = useState<RelatedNews | undefined>(undefined);
-    const [previousSelectedAreaName, setPreviousSelectedAreaName] = useState<string>(''); // Track previous selected area
 
     const fetchData = async () => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu');
-            const data = await response.json();
+            const data: ResearchData = await response.json();
             setResearchData(data);
-    
-            if (data.researchAreas.length > 0) {
-                const index = data.researchAreas.findIndex(
-                    (area: ResearchArea) => area.name === previousSelectedAreaName // Explicitly define the type here
-                );
-                setSelectedAreaIndex(index >= 0 ? index : 0); // Set back to the previous area if it exists
-            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -37,7 +28,7 @@ export default function HuongNghienCuu() {
 
     useEffect(() => {
         fetchData();
-    }, [previousSelectedAreaName]); // Refetch data when the selected area name changes
+    }, []);
 
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
@@ -46,12 +37,10 @@ export default function HuongNghienCuu() {
         return <div>Loading...</div>;
     }
 
-    const { title, researchAreas = [] } = researchData;
-    const selectedArea = researchAreas[selectedAreaIndex] || { name: '', description: '', relatedNews: [] };
+    const selectedArea = researchData.researchAreas.find(area => area.researchAreaID === selectedAreaID);
 
-    const handleAreaClick = (index: number) => {
-        setSelectedAreaIndex(index);
-        setPreviousSelectedAreaName(researchAreas[index].name); // Store the current selected area's name
+    const handleAreaClick = (researchAreaID: string) => {
+        setSelectedAreaID(researchAreaID);
     };
 
     const handleAddResearchArea = () => {
@@ -59,25 +48,23 @@ export default function HuongNghienCuu() {
         setIsAreaModalOpen(true);
     };
 
-    const handleEditResearchArea = (index: number) => {
-        setCurrentArea(researchAreas[index]);
+    const handleEditResearchArea = (area: ResearchArea) => {
+        setCurrentArea(area);
         setIsAreaModalOpen(true);
     };
 
-    const handleDeleteResearchArea = async (index: number) => {
-        const areaName = researchAreas[index].name;
-
+    const handleDeleteResearchArea = async (researchAreaID: string) => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName }),
+                body: JSON.stringify({ researchAreaID, type: 'area' }), // Pass type 'area' to delete area and related news
             });
-
+    
             if (response.ok) {
-                await fetchData(); // Refetch data after deleting the area
+                await fetchData(); // Refetch data after deleting the area and its related news
             } else {
                 console.error('Failed to delete area:', response.statusText);
             }
@@ -85,28 +72,26 @@ export default function HuongNghienCuu() {
             console.error('Error deleting area:', error);
         }
     };
+    
 
     const handleAddNews = () => {
         setCurrentNews(undefined);
         setIsNewsModalOpen(true);
     };
-
-    const handleEditNews = (newsId: number) => {
-        const newsToEdit = selectedArea.relatedNews?.find((news) => news.id === newsId);
-        setCurrentNews(newsToEdit);
+    
+    const handleEditNews = (news: RelatedNews) => {
+        setCurrentNews(news);
         setIsNewsModalOpen(true);
     };
 
-    const handleDeleteNews = async (id: number) => {
-        const areaName = selectedArea.name;
-
+    const handleDeleteNews = async (id: string) => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName, newsId: id }),
+                body: JSON.stringify({ id, type: 'news' }),
             });
 
             if (response.ok) {
@@ -121,8 +106,10 @@ export default function HuongNghienCuu() {
 
     const handleAreaSubmit = async (area: ResearchArea) => {
         const method = currentArea ? 'PUT' : 'POST';
-        const url = '/api/nghien-cuu/huong-nghien-cuu';
-
+        const url = '/api/nghien-cuu/huong-nghien-cuu'; // This should match the API route
+    
+        const newArea = currentArea ? area : { ...area, researchAreaID: new Date().toISOString() };
+    
         try {
             const response = await fetch(url, {
                 method,
@@ -130,14 +117,12 @@ export default function HuongNghienCuu() {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    areaName: currentArea?.name, // Only pass areaName if editing
-                    area,
+                    area: newArea,
                     type: 'area',
                 }),
             });
-
+    
             if (response.ok) {
-                setPreviousSelectedAreaName(area.name); // Remember the area name
                 await fetchData(); // Refetch data after adding/editing
                 setIsAreaModalOpen(false);
             } else {
@@ -147,26 +132,33 @@ export default function HuongNghienCuu() {
             console.error('Error submitting area:', error);
         }
     };
-
+    
+    
     const handleNewsSubmit = async (news: RelatedNews) => {
         const method = currentNews ? 'PUT' : 'POST';
-        const areaName = selectedArea.name;
-
+        const url = '/api/nghien-cuu/huong-nghien-cuu';
+    
+        // Ensure a unique ID is set if creating new related news and associate it with the selected area
+        const newNews = {
+            ...news,
+            id: currentNews ? news.id : new Date().toISOString(), // Generate a new ID if not editing
+            researchAreaID: selectedAreaID ?? news.researchAreaID // Use selectedAreaID if creating a new news
+        };
+    
         try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
+            const response = await fetch(url, {
                 method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    areaName,
-                    news,
+                    researchAreaID: selectedAreaID, // Reference the selected research area
+                    news: newNews,
                     type: 'news',
                 }),
             });
-
+    
             if (response.ok) {
-                setPreviousSelectedAreaName(areaName); // Remember the area name
                 await fetchData(); // Refetch data after adding/editing news
                 setIsNewsModalOpen(false);
             } else {
@@ -176,6 +168,8 @@ export default function HuongNghienCuu() {
             console.error('Error submitting news:', error);
         }
     };
+    
+    
 
     return (
         <div className="max-w-6xl mx-auto p-4">
@@ -183,7 +177,7 @@ export default function HuongNghienCuu() {
             <div className="flex space-x-4">
                 <SideMenu currentSection="Nghiên cứu" />
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Hướng nghiên cứu</h2>
                     {isAdmin && (
                         <div className="flex justify-end mb-4">
                             <button
@@ -195,24 +189,26 @@ export default function HuongNghienCuu() {
                         </div>
                     )}
                     <div className="grid grid-cols-4 gap-4 mb-6">
-                        {researchAreas.map((area, index) => (
+                        {researchData.researchAreas.map((area) => (
                             <button
-                                key={index}
-                                onClick={() => handleAreaClick(index)}
-                                className={`py-8 rounded-lg text-center ${selectedAreaIndex === index ? 'bg-gray-200' : 'bg-gray-300'}`}
+                                key={area.researchAreaID}
+                                onClick={() => handleAreaClick(area.researchAreaID)}
+                                className={`py-8 rounded-lg text-center ${
+                                    selectedAreaID === area.researchAreaID ? 'bg-gray-200' : 'bg-gray-300'
+                                }`}
                             >
                                 {area.name}
                                 {isAdmin && (
                                     <div className="flex justify-end space-x-2 mt-2">
                                         <button
                                             className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                            onClick={() => handleEditResearchArea(index)}
+                                            onClick={() => handleEditResearchArea(area)}
                                         >
                                             Sửa
                                         </button>
                                         <button
                                             className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                            onClick={() => handleDeleteResearchArea(index)}
+                                            onClick={() => handleDeleteResearchArea(area.researchAreaID)}
                                         >
                                             Xóa
                                         </button>
@@ -221,9 +217,7 @@ export default function HuongNghienCuu() {
                             </button>
                         ))}
                     </div>
-                    <div className="text-base mb-8">
-                        {selectedArea.description}
-                    </div>
+                    <div className="text-base mb-8">{selectedArea?.description}</div>
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-xl font-semibold">Các tin liên quan</h3>
                         {isAdmin && (
@@ -236,35 +230,37 @@ export default function HuongNghienCuu() {
                         )}
                     </div>
                     <div className="space-y-6">
-                        {selectedArea.relatedNews?.map((news) => (
-                            <div key={news.id} className="flex justify-between items-center">
-                                <div>
-                                    <h4 className="font-bold">{news.title}</h4>
-                                    <p className="text-gray-600">{news.description}</p>
+                        {researchData.relatedNews
+                            .filter((news) => news.researchAreaID === selectedAreaID)
+                            .map((news) => (
+                                <div key={news.id} className="flex justify-between items-center">
+                                    <div>
+                                        <h4 className="font-bold">{news.title}</h4>
+                                        <p className="text-gray-600">{news.description}</p>
+                                    </div>
+                                    <div className="flex space-x-2">
+                                        <a href={news.link} className="text-[#BD1E1E]">
+                                            Chi tiết &gt;&gt;
+                                        </a>
+                                        {isAdmin && (
+                                            <>
+                                                <button
+                                                    className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+                                                    onClick={() => handleEditNews(news)}
+                                                >
+                                                    Sửa
+                                                </button>
+                                                <button
+                                                    className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                                                    onClick={() => handleDeleteNews(news.id)}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="flex space-x-2">
-                                    <a href={news.link} className="text-[#BD1E1E]">
-                                        Chi tiết &gt;&gt;
-                                    </a>
-                                    {isAdmin && (
-                                        <>
-                                            <button
-                                                className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                                onClick={() => handleEditNews(news.id)}
-                                            >
-                                                Sửa
-                                            </button>
-                                            <button
-                                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                                onClick={() => handleDeleteNews(news.id)}
-                                            >
-                                                Xóa
-                                            </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </div>
             </div>
@@ -281,11 +277,15 @@ export default function HuongNghienCuu() {
 
             {isNewsModalOpen && (
                 <RelatedNewsFormModal
-                    isOpen={isNewsModalOpen}
-                    onClose={() => setIsNewsModalOpen(false)}
-                    onSubmit={handleNewsSubmit}
-                    initialData={currentNews}
-                />
+                isOpen={isNewsModalOpen}
+                onClose={() => setIsNewsModalOpen(false)}
+                onSubmit={handleNewsSubmit}
+                initialData={{
+                    ...currentNews,
+                    researchAreaID: selectedAreaID ?? '', // Ensure researchAreaID is a string
+                    id: currentNews?.id ?? '', // Provide a default empty string if id is undefined
+                }}
+            />
             )}
         </div>
     );

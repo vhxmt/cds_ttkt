@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import {  RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
-
+import { RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
 interface RelatedNewsFormModalProps {
     isOpen: boolean;
@@ -19,25 +18,30 @@ const RelatedNewsFormModal: React.FC<RelatedNewsFormModalProps> = ({ isOpen, onC
             setTitle(initialData.title || '');
             setDescription(initialData.description || '');
             setLink(initialData.link || '');
+        } else {
+            setTitle('');
+            setDescription('');
+            setLink('');
         }
     }, [initialData]);
-
     const handleSubmit = () => {
         if (!title) {
             alert('Please provide a title for the related news.');
             return;
         }
-
+    
         const updatedNews: RelatedNews = {
-            id: initialData?.id || Math.random(), // Generate random ID for new news
+            id: initialData?.id || new Date().toISOString(), // Use current ID or generate new one
             title,
             description,
             link,
+            researchAreaID: initialData?.researchAreaID || '' // Include researchAreaID for linkage
         };
-
+    
         onSubmit(updatedNews);
         onClose();
     };
+    
 
     if (!isOpen) return null;
 

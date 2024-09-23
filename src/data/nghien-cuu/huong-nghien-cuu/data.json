@@ -1,47 +1,37 @@
 {
-  "title": "Hướng nghiên cứu",
   "researchAreas": [
     {
+      "researchAreaID": "2024-09-21T10:30:00.000Z",
       "name": "Lưới điện thông minh",
-      "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn.",
-      "relatedNews": [
-        {
-          "id": 15,
-          "title": "New Related News",
-          "description": "Description of the new related news",
-          "link": "#"
-        }
-      ]
+      "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn."
     },
     {
+      "researchAreaID": "2024-09-21T10:35:00.000Z",
       "name": "nesw",
-      "description": "news",
-      "relatedNews": [
-        {
-          "id": 0.6400398445551874,
-          "title": "add new",
-          "description": "here",
-          "link": ""
-        },
-        {
-          "id": 0.49903867020394865,
-          "title": "adfadf",
-          "description": "adfadfa",
-          "link": ""
-        }
-      ]
+      "description": "news"
+    }
+  ],
+  "relatedNews": [
+    {
+      "id": "2024-09-21T10:40:00.000Z",
+      "researchAreaID": "2024-09-21T10:30:00.000Z",
+      "title": "New Related News",
+      "description": "Description of the new related news",
+      "link": "#"
     },
     {
-      "name": "àdafafd",
-      "description": "adfafda",
-      "relatedNews": [
-        {
-          "id": 0.8612688442568994,
-          "title": "fff",
-          "description": "ddd",
-          "link": ""
-        }
-      ]
+      "id": "2024-09-21T10:45:00.000Z",
+      "researchAreaID": "2024-09-21T10:35:00.000Z",
+      "title": "add new",
+      "description": "here",
+      "link": "#"
+    },
+    {
+      "id": "2024-09-23T17:17:30.358Z",
+      "researchAreaID": "2024-09-23T17:17:23.459Z",
+      "title": "ssssssss",
+      "description": "dddddđ",
+      "link": "#"
     }
   ]
 }

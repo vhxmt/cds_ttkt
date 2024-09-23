@@ -1,10 +1,9 @@
+import { NextRequest, NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
-import { NextRequest, NextResponse } from 'next/server';
 import { ResearchData, ResearchArea, RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
 const filePath = path.join(process.cwd(), 'src/data/nghien-cuu/huong-nghien-cuu/data.json');
-
 
 function readData(): ResearchData {
     const jsonData = fs.readFileSync(filePath, 'utf8');
@@ -21,76 +20,90 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(data);
 }
 
-// Handle POST requests
 export async function POST(req: NextRequest) {
     const body = await req.json();
     const data = readData();
 
     if (body.type === 'area') {
-        const newArea: ResearchArea = body.area;
+        const newArea: ResearchArea = {
+            researchAreaID: new Date().toISOString(),
+            ...body.area
+        };
         data.researchAreas.push(newArea);
         writeData(data);
-        return NextResponse.json({ message: 'Research area added successfully' }, { status: 201 });
+        return NextResponse.json({ message: 'Research area added successfully', area: newArea }, { status: 201 });
     } else if (body.type === 'news') {
-        const areaName = body.areaName;
-        const area = data.researchAreas.find((area) => area.name === areaName);
-        if (!area) {
+        // Check if the area exists
+        const areaExists = data.researchAreas.some(area => area.researchAreaID === body.researchAreaID);
+        if (!areaExists) {
             return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
         }
 
-        if (!area.relatedNews) {
-            area.relatedNews = [];
-        }
+        const newNews: RelatedNews = {
+            id: new Date().toISOString(), // Generate ID based on creation time
+            researchAreaID: body.researchAreaID, // Link to research area
+            ...body.news
+        };
 
-        const newNews: RelatedNews = body.news;
-        area.relatedNews.unshift(newNews);
+        data.relatedNews.push(newNews);
         writeData(data);
-        return NextResponse.json(data, { status: 201 });
+        return NextResponse.json({ message: 'Related news added successfully', news: newNews }, { status: 201 });
     } else {
         return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
     }
 }
 
-// Handle PUT requests for updating an area
+
+// Handle PUT requests
 export async function PUT(req: NextRequest) {
     const body = await req.json();
     const data = readData();
 
-    const areaName = body.areaName;
-    const areaIndex = data.researchAreas.findIndex((area) => area.name === areaName);
-
-    if (areaIndex === -1) {
-        return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
+    if (body.type === 'area') {
+        const areaIndex = data.researchAreas.findIndex(area => area.researchAreaID === body.area.researchAreaID);
+        if (areaIndex === -1) {
+            return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
+        }
+        data.researchAreas[areaIndex] = body.area;
+    } else if (body.type === 'news') {
+        const newsIndex = data.relatedNews.findIndex(news => news.id === body.news.id);
+        if (newsIndex === -1) {
+            return NextResponse.json({ message: 'Related news not found' }, { status: 404 });
+        }
+        data.relatedNews[newsIndex] = body.news;
     }
 
-    data.researchAreas[areaIndex] = body.area;
     writeData(data);
-    return NextResponse.json({ message: 'Research area updated successfully' });
+    return NextResponse.json({ message: 'Update successful' });
 }
 
-// Handle DELETE requests
 export async function DELETE(req: NextRequest) {
     const body = await req.json();
     const data = readData();
 
-    const { areaName, newsId } = body;
+    const { researchAreaID, id, type } = body;
 
-    if (newsId) {
-        // Delete related news
-        const area = data.researchAreas.find((area) => area.name === areaName);
-        if (!area) {
-            return NextResponse.json({ message: 'Research area not found' }, { status: 404 });
-        }
+    if (type === 'area') {
+        // Delete research area
+        data.researchAreas = data.researchAreas.filter(
+            (area) => area.researchAreaID !== researchAreaID
+        );
 
-        area.relatedNews = area.relatedNews.filter((news) => news.id !== newsId);
+        // Delete all related news associated with this researchAreaID
+        data.relatedNews = data.relatedNews.filter(
+            (news) => news.researchAreaID !== researchAreaID
+        );
+
+        writeData(data);
+        return NextResponse.json({ message: 'Research area and related news deleted successfully' });
+    } else if (type === 'news') {
+        // Delete specific related news by ID
+        data.relatedNews = data.relatedNews.filter((news) => news.id !== id);
+
         writeData(data);
         return NextResponse.json({ message: 'Related news deleted successfully' });
-    } else if (areaName) {
-        // Delete research area
-        data.researchAreas = data.researchAreas.filter((area) => area.name !== areaName);
-        writeData(data);
-        return NextResponse.json({ message: 'Research area deleted successfully' });
     } else {
         return NextResponse.json({ message: 'Invalid request' }, { status: 400 });
     }
 }
+
