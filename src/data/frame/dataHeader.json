@@ -3,11 +3,8 @@
       "label": "Tin tức/Sự kiện",
       "items": [
         { "label": "Tin tức", "href": "/NewPage/tin-tuc-su-kien/tin-tuc" },
-        { "label": "Sự kiện",  
-        "subItems": [
-            { "label": "Sự kiện thường niên", "href": "/NewPage/tin-tuc-su-kien/su-kien/su-kien-thuong-nien" },
-            { "label": "Khóa học ngắn hạn", "href": "/NewPage/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han" }
-          ]
+        { "label": "Sự kiện",  "href": "/NewPage/tin-tuc-su-kien/su-kien"
+
         }
       ]
     },
