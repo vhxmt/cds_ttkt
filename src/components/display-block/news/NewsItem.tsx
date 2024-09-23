@@ -6,12 +6,13 @@ interface NewsItemProps {
     imageSrc: string;
     title: string;
     date: string;
+    href: string; // Add href prop for the link
     isAdmin: boolean;
     onEdit?: () => void;
     onDelete?: () => void;
 }
 
-const NewsItem: React.FC<NewsItemProps> = ({ imageSrc, title, date, isAdmin, onEdit, onDelete }) => {
+const NewsItem: React.FC<NewsItemProps> = ({ imageSrc, title, date, href, isAdmin, onEdit, onDelete }) => {
     return (
         <div className="flex items-center mb-10">
             <img
@@ -20,7 +21,9 @@ const NewsItem: React.FC<NewsItemProps> = ({ imageSrc, title, date, isAdmin, onE
                 className="w-40 h-32 object-cover mr-12"
             />
             <div className="flex-1">
-                <h3 className="font-bold text-lg mb-2">{title}</h3>
+                <a href={href} target="_blank" rel="noopener noreferrer"> {/* Wrap title with link */}
+                    <h3 className="font-bold text-lg mb-2 hover:underline">{title}</h3>
+                </a>
                 <p className="text-sm text-gray-500">{date}</p>
                 {isAdmin && (
                     <div className="mt-2 flex space-x-2">

@@ -1,6 +1,14 @@
 {
   "staffData": [
     {
+      "id": "1",
+      "name": "Nguyễn Hữu Thanh",
+      "title": "adfadf",
+      "mail": "agh@xcv",
+      "tel": "12312312312",
+      "imageUrl": "/image/nhan-luc/can-bo/nguyen-huu-thanh.png"
+    },
+    {
       "id": "2024-09-05T04:58:39.967Z",
       "name": "TS. Nguyễn Vũ Thanh",
       "title": "Trưởng khoa Điện",
@@ -13,8 +21,8 @@
       "name": "TS. Nguyễn Quốc Minh",
       "title": "Phó trưởng khoa Điện",
       "mail": "email3@example.com",
-      "tel": "555-555-555",
-      "imageUrl": "/image/nhan-luc/can-bo/1725548560900_TRINH_Phu_Quang.jpg"
+      "tel": "555-555-5556",
+      "imageUrl": "/image/nhan-luc/can-bo/bc016281ebf79912920fb3201.jpg"
     },
     {
       "id": "2024-09-05T05:58:19.967Z",
@@ -22,7 +30,7 @@
       "title": "Giảng viên",
       "mail": "email4@example.com",
       "tel": "111-222-333",
-      "imageUrl": "/image/nhan-luc/can-bo/559be0ae5c458ee554f5d3a00.jpg"
+      "imageUrl": "/image/nhan-luc/can-bo/1726247687634-54008960_432693524232898_5501815061355692032_n.jpg"
     },
     {
       "id": "2024-09-55T04:58:39.967Z",
@@ -95,14 +103,6 @@
       "mail": "new.email@example.com",
       "tel": "000-000-000",
       "imageUrl": "/path-to-new-image.png"
-    },
-    {
-      "id": "2024-09-05T11:06:22.097Z",
-      "name": "àdadfa",
-      "title": "adfadf",
-      "mail": "agh@xcv",
-      "tel": "12312312312",
-      "imageUrl": "/path-to-default-image.png"
     }
   ]
 }

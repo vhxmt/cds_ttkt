@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import {useAuth} from "@/components/providers/AuthProvider";
+import { useAuth } from "@/components/providers/AuthProvider";
 
 interface UserInfoProps {
     name: string;
@@ -9,10 +9,11 @@ interface UserInfoProps {
     imageUrl: string;
     onEdit: () => void;
     onDelete: () => void;
-    isAdmin: boolean; // Thêm prop để kiểm tra quyền admin
+    isAdmin: boolean;
+    id: string;
 }
 
-export default function UserInfo({ name, title, mail, tel, imageUrl, onEdit, onDelete }: UserInfoProps) {
+export default function UserInfo({ name, title, mail, tel, imageUrl, onEdit, onDelete, id }: UserInfoProps) {
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
@@ -40,6 +41,12 @@ export default function UserInfo({ name, title, mail, tel, imageUrl, onEdit, onD
             {/* Action Buttons */}
             {isAdmin && (
                 <div className="flex flex-col space-y-2 ml-4">
+                    <a
+                        href={`/NewPage/nhan-luc/chi-tiet/${id}`}
+                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                    >
+                        Chi tiết
+                    </a>
                     <button
                         onClick={onEdit}
                         className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"

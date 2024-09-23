@@ -1,3 +1,4 @@
+// src/app/NewPage/thiet-bi-va-dung-cu/page.tsx
 "use client";
 import { useState, useEffect } from 'react';
 import Breadcrumb from '@/components/breadcrumb';

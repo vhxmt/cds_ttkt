@@ -1,6 +1,14 @@
 {
   "projects": [
     {
+      "title": "àdadf",
+      "duration": "ádfadf",
+      "details": [
+        "ádfadf"
+      ],
+      "id": "2024-09-14T13:20:14.795Z"
+    },
+    {
       "duration": "2022.12 ~ 2024.06",
       "title": "Phát triển thuật toán điều khiển không cảm biến cho SPMSM",
       "details": [

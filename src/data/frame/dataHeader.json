@@ -5,7 +5,6 @@
         { "label": "Tin tức", "href": "/NewPage/tin-tuc-su-kien/tin-tuc" },
         { "label": "Sự kiện",  
         "subItems": [
-            { "label": "Thảo luận chuyên đề hằng tuần", "href": "/NewPage/tin-tuc-su-kien/su-kien/thao-luan-chuyen-de" },
             { "label": "Sự kiện thường niên", "href": "/NewPage/tin-tuc-su-kien/su-kien/su-kien-thuong-nien" },
             { "label": "Khóa học ngắn hạn", "href": "/NewPage/tin-tuc-su-kien/su-kien/khoa-hoc-ngan-han" }
           ]
@@ -41,7 +40,7 @@
       "items": [
         { "label": "Giải thưởng Bài báo Hội nghị", "href": "/NewPage/giai-thuong/giai-thuong-bai-bao-hoi-nghi" },
         { "label": "Giải thưởng Bài báo Tạp chí", "href": "/NewPage/giai-thuong/giai-thuong-bai-bao-tap-chi" },
-        { "label": "Giải thưởng Bài báo trình bày Hội nghị", "href": "/NewPage/giai-thuong/giai-thuong-bai-trinh-bay-hoi-nghi" },
+        { "label": "Giải thưởng Bài trình bày Hội nghị", "href": "/NewPage/giai-thuong/giai-thuong-bai-trinh-bay-hoi-nghi" },
         { "label": "Giải thưởng khác", "href": "/NewPage/giai-thuong/giai-thuong-khac" }
       ]
     },
@@ -60,7 +59,7 @@
     {
       "label": "Hợp tác",
       "items": [
-        { "label": "Hợp tác doanh nghiệp", "href": "/NewPage/hop-tac/hop-tac-khoi-doanh-nghiep" },
+        { "label": "Hợp tác khối doanh nghiệp", "href": "/NewPage/hop-tac/hop-tac-khoi-doanh-nghiep" },
         { "label": "Hợp tác khối hàn lâm", "href": "/NewPage/hop-tac/hop-tac-khoi-han-lam" },
         { "label": "Hợp tác quốc tế", "href": "/NewPage/hop-tac/hop-tac-quoc-te" }
       ]
