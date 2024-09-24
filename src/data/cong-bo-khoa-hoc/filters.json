@@ -1,0 +1,10 @@
+{
+    "filters": [
+        { "id": "1", "label": "Sách" },
+        { "id": "2", "label": "Chương sách" },
+        { "id": "3", "label": "Hội thảo trong nước" },
+        { "id": "4", "label": "Hội thảo quốc tế" },
+        { "id": "5", "label": "Tạp chí trong nước" },
+        { "id": "6", "label": "Tạp chí quốc tế" }
+      ]
+}

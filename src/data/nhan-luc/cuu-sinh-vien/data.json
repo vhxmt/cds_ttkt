@@ -9,14 +9,6 @@
       "imageUrl": "/image/nhan-luc/can-bo/Screenshot 2024-09-05 110557.jpg"
     },
     {
-      "id": "2024-09-05T04:58:59.967Z",
-      "name": "TS. Nguyễn Quốc Minh",
-      "title": "Phó trưởng khoa Điện",
-      "mail": "email3@example.com",
-      "tel": "555-555-555",
-      "imageUrl": "/path-to-image-3.png"
-    },
-    {
       "id": "2024-09-05T05:58:19.967Z",
       "name": "TS. Trần Văn Tài",
       "title": "Giảng viên",
@@ -39,14 +31,6 @@
       "mail": "email6@example.com",
       "tel": "777-888-999",
       "imageUrl": "/path-to-image-6.png"
-    },
-    {
-      "id": "2024-09-05T04:51:39.967Z",
-      "name": "TS. Đặng Thị Hà",
-      "title": "Giảng viên",
-      "mail": "email7@example.com",
-      "tel": "000-111-222",
-      "imageUrl": "/path-to-image-7.png"
     },
     {
       "id": "2024-09-05T04:52:39.967Z",
@@ -95,14 +79,6 @@
       "mail": "email13@example.com",
       "tel": "888-999-000",
       "imageUrl": "/path-to-image-13.png"
-    },
-    {
-      "id": "2024-10-05T04:58:39.967Z",
-      "name": "New Staff",
-      "title": "New Title",
-      "mail": "new.email@example.com",
-      "tel": "000-000-000",
-      "imageUrl": "/path-to-new-image.png"
     }
   ]
 }

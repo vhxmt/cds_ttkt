@@ -1,44 +1,64 @@
 "use client";
-
 import React, { useState, useEffect } from 'react';
 import PgControl from '@/components/display-block/PgControl';
 import Breadcrumb from "@/components/breadcrumb";
-import Image from 'next/image';
 import SideMenu from '@/components/display-block/SideMenu';
-import data from '@/data/cong-bo-khoa-hoc/data.json';
-import {useAuth} from "@/components/providers/AuthProvider";  // Import JSON data
-
-// Define the types for the JSON data
-interface Article {
-    id: number;
-    title: string;
-    date: string;
-    imageUrl: string;
-}
+import filterData from '@/data/cong-bo-khoa-hoc/filters.json';
+import { useAuth } from "@/components/providers/AuthProvider";
+import ArticleForm from './ArticleForm'; 
+import { mainData } from '@/interfaces/cong-bo-khoa-hoc/interface'; 
 
 interface Filter {
     id: string;
     label: string;
 }
 
-interface Data {
-    articles: Article[];
-    filters: Filter[];
-}
-
 export default function CongBoKhoaHoc() {
-    const { articles, filters } = data as Data;  // Type the JSON import
-
+    const { filters } = filterData;
+    const [mainData, setMainData] = useState<mainData[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 3;
+    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const [yearRange, setYearRange] = useState({ from: 1980, to: new Date().getFullYear() });
+    const [filterApplied, setFilterApplied] = useState(false);
+    const [appliedFilters, setAppliedFilters] = useState<string[]>([]);
+    const [appliedYearRange, setAppliedYearRange] = useState({ from: 1980, to: new Date().getFullYear() });
+    const [error, setError] = useState<string | null>(null);
+    const [currentMainData, setCurrentMainData] = useState<mainData | null>(null);
+    const [showForm, setShowForm] = useState(false);
 
-    // Calculate indices for pagination
+    const fetchMainData = async () => {
+        try {
+            const res = await fetch('/api/cong-bo-khoa-hoc');
+            if (!res.ok) throw new Error('Failed to fetch mainData');
+            const data = await res.json();
+            setMainData(data.mainData);
+        } catch (err) {
+            setError('Error loading mainData');
+        }
+    };
+
+    useEffect(() => {
+        fetchMainData();
+    }, []);
+
+    const applyFilters = () => {
+        setAppliedFilters(selectedFilters);
+        setAppliedYearRange(yearRange);
+        setFilterApplied(true);
+        setCurrentPage(1);
+    };
+
+    const filteredMainData = mainData.filter(mainData => {
+        const matchesFilter = appliedFilters.length === 0 || appliedFilters.includes(mainData.type);
+        const matchesYearRange = mainData.releaseYear >= appliedYearRange.from && mainData.releaseYear <= appliedYearRange.to;
+        return matchesFilter && matchesYearRange;
+    });
+
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = articles.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Calculate total pages
-    const totalPages = Math.ceil(articles.length / itemsPerPage);
+    const currentItems = filteredMainData.slice(indexOfFirstItem, indexOfLastItem);
+    const totalPages = Math.ceil(filteredMainData.length / itemsPerPage);
 
     const handleNextPage = () => {
         if (currentPage < totalPages) {
@@ -51,9 +71,6 @@ export default function CongBoKhoaHoc() {
             setCurrentPage(currentPage - 1);
         }
     };
-
-    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
-    const [yearRange, setYearRange] = useState({ from: 1980, to: 2024 });
 
     const handleFilterChange = (filterId: string) => {
         setSelectedFilters(prev =>
@@ -71,60 +88,61 @@ export default function CongBoKhoaHoc() {
         }));
     };
 
-    const filteredArticles = articles.filter(article => {
-        // Implement filter logic here if needed based on selectedFilters and yearRange
-        return true;
-    });
-
-    // Simulate a check for admin status (you would replace this with actual authentication logic)
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
 
     const handleAdd = () => {
-        console.log("Thêm bài báo mới");
+        setCurrentMainData(null);
+        setShowForm(true);
     };
 
-    const handleEdit = (id: number) => {
-        console.log("Sửa bài báo với ID:", id);
+    const handleEdit = (id: string) => {
+        const mainDataToEdit = mainData.find((data) => data.id === id);
+        if (mainDataToEdit) {
+            setCurrentMainData(mainDataToEdit); // Set the data to be edited
+            setShowForm(true); // Open the form with the data loaded
+        }
     };
+    
+    
 
-    const handleDelete = (id: number) => {
-        console.log("Xóa bài báo với ID:", id);
+    const handleFormSubmit = async (data: mainData) => {
+        const url = currentMainData ? `/api/cong-bo-khoa-hoc?id=${data.id}` : '/api/cong-bo-khoa-hoc';
+        const method = currentMainData ? 'PUT' : 'POST';
+        
+        await fetch(url, {
+            method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ ...data, id: String(data.id) }), // Ensure ID is sent as a string
+        });
+    
+        fetchMainData(); // Refresh the data after adding or updating
+        setShowForm(false); // Close the form
+    };
+    
+    
+    
+
+    const handleDelete = async (id: string) => {
+        try {
+            const res = await fetch(`/api/cong-bo-khoa-hoc?id=${id}`, { method: 'DELETE' });
+            if (res.ok) {
+                setMainData(mainData.filter(mainData => mainData.id !== id));
+            } else {
+                console.error('Failed to delete mainData');
+            }
+        } catch (error) {
+            console.error('Error deleting mainData:', error);
+        }
     };
 
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
-            <Breadcrumb/>
+            <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Side Menu */}
                 <SideMenu />
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    {/* Search Bar */}
-                    <div className="flex items-center mb-6">
-                        <input
-                            type="text"
-                            placeholder="Tìm kiếm..."
-                            className="w-full p-2 border border-gray-300 rounded-l-lg focus:outline-none"
-                        />
-                        <button className="bg-gray-200 p-2 rounded-r-lg">
-                            <svg
-                                className="h-6 w-6 text-gray-600"
-                                fill="none"
-                                stroke="currentColor"
-                                viewBox="0 0 24 24"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    d="M21 21l-4.35-4.35M4.75 10.5a5.75 5.75 0 1111.5 0 5.75 5.75 0 01-11.5 0z"
-                                ></path>
-                            </svg>
-                        </button>
-                    </div>
-
+                    {/* Filter Section */}
                     <div className="flex p-4 border-l border-gray-300">
                         <div className="flex-none w-1/2 p-4">
                             <h3>Bộ lọc:</h3>
@@ -134,12 +152,12 @@ export default function CongBoKhoaHoc() {
                                         type="checkbox"
                                         id={filter.id}
                                         onChange={() => handleFilterChange(filter.id)}
+                                        checked={selectedFilters.includes(filter.id)}
                                     />
                                     <label htmlFor={filter.id} className="ml-2">{filter.label}</label>
                                 </div>
                             ))}
                         </div>
-
                         {/* Year Filter */}
                         <div className="w-1/2 mb-6 flex items-center space-x-4">
                             <div className="font-bold text-[14px]">Lọc theo năm:</div>
@@ -161,57 +179,15 @@ export default function CongBoKhoaHoc() {
                         </div>
                     </div>
 
-                    {/* Publications List */}
-                    <div className="space-y-6">
-                        {currentItems.map(article => (
-                            <div
-                                key={article.id}
-                                className="flex space-x-4 border-b pb-4"
-                            >
-                                <Image
-                                    src={article.imageUrl}
-                                    alt="Thumbnail"
-                                    width={200}
-                                    height={200}
-                                    className="w-1/4 h-auto object-cover rounded-lg"
-                                />
-                                <div className="flex flex-col justify-between w-2/3">
-                                    <div>
-                                        <h4 className="font-bold text-lg">
-                                            {article.title}
-                                        </h4>
-                                        <p className="text-sm text-gray-600">
-                                            {article.date}
-                                        </p>
-                                    </div>
-                                    {isAdmin && (
-                                        <div className="flex space-x-2 mt-2">
-                                            <button
-                                                className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                                onClick={() => handleEdit(article.id)}
-                                            >
-                                                Sửa
-                                            </button>
-                                            <button
-                                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                                onClick={() => handleDelete(article.id)}
-                                            >
-                                                Xóa
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+                    {/* "Lọc" button */}
+                    <div className="flex justify-end mt-4">
+                        <button
+                            className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                            onClick={applyFilters}
+                        >
+                            Lọc
+                        </button>
                     </div>
-
-                    {/* Pagination Controls */}
-                    <PgControl
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onNextPage={handleNextPage}
-                        onPrevPage={handlePrevPage}
-                    />
 
                     {isAdmin && (
                         <div className="flex justify-end mt-4">
@@ -223,8 +199,59 @@ export default function CongBoKhoaHoc() {
                             </button>
                         </div>
                     )}
+
+                    <div className="space-y-6">
+                        {currentItems.map(mainData => (
+                            <div key={mainData.id} className="flex space-x-4 border-b pb-4">
+                                <div className="flex flex-col justify-between w-full">
+                                    <div>
+                                        <h4 className="font-bold text-lg">{mainData.title}</h4>
+                                        <p className="text-sm text-gray-600">{mainData.releaseDay}/{mainData.releaseMonth}/{mainData.releaseYear}</p>
+                                        <p className="text-sm text-gray-600">{mainData.author}</p>
+                                        <p className="text-sm text-gray-600">{mainData.conference}</p>
+                                        <a href={mainData.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                                            Read more
+                                        </a>
+                                    </div>
+                                    {isAdmin && (
+                                        <div className="flex space-x-2 mt-2">
+                                            <button
+                                                className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+                                                onClick={() => handleEdit(mainData.id)}
+                                            >
+                                                Sửa
+                                            </button>
+                                            <button
+                                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                                                onClick={() => handleDelete(mainData.id)}
+                                            >
+                                                Xóa
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    <PgControl
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onNextPage={handleNextPage}
+                        onPrevPage={handlePrevPage}
+                    />
                 </div>
             </div>
+
+            {/* Render the form for adding or editing */}
+            {showForm && (
+                <ArticleForm
+                    mainData={currentMainData}
+                    filters={filters}
+                    onSubmit={handleFormSubmit}
+                    onCancel={() => setShowForm(false)}
+                />
+            )}
         </div>
     );
 }

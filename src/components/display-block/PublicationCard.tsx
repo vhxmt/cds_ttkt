@@ -3,14 +3,14 @@ import Image from 'next/image';
 import {useAuth} from "@/components/providers/AuthProvider";
 
 interface PublicationCardProps {
-    date: string;
+    date?: string; // Allow undefined
     title: string;
-    imageUrl?: string;
+    href?: string; // Allow undefined
+    imageUrl?: string; // Allow undefined
     imageAlt: string;
-    href: string; // Link to the detailed page of the post
-    isAdmin: boolean; // Thêm prop để kiểm tra quyền admin
-    onEdit?: () => void; // Hàm xử lý sự kiện nhấn nút Sửa
-    onDelete?: () => void; // Hàm xử lý sự kiện nhấn nút Xóa
+    onEdit: () => void;
+    onDelete: () => void;
+    isAdmin: boolean;
 }
 
 export default function PublicationCard({date, title, imageUrl, imageAlt, href, onEdit, onDelete}: PublicationCardProps) {

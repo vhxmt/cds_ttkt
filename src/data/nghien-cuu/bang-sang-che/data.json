@@ -1,19 +1,46 @@
 {
-    "patents": [
-      {
-        "stt": 1,
-        "author": "Lương Ngọc Lợi",
-        "type": "GPHI",
-        "title": "Buồng trộn, vòi phun hỗn hợp nước - khí nén dùng trong công nghệ dập bụi làm mát",
-        "submissionDate": "13-08",
-        "submissionYear": "2013",
-        "applicationNumber": "2-2013-00195",
-        "grantYear": "2021",
-        "grantDate": "20-09-21",
-        "grantNumber": "2719",
-        "decisionNumber": "14600w/QĐ-SHTT",
-        "unit": "Trường Cơ khí"
-      }
-    ]
-  }
-  
+  "patents": [
+    {
+      "stt": 1,
+      "author": "Lương Ngọc Lợi",
+      "type": "GPHI",
+      "title": "Buồng trộn, vòi phun hỗn hợp nước - khí nén dùng trong công nghệ dập bụi làm mát",
+      "submissionDate": "13-08",
+      "submissionYear": "2013",
+      "applicationNumber": "2-2013-00195",
+      "grantYear": "2021",
+      "grantDate": "20-09-21",
+      "grantNumber": "2719",
+      "decisionNumber": "14600w/QĐ-SHTT",
+      "unit": "Trường Cơ khí"
+    },
+    {
+      "stt": 2,
+      "author": "adfaf",
+      "type": "adfaf",
+      "title": "àda",
+      "submissionDate": "adfafda",
+      "submissionYear": "",
+      "applicationNumber": "",
+      "grantYear": "",
+      "grantDate": "",
+      "grantNumber": "",
+      "decisionNumber": "",
+      "unit": ""
+    },
+    {
+      "stt": 3,
+      "author": "zxczxc",
+      "type": "zxczc",
+      "title": "zxczc",
+      "submissionDate": "zxczxc",
+      "submissionYear": "1999",
+      "applicationNumber": "",
+      "grantYear": "",
+      "grantDate": "",
+      "grantNumber": "",
+      "decisionNumber": "",
+      "unit": ""
+    }
+  ]
+}

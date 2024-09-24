@@ -1,23 +1,29 @@
 {
   "toolsTwoCol": [
     {
+      "id": "2024-09-12T11:32:25.481Z",
+      "title": "ádads",
+      "imgSrc": "/image/thiet-bi-va-dung-cu/8c9cc6a30e868c16adcae4c01.jpg",
+      "description": "ádasdad"
+    },
+    {
       "id": "2024-09-05T10:15:30Z",
       "title": "PMSM-IM set",
       "imgSrc": "/image/thiet-bi-va-dung-cu/PMSM-IM.png",
-      "description": "Model-SYG-D245-460-1000W\nOutput Power: 1030W(55Vdc@1175W)"
-    },
-    {
-      "id": "2024-09-05T11:20:25Z",
-      "title": "DFIG-IM set",
-      "imgSrc": "/image/thiet-bi-va-dung-cu/DFIG-IM.png",
       "description": "Model-SYG-D245-460-1000W\nOutput Power: 1030W(55Vdc@1175W)"
     }
   ],
   "toolOneCol": [
     {
+      "id": "2024-09-21T08:26:21.136Z",
+      "title": "ầdf",
+      "imgSrc": "/image/thiet-bi-va-dung-cu/1726907181081-Homescreen.jpg",
+      "description": "àdadfafdaf"
+    },
+    {
       "id": "2024-09-05T15:10:35Z",
       "title": "DSP Control Boards",
-      "imgSrc": "/image/thiet-bi-va-dung-cu/DSP-Control-Boards.png",
+      "imgSrc": "/image/thiet-bi-va-dung-cu/1726244997155-Screenshot 2021-11-27 074800.jpg",
       "description": ""
     }
   ]

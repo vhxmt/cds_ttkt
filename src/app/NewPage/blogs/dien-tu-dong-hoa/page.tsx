@@ -1,85 +1,104 @@
-// src/app/blogs/dien-tu-dong-hoa/page.tsx
-'use client'
+// src/app/NewPage/blogs/dien-tu-dong-hoa/page.tsx
+'use client';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import PgControl from '@/components/display-block/PgControl';
-import blogData from '@/data/blogs/dien-tu-dong-hoa/data.json';
+import { useState, useEffect } from 'react';
+import { useAuth } from '@/components/providers/AuthProvider';
 import PublicationCard from '@/components/display-block/PublicationCard';
-import { useState } from 'react';
-import { useAuth } from '@/components/providers/AuthProvider'; // Import useAuth
-
-// Define the types for the blog posts
-export interface BlogPost {
-    title: string;
-    date: string;
-    description: string;
-    imageUrl: string;
-    href: string;
-}
-
-export interface BlogData {
-    blogPosts: BlogPost[];
-}
+import BlogFormModal from './BlogFormModal'; 
+import { mainData } from '@/interfaces/blogs/interface';
 
 export default function DienTuDongHoa() {
-    const { isLoggedIn, user } = useAuth(); // Lấy thông tin user và trạng thái đăng nhập
-    const isAdmin = isLoggedIn && user?.role === 'admin'; // Xác định quyền admin
+    const { isLoggedIn, user } = useAuth();
+    const isAdmin = isLoggedIn && user?.role === 'admin';
 
-    // Type the blogData import
-    const blogPosts = (blogData as BlogData).blogPosts;
-
+    const [mainData, setmainData] = useState<mainData[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentPost, setCurrentPost] = useState<mainData | null>(null);
+
     const itemsPerPage = 3;
 
-    // Calculate indices for pagination
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = blogPosts.slice(indexOfFirstItem, indexOfLastItem);
-
-    // Calculate total pages
-    const totalPages = Math.ceil(blogPosts.length / itemsPerPage);
-
-    const handleNextPage = () => {
-        if (currentPage < totalPages) {
-            setCurrentPage(currentPage + 1);
+    const fetchData = async () => {
+        try {
+            const res = await fetch('/api/blogs/dien-tu-dong-hoa');
+            const data = await res.json();
+            setmainData(data.mainData);
+        } catch (error) {
+            console.error('Failed to fetch blog posts:', error);
         }
     };
 
-    const handlePrevPage = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1);
-        }
-    };
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     const handleAdd = () => {
-        console.log("Thêm bài viết mới");
-        // Thực hiện hành động thêm bài viết mới ở đây
+        setCurrentPost(null);
+        setIsModalOpen(true); 
     };
 
-    function handleDelete(post: BlogPost) {
-        
-    }
+    const handleEdit = (post: mainData) => {
+        setCurrentPost(post); 
+        setIsModalOpen(true); 
+    };
 
-    function handleEdit(post: BlogPost) {
-        
-    }
+
+    const handleSubmit = async (post: mainData) => {
+        const method = post.id ? 'PUT' : 'POST';
+        const url = '/api/blogs/dien-tu-dong-hoa';
+    
+        // Ensure that optional fields can be left empty
+        const bodyContent = post.id
+            ? { id: post.id, updatedPost: post } // For edit (PUT request)
+            : { newPost: { ...post, id: undefined } }; // For adding a new post (POST request)
+    
+        const response = await fetch(url, {
+            method,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(bodyContent),
+        });
+    
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error('Error submitting post:', errorData.message);
+            return;
+        }
+    
+        fetchData(); // Refresh blog posts
+        setIsModalOpen(false); // Close the modal after submission
+    };
+    
+
+    const handleDelete = async (id: string) => {
+        try {
+            const res = await fetch(`/api/blogs/dien-tu-dong-hoa?id=${id}`, {
+                method: 'DELETE',
+            });
+            if (res.ok) {
+                fetchData(); 
+            } else {
+                console.error('Failed to delete post');
+            }
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
 
     return (
         <div className="max-w-6xl mx-auto p-4">
-            {/* Main Container */}
             <Breadcrumb />
             <div className="flex space-x-4">
-                {/* Side Menu */}
                 <SideMenu currentSection="Blogs" />
-
-                {/* Main Content */}
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    {/* Nút "Thêm" */}
                     {isAdmin && (
                         <div className="flex justify-end mb-4">
                             <button
                                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                                onClick={handleAdd}
+                                onClick={handleAdd} // Open modal for adding new post
                             >
                                 Thêm
                             </button>
@@ -89,30 +108,37 @@ export default function DienTuDongHoa() {
                     <h2 className="text-2xl font-semibold mb-4">Lĩnh vực: Điện - Tự động hóa</h2>
 
                     <div className="grid grid-cols-3 gap-4">
-                        {currentItems.map((post: BlogPost, index) => (
-                            // eslint-disable-next-line react/jsx-key
+                        {mainData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage).map((post) => (
                             <PublicationCard
+                                key={post.id}
                                 date={post.date}
                                 title={post.title}
-                                imageAlt="Image Placeholder"
                                 href={post.href}
                                 imageUrl={post.imageUrl}
-                                onEdit={() => handleEdit(post)} // Truyền hàm xử lý
-                                onDelete={() => handleDelete(post)} // Truyền hàm xử lý
-                                isAdmin/>
-
+                                imageAlt={post.title}
+                                onEdit={() => handleEdit(post)}
+                                onDelete={() => handleDelete(post.id)}
+                                isAdmin={isAdmin}
+                            />
                         ))}
                     </div>
 
-                    {/* Pagination Controls */}
                     <PgControl
                         currentPage={currentPage}
-                        totalPages={totalPages}
-                        onNextPage={handleNextPage}
-                        onPrevPage={handlePrevPage}
+                        totalPages={Math.ceil(mainData.length / itemsPerPage)}
+                        onNextPage={() => setCurrentPage((prev) => prev + 1)}
+                        onPrevPage={() => setCurrentPage((prev) => prev - 1)}
                     />
                 </div>
             </div>
+
+            {/* Add/Edit Modal */}
+            <BlogFormModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onSubmit={handleSubmit}
+                initialData={currentPost || undefined} // Pass undefined for a new entry to clear fields
+            />
         </div>
     );
 }

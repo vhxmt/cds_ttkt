@@ -2,45 +2,29 @@
 import { useState, useEffect } from 'react';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
-import { useAuth } from '@/components/providers/AuthProvider'; // Import hook to check admin rights
-
-interface ResearchArea {
-    name: string;
-    highlight?: boolean;
-    description?: string;
-    relatedNews?: RelatedNews[];
-}
-
-interface RelatedNews {
-    id: number;
-    title: string;
-    description: string;
-    link: string;
-}
-
-interface ResearchData {
-    title: string;
-    researchAreas: ResearchArea[];
-    description: string;
-    relatedNews: RelatedNews[];
-}
+import { useAuth } from '@/components/providers/AuthProvider';
+import ResearchAreaFormModal from './ResearchAreaFormModal';
+import RelatedNewsFormModal from './RelatedNewsFormModal';
+import { ResearchData, ResearchArea, RelatedNews } from '@/interfaces/nghien-cuu/huong-nghien-cuu/interface';
 
 export default function HuongNghienCuu() {
     const [researchData, setResearchData] = useState<ResearchData | null>(null);
-    const [selectedAreaIndex, setSelectedAreaIndex] = useState<number>(0);
+    const [selectedAreaID, setSelectedAreaID] = useState<string | null>(null);
+    const [isAreaModalOpen, setIsAreaModalOpen] = useState(false);
+    const [isNewsModalOpen, setIsNewsModalOpen] = useState(false);
+    const [currentArea, setCurrentArea] = useState<ResearchArea | undefined>(undefined);
+    const [currentNews, setCurrentNews] = useState<RelatedNews | undefined>(undefined);
 
     const fetchData = async () => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu');
-            const data = await response.json();
+            const data: ResearchData = await response.json();
             setResearchData(data);
-            if (data.researchAreas.length > 0) {
-                setSelectedAreaIndex(0);
-            }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
+    
 
     useEffect(() => {
         fetchData();
@@ -53,79 +37,34 @@ export default function HuongNghienCuu() {
         return <div>Loading...</div>;
     }
 
-    // Safeguard against undefined researchAreas
-    const { title, researchAreas = [] } = researchData;
-    const selectedArea = researchAreas[selectedAreaIndex] || { name: '', description: '', relatedNews: [] };
+    const selectedArea = researchData.researchAreas.find(area => area.researchAreaID === selectedAreaID);
 
-    const handleAreaClick = (index: number) => {
-        setSelectedAreaIndex(index);
+    const handleAreaClick = (researchAreaID: string) => {
+        setSelectedAreaID(researchAreaID);
     };
 
-    const handleAddResearchAreas = async () => {
-        const newArea = {
-            name: "New Research Area",
-            description: "Description of new research area",
-            relatedNews: [],
-        };
-
-        try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ type: 'area', area: newArea }),
-            });
-
-            if (response.ok) {
-                await fetchData(); // Refetch data after adding new area
-            } else {
-                console.error('Failed to add new area:', response.statusText);
-            }
-        } catch (error) {
-            console.error('Error adding new area:', error);
-        }
+    const handleAddResearchArea = () => {
+        setCurrentArea(undefined);
+        setIsAreaModalOpen(true);
     };
 
-    const handleEdit = async (index: number) => {
-        const updatedArea = {
-            ...researchAreas[index],
-            name: "Updated Research Area",
-        };
-
-        try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ areaName: researchAreas[index].name, area: updatedArea }),
-            });
-
-            if (response.ok) {
-                await fetchData(); // Refetch data after updating the area
-            } else {
-                console.error('Failed to update area');
-            }
-        } catch (error) {
-            console.error('Error updating area:', error);
-        }
+    const handleEditResearchArea = (area: ResearchArea) => {
+        setCurrentArea(area);
+        setIsAreaModalOpen(true);
     };
 
-    const handleDeleteResearchAreas = async (index: number) => {
-        const areaName = researchAreas[index].name;
-
+    const handleDeleteResearchArea = async (researchAreaID: string) => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName }),
+                body: JSON.stringify({ researchAreaID, type: 'area' }), // Pass type 'area' to delete area and related news
             });
-
+    
             if (response.ok) {
-                await fetchData(); // Refetch data after deleting the area
+                await fetchData(); // Refetch data after deleting the area and its related news
             } else {
                 console.error('Failed to delete area:', response.statusText);
             }
@@ -133,28 +72,30 @@ export default function HuongNghienCuu() {
             console.error('Error deleting area:', error);
         }
     };
+    
 
-    const handleEditNews = async (id: number) => {
-        // Implement the logic to edit related news via API
-        console.log("Edit related news with ID:", id);
+    const handleAddNews = () => {
+        setCurrentNews(undefined);
+        setIsNewsModalOpen(true);
+    };
+    
+    const handleEditNews = (news: RelatedNews) => {
+        setCurrentNews(news);
+        setIsNewsModalOpen(true);
     };
 
-    const handleDeleteNews = async (id: number) => {
-        const areaName = selectedArea.name; // Get the name of the currently selected area
-    
+    const handleDeleteNews = async (id: string) => {
         try {
             const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ areaName, newsId: id }), // Send the correct area name and news ID
+                body: JSON.stringify({ id, type: 'news' }),
             });
-    
+
             if (response.ok) {
                 await fetchData(); // Refetch the data after deleting the news
-                // Ensure the currently selected area remains selected after data refresh
-                setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
             } else {
                 console.error('Failed to delete news:', response.statusText);
             }
@@ -163,36 +104,72 @@ export default function HuongNghienCuu() {
         }
     };
 
-    const handleAddNews = async () => {
-        const newNews = {
-            id: Math.max(...(selectedArea.relatedNews?.map(news => news.id) || [0]), 0) + 1,
-            title: "New Related News",
-            description: "Description of the new related news",
-            link: "#",
-        };
+    const handleAreaSubmit = async (area: ResearchArea) => {
+        const method = currentArea ? 'PUT' : 'POST';
+        const url = '/api/nghien-cuu/huong-nghien-cuu'; // This should match the API route
     
-        const areaName = selectedArea.name; // Get the name of the currently selected area
+        const newArea = currentArea ? area : { ...area, researchAreaID: new Date().toISOString() };
     
         try {
-            const response = await fetch('/api/nghien-cuu/huong-nghien-cuu', {
-                method: 'POST',
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ type: 'news', areaName, news: newNews }), // Send the correct area name
+                body: JSON.stringify({
+                    area: newArea,
+                    type: 'area',
+                }),
             });
     
             if (response.ok) {
-                await fetchData(); // Refetch the data after adding the news
-                // Ensure the currently selected area remains selected after data refresh
-                setSelectedAreaIndex(researchAreas.findIndex(area => area.name === areaName));
+                await fetchData(); // Refetch data after adding/editing
+                setIsAreaModalOpen(false);
             } else {
-                console.error('Failed to add new news:', response.statusText);
+                console.error('Failed to submit area:', response.statusText);
             }
         } catch (error) {
-            console.error('Error adding new news:', error);
+            console.error('Error submitting area:', error);
         }
     };
+    
+    
+    const handleNewsSubmit = async (news: RelatedNews) => {
+        const method = currentNews ? 'PUT' : 'POST';
+        const url = '/api/nghien-cuu/huong-nghien-cuu';
+    
+        // Ensure a unique ID is set if creating new related news and associate it with the selected area
+        const newNews = {
+            ...news,
+            id: currentNews ? news.id : new Date().toISOString(), // Generate a new ID if not editing
+            researchAreaID: selectedAreaID ?? news.researchAreaID // Use selectedAreaID if creating a new news
+        };
+    
+        try {
+            const response = await fetch(url, {
+                method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    researchAreaID: selectedAreaID, // Reference the selected research area
+                    news: newNews,
+                    type: 'news',
+                }),
+            });
+    
+            if (response.ok) {
+                await fetchData(); // Refetch data after adding/editing news
+                setIsNewsModalOpen(false);
+            } else {
+                console.error('Failed to submit news:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error submitting news:', error);
+        }
+    };
+    
+    
 
     return (
         <div className="max-w-6xl mx-auto p-4">
@@ -200,24 +177,24 @@ export default function HuongNghienCuu() {
             <div className="flex space-x-4">
                 <SideMenu currentSection="Nghiên cứu" />
                 <div className="w-3/4 p-4 border-l border-gray-300">
-                    <h2 className="text-2xl font-semibold mb-4 text-center">{title}</h2>
+                    <h2 className="text-2xl font-semibold mb-4 text-center">Hướng nghiên cứu</h2>
                     {isAdmin && (
                         <div className="flex justify-end mb-4">
                             <button
                                 className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                                onClick={handleAddResearchAreas}
+                                onClick={handleAddResearchArea}
                             >
                                 Thêm hướng nghiên cứu
                             </button>
                         </div>
                     )}
                     <div className="grid grid-cols-4 gap-4 mb-6">
-                        {researchAreas.map((area, index) => (
+                        {researchData.researchAreas.map((area) => (
                             <button
-                                key={index}
-                                onClick={() => handleAreaClick(index)}
+                                key={area.researchAreaID}
+                                onClick={() => handleAreaClick(area.researchAreaID)}
                                 className={`py-8 rounded-lg text-center ${
-                                    selectedAreaIndex === index ? 'bg-gray-200' : 'bg-gray-300'
+                                    selectedAreaID === area.researchAreaID ? 'bg-gray-200' : 'bg-gray-300'
                                 }`}
                             >
                                 {area.name}
@@ -225,13 +202,13 @@ export default function HuongNghienCuu() {
                                     <div className="flex justify-end space-x-2 mt-2">
                                         <button
                                             className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                            onClick={() => handleEdit(index)}
+                                            onClick={() => handleEditResearchArea(area)}
                                         >
                                             Sửa
                                         </button>
                                         <button
                                             className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                            onClick={() => handleDeleteResearchAreas(index)}
+                                            onClick={() => handleDeleteResearchArea(area.researchAreaID)}
                                         >
                                             Xóa
                                         </button>
@@ -240,9 +217,7 @@ export default function HuongNghienCuu() {
                             </button>
                         ))}
                     </div>
-                    <div className="text-base mb-8">
-                        {selectedArea.description}
-                    </div>
+                    <div className="text-base mb-8">{selectedArea?.description}</div>
                     <div className="flex justify-between items-center mb-4">
                         <h3 className="text-xl font-semibold">Các tin liên quan</h3>
                         {isAdmin && (
@@ -255,38 +230,63 @@ export default function HuongNghienCuu() {
                         )}
                     </div>
                     <div className="space-y-6">
-                        {selectedArea.relatedNews?.map((news) => (
-                            <div key={news.id} className="flex justify-between items-center">
-                                <div>
-                                    <h4 className="font-bold">{news.title}</h4>
-                                    <p className="text-gray-600">{news.description}</p>
+                        {researchData.relatedNews
+                            .filter((news) => news.researchAreaID === selectedAreaID)
+                            .map((news) => (
+                                <div key={news.id} className="flex justify-between items-center">
+                                    <div>
+                                        <h4 className="font-bold">{news.title}</h4>
+                                        <p className="text-gray-600">{news.description}</p>
+                                    </div>
+                                    <div className="flex space-x-2">
+                                        <a href={news.link} className="text-[#BD1E1E]">
+                                            Chi tiết &gt;&gt;
+                                        </a>
+                                        {isAdmin && (
+                                            <>
+                                                <button
+                                                    className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
+                                                    onClick={() => handleEditNews(news)}
+                                                >
+                                                    Sửa
+                                                </button>
+                                                <button
+                                                    className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
+                                                    onClick={() => handleDeleteNews(news.id)}
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="flex space-x-2">
-                                    <a href={news.link} className="text-[#BD1E1E]">
-                                        Chi tiết &gt;&gt;
-                                    </a>
-                                    {isAdmin && (
-                                        <>
-                                            <button
-                                                className="bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600"
-                                                onClick={() => handleEditNews(news.id)}
-                                            >
-                                                Sửa
-                                            </button>
-                                            <button
-                                                className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                                onClick={() => handleDeleteNews(news.id)}
-                                            >
-                                                Xóa
-                                            </button>
-                                        </>
-                                    )}
-                                </div>
-                            </div>
-                        ))}
+                            ))}
                     </div>
                 </div>
             </div>
+
+            {/* Modals for adding/editing */}
+            {isAreaModalOpen && (
+                <ResearchAreaFormModal
+                    isOpen={isAreaModalOpen}
+                    onClose={() => setIsAreaModalOpen(false)}
+                    onSubmit={handleAreaSubmit}
+                    initialData={currentArea}
+                />
+            )}
+
+            {isNewsModalOpen && (
+                <RelatedNewsFormModal
+                isOpen={isNewsModalOpen}
+                onClose={() => setIsNewsModalOpen(false)}
+                onSubmit={handleNewsSubmit}
+                initialData={{
+                    ...currentNews,
+                    researchAreaID: selectedAreaID ?? '', // Ensure researchAreaID is a string
+                    id: currentNews?.id ?? '', // Provide a default empty string if id is undefined
+                }}
+            />
+            )}
         </div>
     );
 }
