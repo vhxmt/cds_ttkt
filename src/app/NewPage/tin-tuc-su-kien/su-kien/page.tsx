@@ -12,12 +12,18 @@ export default function NewsPage() {
     const { upcomingCourses } = eventData;
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
-    const itemsPerPage = 5;
-
+    const eventsPerPage = 5;
+    const coursesPerPage = 3;
+    // State cho phân trang sự kiện
     const [currentTuyendungPage, setCurrentTuyendungPage] = useState(1);
-    const totalTuyendungPages = Math.ceil(events.length / itemsPerPage);
+    const totalTuyendungPages = Math.ceil(events.length / eventsPerPage);
 
-    const handlePageChange = (direction: 'next' | 'prev') => {
+    // State cho phân trang khóa học
+    const [currentCoursesPage, setCurrentCoursesPage] = useState(1);
+    const totalCoursesPages = Math.ceil(upcomingCourses.length / coursesPerPage);
+
+    // Chuyển trang sự kiện
+    const handleTuyendungPageChange = (direction: 'next' | 'prev') => {
         if (direction === 'next' && currentTuyendungPage < totalTuyendungPages) {
             setCurrentTuyendungPage(prevPage => prevPage + 1);
         } else if (direction === 'prev' && currentTuyendungPage > 1) {
@@ -25,9 +31,25 @@ export default function NewsPage() {
         }
     };
 
+    // Chuyển trang khóa học
+    const handleCoursesPageChange = (direction: 'next' | 'prev') => {
+        if (direction === 'next' && currentCoursesPage < totalCoursesPages) {
+            setCurrentCoursesPage(prevPage => prevPage + 1);
+        } else if (direction === 'prev' && currentCoursesPage > 1) {
+            setCurrentCoursesPage(prevPage => prevPage - 1);
+        }
+    };
+
+    // Các sự kiện cho trang hiện tại
     const currentTuyendungLinks = events.slice(
-        (currentTuyendungPage - 1) * itemsPerPage,
-        currentTuyendungPage * itemsPerPage
+        (currentTuyendungPage - 1) * eventsPerPage,
+        currentTuyendungPage * eventsPerPage
+    );
+
+    // Các khóa học cho trang hiện tại
+    const currentCourses = upcomingCourses.slice(
+        (currentCoursesPage - 1) * coursesPerPage,
+        currentCoursesPage * coursesPerPage
     );
 
     const handleAdd = () => {
@@ -77,8 +99,8 @@ export default function NewsPage() {
                             <PgControl
                                 currentPage={currentTuyendungPage}
                                 totalPages={totalTuyendungPages}
-                                onNextPage={() => handlePageChange('next')}
-                                onPrevPage={() => handlePageChange('prev')}
+                                onNextPage={() => handleTuyendungPageChange('next')}
+                                onPrevPage={() => handleTuyendungPageChange('prev')}
                             />
                         </div>
                     </div>
@@ -96,7 +118,7 @@ export default function NewsPage() {
                                 </button>
                             )}
                         </header>
-                        {upcomingCourses.map((course, index) => (
+                        {currentCourses.map((course, index) => (
                             <div key={index} className="p-6 max-w-4xl mx-auto bg-gray-100 shadow-md rounded-lg mb-6">
                                 <h2 className="text-2xl font-semibold mb-4 font-inter">
                                     {course.date}: {course.name}
@@ -134,6 +156,12 @@ export default function NewsPage() {
                                 </div>
                             </div>
                         ))}
+                        <PgControl
+                            currentPage={currentCoursesPage}
+                            totalPages={totalCoursesPages}
+                            onNextPage={() => handleCoursesPageChange('next')}
+                            onPrevPage={() => handleCoursesPageChange('prev')}
+                        />
                     </div>
                 </div>
             </div>
