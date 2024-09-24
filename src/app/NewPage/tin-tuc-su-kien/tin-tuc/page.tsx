@@ -1,131 +1,128 @@
-'use client'
-import { useState } from 'react';
+// src/app/NewsPage/tin-tuc-su-kien/tin-tuc
+'use client';
+import { useState, useEffect } from 'react';
+import NewsSection from '@/components/display-block/tin-tuc-block';
 import SideMenu from '@/components/display-block/SideMenu';
-import Banner from '@/components/display-block/Banner';
 import Breadcrumb from '@/components/breadcrumb';
-import dataTinTuc from '@/data/tin-tuc-su-kien/tin-tuc/tin-tuc.json';
 import { useAuth } from '@/components/providers/AuthProvider';
-import dataTuyenDung from '@/data/tin-tuc-su-kien/tin-tuc/tuyen-dung.json';
-import PgControl from '@/components/display-block/PgControl';
+import { NewsData, NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
 
 export default function NewsPage() {
-  const { banner, newsData } = dataTinTuc;
-  const { tuyendung } = dataTuyenDung;
   const { isLoggedIn, user } = useAuth();
   const isAdmin = isLoggedIn && user?.role === 'admin';
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
-  const [currentNewsPage, setCurrentNewsPage] = useState(1);
-  const [currentTuyendungPage, setCurrentTuyendungPage] = useState(1);
+  // State to store fetched data
+  const [newsData, setNewsData] = useState<NewsData[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const totalNewsPages = Math.ceil(newsData[0].links.length / itemsPerPage);
-  const totalTuyendungPages = Math.ceil(tuyendung.length / itemsPerPage);
+  // Fetch data from API when component mounts
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const newsResponse = await fetch('/api/tin-tuc-su-kien/tin-tuc');
 
-  const handlePageChange = (type: 'news' | 'tuyendung', direction: 'next' | 'prev') => {
-    if (type === 'news') {
-      if (direction === 'next' && currentNewsPage < totalNewsPages) {
-        setCurrentNewsPage(prevPage => prevPage + 1);
-      } else if (direction === 'prev' && currentNewsPage > 1) {
-        setCurrentNewsPage(prevPage => prevPage - 1);
+        if (!newsResponse.ok) {
+          throw new Error('Failed to fetch data');
+        }
+
+        const data = await newsResponse.json();
+        console.log('Fetched Data:', data); // Check the structure of the fetched data
+        setNewsData(data.newsData); // Ensure this matches the expected structure
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
       }
-    } else if (type === 'tuyendung') {
-      if (direction === 'next' && currentTuyendungPage < totalTuyendungPages) {
-        setCurrentTuyendungPage(prevPage => prevPage + 1);
-      } else if (direction === 'prev' && currentTuyendungPage > 1) {
-        setCurrentTuyendungPage(prevPage => prevPage - 1);
+    };
+
+    fetchData();
+  }, []);
+
+  // Check if data is being set correctly
+  console.log('State newsData:', newsData);
+
+  // Handler for adding a news item
+  const handleAddNews = async (newItem: NewsItem) => {
+    try {
+      const response = await fetch('/api/tin-tuc-su-kien/tin-tuc', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newItem),
+      });
+      if (response.ok) {
+        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
+        setNewsData(updatedNews.newsData);
       }
+    } catch (error) {
+      console.error('Error adding news:', error);
     }
   };
 
+  // Handler for updating a news item
+  const handleEditNews = async (index: number, updatedItem: NewsItem) => {
+    try {
+      const response = await fetch('/api/tin-tuc-su-kien/tin-tuc', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ index, updatedItem }),
+      });
+      if (response.ok) {
+        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
+        setNewsData(updatedNews.newsData);
+      }
+    } catch (error) {
+      console.error('Error updating news:', error);
+    }
+  };
 
-  const currentNewsLinks = newsData[0].links.slice(
-      (currentNewsPage - 1) * itemsPerPage,
-      currentNewsPage * itemsPerPage
-  );
+  // Handler for deleting a news item
+  const handleDeleteNews = async (index: number) => {
+    try {
+      const response = await fetch('/api/tin-tuc-su-kien/tin-tuc', {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ index }),
+      });
+      if (response.ok) {
+        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
+        setNewsData(updatedNews.newsData);
+      }
+    } catch (error) {
+      console.error('Error deleting news:', error);
+    }
+  };
 
-  const currentTuyendung = tuyendung.slice(
-      (currentTuyendungPage - 1) * itemsPerPage,
-      currentTuyendungPage * itemsPerPage
-  );
+  if (loading) {
+    return <div>Loading...</div>; // Add a loading state
+  }
 
   return (
-      <div className="max-w-6xl mx-auto p-4 mt-6">
-        <Breadcrumb />
-        <div className="flex space-x-4">
-          <SideMenu currentSection="Tin tức/Sự kiện" />
-          <div className="flex-1">
-            <div className="flex bg-white mb-10 flex-wrap">
-              {/* Tin tức nổi bật */}
-              <div className="w-full md:w-1/2 p-4">
-                <h1 className="text-green-700 text-2xl mb-4 font-bold">Tin tức nổi bật</h1>
-                <div className="flex flex-wrap">
-                  <ul className="list-disc pl-5">
-                    {currentNewsLinks.map((link, index) => (
-                        <li className="mb-2" key={index}>
-                          <a className="text-blue-600 hover:underline" href={link.url} title={link.title}>
-                            {link.title}
-                          </a>
-                          {isAdmin && (
-                              <div className="flex space-x-2">
-                                <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Sửa</button>
-                                <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Xóa</button>
-                              </div>
-                          )}
-                        </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Phân trang Tin tức nổi bật */}
-                <PgControl
-                    currentPage={currentNewsPage}
-                    totalPages={totalNewsPages}
-                    onNextPage={() => handlePageChange('news', 'next')}
-                    onPrevPage={() => handlePageChange('news', 'prev')}
-                />
-                {isAdmin && (
-                    <div className="flex space-x-2">
-                      <button className="px-4 mt-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">Thêm tin</button>
-                    </div>
-                )}
-              </div>
-
-              {/* Tuyển dụng */}
-              <div className="w-full md:w-1/2 p-4">
-                <h1 className="text-green-700 text-2xl mb-4 font-bold">Tuyển dụng</h1>
-                <ul className="list-disc pl-5">
-                  {currentTuyendung.map((job, index) => (
-                      <li className="mb-4" key={index}>
-                        <a className="text-blue-600 hover:underline" href={job.url} title={job.title}>
-                          {job.title}
-                        </a>
-                        {isAdmin && (
-                            <div className="flex space-x-2">
-                              <button className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Sửa</button>
-                              <button className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Xóa</button>
-                            </div>
-                        )}
-                      </li>
-                  ))}
-                </ul>
-
-                {/* Phân trang Tuyển dụng */}
-                <PgControl
-                    currentPage={currentTuyendungPage}
-                    totalPages={totalTuyendungPages}
-                    onNextPage={() => handlePageChange('tuyendung', 'next')}
-                    onPrevPage={() => handlePageChange('tuyendung', 'prev')}
-                />
-
-                {isAdmin && (
-                    <div className="flex space-x-2">
-                      <button className="px-4 mt-6 py-2 bg-green-500 text-white rounded hover:bg-green-600">Thêm tin</button>
-                    </div>
-                )}
-              </div>
-            </div>
+    <div className="max-w-6xl mx-auto p-4 mt-6">
+      <Breadcrumb />
+      <div className="flex space-x-4">
+        <SideMenu currentSection="Tin tức/Sự kiện" />
+        <div className="flex-1">
+          <div className="flex bg-white mb-10 flex-wrap">
+            {/* Tin tức nổi bật */}
+            <NewsSection
+              title="Tin tức nổi bật"
+              items={newsData[0]?.links || []} // Check if this is correct
+              itemsPerPage={itemsPerPage}
+              isAdmin={isAdmin}
+              onAddItem={handleAddNews}
+              onEditItem={handleEditNews}
+              onDeleteItem={handleDeleteNews}
+            />
           </div>
         </div>
       </div>
+    </div>
   );
 }
