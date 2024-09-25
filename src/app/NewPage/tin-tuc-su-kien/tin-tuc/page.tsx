@@ -1,11 +1,11 @@
-// src/app/NewsPage/tin-tuc-su-kien/tin-tuc
+// src/app/NewsPage/tin-tuc-su-kien/tin-tuc.tsx
 'use client';
 import { useState, useEffect } from 'react';
 import NewsSection from '@/components/display-block/tin-tuc-block';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { NewsData, NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
+import { NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
 
 export default function NewsPage() {
   const { isLoggedIn, user } = useAuth();
@@ -13,7 +13,7 @@ export default function NewsPage() {
   const itemsPerPage = 10;
 
   // State to store fetched data
-  const [newsData, setNewsData] = useState<NewsData[]>([]);
+  const [newsData, setNewsData] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
 
   // Fetch data from API when component mounts
@@ -28,7 +28,7 @@ export default function NewsPage() {
 
         const data = await newsResponse.json();
         console.log('Fetched Data:', data); // Check the structure of the fetched data
-        setNewsData(data.newsData); // Ensure this matches the expected structure
+        setNewsData(data.newsData); // Set the flat newsData array
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -38,9 +38,6 @@ export default function NewsPage() {
 
     fetchData();
   }, []);
-
-  // Check if data is being set correctly
-  console.log('State newsData:', newsData);
 
   // Handler for adding a news item
   const handleAddNews = async (newItem: NewsItem) => {
@@ -53,8 +50,8 @@ export default function NewsPage() {
         body: JSON.stringify(newItem),
       });
       if (response.ok) {
-        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
-        setNewsData(updatedNews.newsData);
+        const updatedNews = await response.json();
+        setNewsData(updatedNews.newsData); // Update with the new flat newsData array
       }
     } catch (error) {
       console.error('Error adding news:', error);
@@ -62,18 +59,18 @@ export default function NewsPage() {
   };
 
   // Handler for updating a news item
-  const handleEditNews = async (index: number, updatedItem: NewsItem) => {
+  const handleEditNews = async (id: string, updatedItem: NewsItem) => {
     try {
       const response = await fetch('/api/tin-tuc-su-kien/tin-tuc', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ index, updatedItem }),
+        body: JSON.stringify({ id, updatedItem }), // Send item id and updated data
       });
       if (response.ok) {
-        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
-        setNewsData(updatedNews.newsData);
+        const updatedNews = await response.json();
+        setNewsData(updatedNews.newsData); // Update with the new flat newsData array
       }
     } catch (error) {
       console.error('Error updating news:', error);
@@ -81,18 +78,18 @@ export default function NewsPage() {
   };
 
   // Handler for deleting a news item
-  const handleDeleteNews = async (index: number) => {
+  const handleDeleteNews = async (id: string) => {
     try {
       const response = await fetch('/api/tin-tuc-su-kien/tin-tuc', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ index }),
+        body: JSON.stringify({ id }), // Send the id of the item to delete
       });
       if (response.ok) {
-        const updatedNews: { banner: any; newsData: NewsData[] } = await response.json();
-        setNewsData(updatedNews.newsData);
+        const updatedNews = await response.json();
+        setNewsData(updatedNews.newsData); // Update with the new flat newsData array
       }
     } catch (error) {
       console.error('Error deleting news:', error);
@@ -113,7 +110,7 @@ export default function NewsPage() {
             {/* Tin tức nổi bật */}
             <NewsSection
               title="Tin tức nổi bật"
-              items={newsData[0]?.links || []} // Check if this is correct
+              items={newsData || []} // Use newsData state directly
               itemsPerPage={itemsPerPage}
               isAdmin={isAdmin}
               onAddItem={handleAddNews}
