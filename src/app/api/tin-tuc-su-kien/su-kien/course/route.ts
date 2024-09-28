@@ -1,5 +1,6 @@
-// src/pages/api/tin-tuc-su-kien/su-kien/courses/route.ts
-import { NextApiRequest, NextApiResponse } from 'next';
+// src/app/api/tin-tuc-su-kien/su-kien/course/route.ts
+
+import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 
@@ -17,29 +18,69 @@ const writeDataToFile = (data: any) => {
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
 };
 
-// Generate a unique ID based on the current time
+// Generate a unique ID based on the current date and time
 const generateUniqueId = (): string => {
-  return new Date().getTime().toString();
+  return new Date().toISOString(); // Returns the current date and time in ISO format
 };
 
-export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method === 'GET') {
-    // Get all courses
+// Handler for GET method
+export async function GET(req: NextRequest) {
+  try {
     const data = readDataFromFile();
-    res.status(200).json(data.upcomingCourses);
-  } else if (req.method === 'POST') {
-    // Add a new course
-    try {
-      const data = readDataFromFile();
-      const newCourse = { id: generateUniqueId(), ...req.body };
-      data.upcomingCourses.push(newCourse);
-      writeDataToFile(data);
-      res.status(201).json(newCourse);
-    } catch (error) {
-      res.status(500).json({ message: 'Error adding the course' });
-    }
-  } else {
-    res.setHeader('Allow', ['GET', 'POST']);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    return NextResponse.json(data.Courses);
+  } catch (error) {
+    return NextResponse.json({ message: 'Error fetching data' }, { status: 500 });
   }
 }
+
+// Handler for POST method
+export async function POST(req: NextRequest) {
+  try {
+    const data = readDataFromFile();
+    const newCourse = { id: generateUniqueId(), ...await req.json() };
+    data.Courses.unshift(newCourse);
+    writeDataToFile(data);
+    return NextResponse.json(newCourse, { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ message: 'Error adding the course' }, { status: 500 });
+  }
+}
+
+// Handler for PUT method
+export async function PUT(req: NextRequest) {
+  try {
+    const data = readDataFromFile();
+    const { id, ...updatedCourse } = await req.json();
+    const index = data.Courses.findIndex((course: any) => course.id === id);
+
+    if (index === -1) {
+      return NextResponse.json({ message: 'Course not found' }, { status: 404 });
+    }
+
+    data.Courses[index] = { ...data.Courses[index], ...updatedCourse };
+    writeDataToFile(data);
+    return NextResponse.json(data.Courses[index]);
+  } catch (error) {
+    return NextResponse.json({ message: 'Error updating the course' }, { status: 500 });
+  }
+}
+
+// Handler for DELETE method
+export async function DELETE(req: NextRequest) {
+  try {
+    const data = readDataFromFile();
+    const { id } = await req.json();
+    const index = data.Courses.findIndex((course: any) => course.id === id);
+
+    if (index === -1) {
+      return NextResponse.json({ message: 'Course not found' }, { status: 404 });
+    }
+
+    data.Courses.splice(index, 1);
+    writeDataToFile(data);
+    return NextResponse.json({ message: 'Course deleted successfully' }, { status: 200 }); // Return 200 instead of 204 for clarity
+  } catch (error) {
+    return NextResponse.json({ message: 'Error deleting the course', error: error.message }, { status: 500 });
+  }
+}
+

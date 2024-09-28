@@ -4,13 +4,13 @@ import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import NewsSection from '@/components/display-block/tin-tuc-su-kien/tin-tuc-block';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
+import { NewsItem } from '@/interfaces/tin-tuc-su-kien/interface';
 import CourseSection from '@/components/display-block/tin-tuc-su-kien/CourseSection';
 
 export default function EventsPage() {
     const { isLoggedIn, user } = useAuth();
     const isAdmin = isLoggedIn && user?.role === 'admin';
-    const itemsPerPage = 10;
+    const itemsPerPage = 5;
   
     // State to store fetched data
     const [newsData, setNewsData] = useState<NewsItem[]>([]);

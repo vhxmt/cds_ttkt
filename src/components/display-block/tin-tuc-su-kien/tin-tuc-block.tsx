@@ -1,9 +1,8 @@
-// components/display-block/tin-tuc-block.tsx
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import PgControl from '@/components/display-block/PgControl';
-import { NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
-import NewsForm from './tin-tuc/NewsForm';
+import { NewsItem } from '@/interfaces/tin-tuc-su-kien/interface';
+import NewsForm from './form/NewsForm';
 
 interface NewsSectionProps {
   title: string;
@@ -27,9 +26,20 @@ const NewsSection: React.FC<NewsSectionProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [isFormVisible, setFormVisible] = useState(false);
   const [editingItem, setEditingItem] = useState<NewsItem | null>(null);
-  
+
+  // Calculate the total number of pages
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
+  // Ensure currentPage is within bounds
+  useEffect(() => {
+    if (currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+    // Log state values for debugging
+    console.log(`Current Page: ${currentPage}, Total Pages: ${totalPages}`);
+  }, [totalPages, currentPage]);
+
+  // Function to handle page changes
   const handlePageChange = (direction: 'next' | 'prev') => {
     if (direction === 'next' && currentPage < totalPages) {
       setCurrentPage((prevPage) => prevPage + 1);
@@ -38,11 +48,13 @@ const NewsSection: React.FC<NewsSectionProps> = ({
     }
   };
 
+  // Function to handle adding a new item
   const handleAdd = () => {
     setEditingItem(null);
     setFormVisible(true);
   };
 
+  // Function to handle editing an existing item
   const handleEdit = (id: string) => {
     const itemToEdit = items.find(item => item.id === id);
     if (itemToEdit) {
@@ -51,12 +63,14 @@ const NewsSection: React.FC<NewsSectionProps> = ({
     }
   };
 
+  // Function to handle deleting an item
   const handleDelete = (id: string) => {
     if (onDeleteItem) {
       onDeleteItem(id); // Call the parent function with the item's id
     }
   };
 
+  // Function to handle form submission
   const handleSubmitForm = (newsItem: NewsItem) => {
     if (editingItem && onEditItem) {
       onEditItem(newsItem.id, newsItem); // Update existing item
@@ -66,43 +80,45 @@ const NewsSection: React.FC<NewsSectionProps> = ({
     setFormVisible(false);
   };
 
+  // Function to handle form cancellation
   const handleCancelForm = () => {
     setFormVisible(false);
   };
 
-  const currentItems = items.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // Calculate items to display on the current page
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, items.length);
+  const currentItems = items.slice(startIndex, endIndex); // Correct slicing
+
+  // Log the current items for debugging
+  console.log('Current Items:', currentItems);
 
   return (
     <div className="w-full p-4">
       <h1 className="text-green-700 text-2xl mb-4 font-bold">{title}</h1>
       {isAdmin && (
-            <div className="flex space-x-2">
-              <button className="px-4 mt-6 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={handleAdd}>
-                Thêm tin
-              </button>
-            </div>
-          )}
+        <div className="flex space-x-2">
+          <button className="px-4 mt-6 py-2 bg-green-500 text-white rounded hover:bg-green-600" onClick={handleAdd}>
+            Thêm tin
+          </button>
+        </div>
+      )}
       {isFormVisible ? (
         <NewsForm
-          initialData={editingItem}
+          initialData={editingItem || undefined} // Convert null to undefined here
           onSubmit={handleSubmitForm}
           onCancel={handleCancelForm}
         />
       ) : (
         <>
           <ul className="list-disc pl-5">
-            
             {currentItems.map((item) => (
               <li className="mb-4" key={item.id}>
                 <a className="text-blue-600 hover:underline" href={item.url} title={item.title}>
                   {item.title}
                 </a>
-                
                 {isAdmin && (
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-2 mt-2">
                     <button
                       className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
                       onClick={() => handleEdit(item.id)} // Pass the item's id to handleEdit
@@ -128,8 +144,6 @@ const NewsSection: React.FC<NewsSectionProps> = ({
             onNextPage={() => handlePageChange('next')}
             onPrevPage={() => handlePageChange('prev')}
           />
-
-          
         </>
       )}
     </div>

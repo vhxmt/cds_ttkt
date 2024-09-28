@@ -1,7 +1,7 @@
 
 'use client';
 import { useState, useEffect } from 'react';
-import { NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
+import { NewsItem } from '@/interfaces/tin-tuc-su-kien/interface';
 
 interface NewsFormProps {
   initialData?: NewsItem;

@@ -46,7 +46,7 @@ async function addItem(req: NextRequest): Promise<NextResponse> {
     const data = readDataFromFile(filePath);
     const newItem = await req.json() as NewsItem;
     newItem.id = generateUniqueId(); // Generate a unique ID for the new item
-    data.newsData.push(newItem);
+    data.newsData.unshift(newItem);
     writeDataToFile(filePath, data);
     return NextResponse.json(data, { status: 201 });
   } catch (error) {

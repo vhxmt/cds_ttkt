@@ -41,12 +41,6 @@ export default function UserInfo({ name, title, mail, tel, imageUrl, onEdit, onD
             {/* Action Buttons */}
             {isAdmin && (
                 <div className="flex flex-col space-y-2 ml-4">
-                    <a
-                        href={`/NewPage/nhan-luc/chi-tiet/${id}`}
-                        className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-                    >
-                        Chi tiết
-                    </a>
                     <button
                         onClick={onEdit}
                         className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-600"

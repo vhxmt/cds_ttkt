@@ -5,7 +5,7 @@ import NewsSection from '@/components/display-block/tin-tuc-su-kien/tin-tuc-bloc
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider';
-import { NewsItem } from '@/interfaces/tin-tuc-su-kien/tin-tuc/interface';
+import { NewsItem } from '@/interfaces/tin-tuc-su-kien/interface';
 
 export default function NewsPage() {
   const { isLoggedIn, user } = useAuth();
