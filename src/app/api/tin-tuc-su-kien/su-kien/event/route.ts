@@ -1,11 +1,10 @@
 // src/app/api/tin-tuc-su-kien/tin-tuc/route.ts
-
 import { NextRequest, NextResponse } from 'next/server';
 import path from 'path';
 import fs from 'fs';
 import { NewsItem } from '@/interfaces/tin-tuc-su-kien/interface';
 
-const filePath = path.join(process.cwd(), 'src/data/tin-tuc-su-kien/tin-tuc/tin-tuc.json');
+const filePath = path.join(process.cwd(), 'src/data/tin-tuc-su-kien/su-kien/su-kien.json');
 
 // ID generator function
 const generateUniqueId = (): string => {

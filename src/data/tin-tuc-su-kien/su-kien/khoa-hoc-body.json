@@ -1,6 +1,7 @@
 {
-    "upcomingCourses": [
+    "Courses": [
       {
+        "id": "2023-09-05T04:58:59.967Z",
         "date": "Ngày 17 tháng 05 năm 2024",
         "name": "Tên khóa học 1",
         "time": "09:00 - 17:00",
@@ -8,6 +9,7 @@
         "description": "Mô tả chi tiết khóa học 1"
       },
       {
+        "id": "2023-08-05T04:58:59.967Z",
         "date": "Ngày 30 tháng 05 năm 2024",
         "name": "Tên khóa học 2",
         "time": "10:00 - 16:00",

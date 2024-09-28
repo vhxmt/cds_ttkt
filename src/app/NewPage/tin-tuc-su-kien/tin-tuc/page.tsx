@@ -1,7 +1,7 @@
 // src/app/NewsPage/tin-tuc-su-kien/tin-tuc.tsx
 'use client';
 import { useState, useEffect } from 'react';
-import NewsSection from '@/components/display-block/tin-tuc-block';
+import NewsSection from '@/components/display-block/tin-tuc-su-kien/tin-tuc-block';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from '@/components/providers/AuthProvider';
@@ -27,8 +27,8 @@ export default function NewsPage() {
         }
 
         const data = await newsResponse.json();
-        console.log('Fetched Data:', data); // Check the structure of the fetched data
-        setNewsData(data.newsData); // Set the flat newsData array
+        console.log('Fetched Data:', data); 
+        setNewsData(data.newsData); 
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
@@ -110,7 +110,7 @@ export default function NewsPage() {
             {/* Tin tức nổi bật */}
             <NewsSection
               title="Tin tức nổi bật"
-              items={newsData || []} // Use newsData state directly
+              items={newsData || []}
               itemsPerPage={itemsPerPage}
               isAdmin={isAdmin}
               onAddItem={handleAddNews}
