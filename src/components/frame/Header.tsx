@@ -55,18 +55,18 @@ const Header: React.FC = () => {
               <>
                 <span className="text-black">Xin chào, {user?.name}!</span>
                 <span className="mx-3 text-gray-600">|</span>
+                <a className="text-black" href="/NewPage/login" id="acc-manage">Quản lí tài khoản</a>
+                <span className="mx-3 text-gray-600">|</span>
                 <button onClick={handleLogout} className="text-black">
                   Đăng xuất
                 </button>
+               
               </>
+              
             ) : (
               <>
                 <a href="/NewPage/login" id="sign-in" className="text-black">
                   Đăng nhập
-                </a>
-                <span className="mx-3 text-gray-600">|</span>
-                <a href="/contact-us" className="text-black">
-                  Liên hệ
                 </a>
               </>
             )}

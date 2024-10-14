@@ -6,9 +6,9 @@
       "description": "Nghiên cứu về lưới điện thông minh bao gồm công nghệ và phương pháp để làm cho lưới điện trở nên thông minh hơn."
     },
     {
-      "researchAreaID": "2024-09-21T10:35:00.000Z",
-      "name": "nesw",
-      "description": "news"
+      "researchAreaID": "2024-10-14T07:36:00.127Z",
+      "name": "aa",
+      "description": "aa"
     }
   ],
   "relatedNews": [
@@ -20,18 +20,18 @@
       "link": "#"
     },
     {
-      "id": "2024-09-21T10:45:00.000Z",
-      "researchAreaID": "2024-09-21T10:35:00.000Z",
-      "title": "add new",
-      "description": "here",
-      "link": "#"
-    },
-    {
       "id": "2024-09-23T17:17:30.358Z",
       "researchAreaID": "2024-09-23T17:17:23.459Z",
       "title": "ssssssss",
       "description": "dddddđ",
       "link": "#"
+    },
+    {
+      "id": "2024-10-14T07:36:12.229Z",
+      "researchAreaID": "2024-10-14T07:36:00.127Z",
+      "title": "aa",
+      "description": "aa",
+      "link": "https://apprendre.tv5monde.com/vi/tcf/test-dentrainement-au-tcf?tcf_lot_id=58&competence=CO#tcf_header"
     }
   ]
 }
