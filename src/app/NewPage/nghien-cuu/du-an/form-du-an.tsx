@@ -9,7 +9,7 @@ interface ProjectFormProps {
 }
 
 export interface Project {
-    id?: string; // Optional ID for new projects
+    id: string; // Optional ID for new projects
     duration: string;
     title: string;
     details: string[];
@@ -35,7 +35,7 @@ const ProjectForm: React.FC<ProjectFormProps> = ({ project, onSubmit, onClose })
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const newProject: Project = {
-            id: project?.id || undefined,  // Ensure `id` is undefined if not provided
+            id: project?.id || '',  // Ensure `id` is undefined if not provided
             title,
             duration,
             details: details.split('\n').filter(d => d),

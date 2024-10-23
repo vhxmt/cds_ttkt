@@ -7,7 +7,7 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-cuu-sinh-vien';
+import StaffForm from './form-can-bo';
 import { Staff } from '@/interfaces/nhan-luc/interface';
 
 export default function NewsPage() {
@@ -185,6 +185,7 @@ export default function NewsPage() {
                                             mail={staff.mail}
                                             tel={staff.tel}
                                             imageUrl={staff.imageUrl}
+                                            id={staff.id} 
                                             onEdit={() => handleEdit(staff)}
                                             onDelete={() => handleDelete(staff)}
                                             isAdmin={isAdmin}

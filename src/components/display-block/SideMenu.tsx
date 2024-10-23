@@ -28,26 +28,7 @@ export default function SideMenu({ currentSection }: SideMenuProps) {
                 {item.label}
               </p>
             )}
-            {/* Render subItems if available */}
-            {item.subItems && item.subItems.length > 0 && (
-              <ul className="list-disc list-inside ml-4 text-red-500 text-base">
-                {item.subItems.map((subItem, subIndex) => (
-                  <li key={subIndex}>
-                    {/* Only render a Link if the subItem has an href */}
-                    {subItem.href ? (
-                      <Link className={convertClassName('link')} href={subItem.href}>
-                        {subItem.label}
-                      </Link>
-                    ) : (
-                      // If no href, render the subItem label as plain text
-                      <span className={convertClassName('link')}>
-                        {subItem.label}
-                      </span>
-                    )}
-                  </li>
-                ))}
-              </ul>
-            )}
+            
           </div>
         ))
       }

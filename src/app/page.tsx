@@ -88,11 +88,14 @@ export default function Home() {
                 <h2 className="text-xl font-semibold mb-2">
                     {homePageData.StrategicGoalsTitle}
                 </h2>
-                <ul className="list-disc list-inside mb-4">
+                <ul className="list-none list-inside mb-4">
                     {strategicGoalsItems.map((item: string, index: number) => (
-                        <li key={index}>{item}</li>
+                        <li key={index} style={{ textIndent: "1rem" }}>{item}</li>
                     ))}
                 </ul>
+
+
+
 
                 {/* Show Edit Button for Admin */}
                 {isAdmin && (

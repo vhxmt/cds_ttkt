@@ -7,7 +7,7 @@ interface Filter {
 }
 
 interface mainDataFormProps {
-    mainData?: mainData;
+    mainData?: mainData | null;
     filters: Filter[];
     onSubmit: (mainData: mainData) => void;
     onCancel: () => void;

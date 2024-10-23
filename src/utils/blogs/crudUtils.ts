@@ -2,17 +2,17 @@
 import fs from 'fs';
 import path from 'path';
 import { NextRequest, NextResponse } from 'next/server';
-import { BlogPost } from '@/interfaces/blogs/interface';
+import { mainData } from '@/interfaces/blogs/interface';
 
 // Read data from the JSON file
-export const readData = (filePath: string): BlogPost[] => {
+export const readData = (filePath: string): mainData[] => {
     const fileData = fs.readFileSync(filePath, 'utf8');
     const parsedData = JSON.parse(fileData);
     return parsedData?.mainData || []; // Ensure 'mainData' key is checked
 };
 
 // Write data to the JSON file
-export const writeData = (filePath: string, data: BlogPost[]): void => {
+export const writeData = (filePath: string, data: mainData[]): void => {
     const jsonData = JSON.stringify({ mainData: data }, null, 2); // 'mainData' key
     fs.writeFileSync(filePath, jsonData, 'utf8');
 };
@@ -49,7 +49,7 @@ export const getAllItems = (filePath: string): NextResponse => {
 export const addItem = async (req: NextRequest, filePath: string): Promise<NextResponse> => {
     try {
         const body = await req.json();
-        const newPost: BlogPost = { id: new Date().toISOString(), ...body.newPost };
+        const newPost: mainData = { id: new Date().toISOString(), ...body.newPost };
 
         if (!newPost.title) {
             return NextResponse.json({ message: 'Invalid request. Title is required.' }, { status: 400 });

@@ -1,4 +1,4 @@
-// src/app/NewPage/nhan-luc/ctv-nc/page.tsx
+// src/app/NewPage/nhan-luc/can-bo/page.tsx
 "use client";
 import { useState, useEffect } from 'react';
 import UserInfo from '@/components/display-block/UserInfo';
@@ -7,7 +7,7 @@ import PgControl from '@/components/display-block/PgControl';
 import SideMenu from '@/components/display-block/SideMenu';
 import Breadcrumb from '@/components/breadcrumb';
 import { useAuth } from "@/components/providers/AuthProvider";
-import StaffForm from './form-ctv-nc';
+import StaffForm from './form-can-bo';
 import { Staff } from '@/interfaces/nhan-luc/interface';
 
 export default function NewsPage() {
@@ -25,7 +25,7 @@ export default function NewsPage() {
         setIsLoading(true);
         setHasError(false);
         try {
-            const response = await fetch('/api/nhan-luc/ctv-nc');
+            const response = await fetch('/api/nhan-luc/can-bo');
             if (response.ok) {
                 const data = await response.json();
                 if (Array.isArray(data?.staffData)) {
@@ -55,7 +55,7 @@ export default function NewsPage() {
                 const formData = new FormData();
                 formData.append('file', imageFile);
 
-                const uploadResponse = await fetch('/api/nhan-luc/ctv-nc/upload', {
+                const uploadResponse = await fetch('/api/nhan-luc/can-bo/upload', {
                     method: 'POST',
                     body: formData,
                 });
@@ -72,8 +72,8 @@ export default function NewsPage() {
             const id = editingStaff ? editingStaff.id : `${Date.now()}`;
             const method = editingStaff ? 'PUT' : 'POST';
             const url = editingStaff
-                ? `/api/nhan-luc/ctv-nc?id=${editingStaff.id}`
-                : '/api/nhan-luc/ctv-nc';
+                ? `/api/nhan-luc/can-bo?id=${editingStaff.id}`
+                : '/api/nhan-luc/can-bo';
 
             const response = await fetch(url, {
                 method,
@@ -97,7 +97,7 @@ export default function NewsPage() {
 
     const handleDelete = async (staff: Staff) => {
         try {
-            const response = await fetch(`/api/nhan-luc/ctv-nc?id=${staff.id}`, {
+            const response = await fetch(`/api/nhan-luc/can-bo?id=${staff.id}`, {
                 method: 'DELETE',
             });
 
@@ -185,6 +185,7 @@ export default function NewsPage() {
                                             mail={staff.mail}
                                             tel={staff.tel}
                                             imageUrl={staff.imageUrl}
+                                            id={staff.id} 
                                             onEdit={() => handleEdit(staff)}
                                             onDelete={() => handleDelete(staff)}
                                             isAdmin={isAdmin}

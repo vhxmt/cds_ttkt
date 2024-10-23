@@ -192,7 +192,7 @@ export default function HuongNghienCuu() {
                         {researchData.researchAreas.map((area) => (
                             <button
                                 key={area.researchAreaID}
-                                onClick={() => handleAreaClick(area.researchAreaID)}
+                                onClick={() => handleAreaClick(area.researchAreaID ?? '')}
                                 className={`py-8 rounded-lg text-center ${
                                     selectedAreaID === area.researchAreaID ? 'bg-gray-200' : 'bg-gray-300'
                                 }`}
@@ -208,7 +208,7 @@ export default function HuongNghienCuu() {
                                         </button>
                                         <button
                                             className="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600"
-                                            onClick={() => handleDeleteResearchArea(area.researchAreaID)}
+                                            onClick={() => handleDeleteResearchArea(area.researchAreaID ?? '')}
                                         >
                                             Xóa
                                         </button>
@@ -284,6 +284,9 @@ export default function HuongNghienCuu() {
                     ...currentNews,
                     researchAreaID: selectedAreaID ?? '', // Ensure researchAreaID is a string
                     id: currentNews?.id ?? '', // Provide a default empty string if id is undefined
+                    title: currentNews?.title ?? '', // Ensure title is a string
+                    description: currentNews?.description ?? '', // Ensure description is a string
+                    link: currentNews?.link ?? '', // Ensure link is a string
                 }}
             />
             )}

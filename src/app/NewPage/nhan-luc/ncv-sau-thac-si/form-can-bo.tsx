@@ -1,4 +1,4 @@
-// src/app/NewPage/nhan-luc/sinh-vien-thac-si/form-sinh-vien-thac-si.tsx
+// src/app/NewPage/nhan-luc/cuu-sinh-vien/form-cuu-sinh-vien.tsx
 import { useState } from 'react';
 
 interface StaffFormProps {
@@ -42,7 +42,7 @@ export default function StaffForm({ initialData, onSubmit, onCancel }: StaffForm
             if (imageFile) {
                 const formData = new FormData();
                 formData.append('file', imageFile);
-                formData.append('folderPath', 'image/nhan-luc/sinh-vien-thac-si'); // Set the folder path for staff images
+                formData.append('folderPath', 'image/nhan-luc/cuu-sinh-vien'); // Set the folder path for staff images
                 
                 // Include the old image URL if present, to delete the old image
                 if (initialData?.imageUrl) {

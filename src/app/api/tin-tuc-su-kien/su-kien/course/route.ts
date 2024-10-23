@@ -80,7 +80,7 @@ export async function DELETE(req: NextRequest) {
     writeDataToFile(data);
     return NextResponse.json({ message: 'Course deleted successfully' }, { status: 200 }); // Return 200 instead of 204 for clarity
   } catch (error) {
-    return NextResponse.json({ message: 'Error deleting the course', error: error.message }, { status: 500 });
+    return NextResponse.json({ message: 'Error deleting the course', error: (error as Error).message }, { status: 500 });
   }
 }
 

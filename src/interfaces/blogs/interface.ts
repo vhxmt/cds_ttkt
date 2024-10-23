@@ -1,5 +1,5 @@
 // src/interfaces/blogs//BlogPost.ts
-export interface BlogPost {
+export interface mainData {
     id: string;
     title: string;
     date?: string;

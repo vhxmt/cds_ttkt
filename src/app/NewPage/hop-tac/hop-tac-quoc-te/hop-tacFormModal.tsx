@@ -54,7 +54,7 @@ const CooperationEventFormModal: React.FC<CooperationEventFormModalProps> = ({
 
             const formData = new FormData();
             formData.append('file', file);
-            formData.append('folderPath', 'image/hop-tac/hop-tac-quoc-te'); // Universal path
+            formData.append('folderPath', 'image/hop-tac/hop-tac-khoi-doanh-nghiep'); // Universal path
 
             try {
                 const res = await fetch('/api/upload', {

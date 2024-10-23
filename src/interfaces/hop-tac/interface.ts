@@ -4,4 +4,5 @@ export interface CooperationEvent {
     title: string;
     date: string;
     imageSrc: string;
+    href: string;
 }

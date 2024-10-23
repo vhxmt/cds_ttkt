@@ -15,16 +15,15 @@ export default function NewsPage() {
     const [newsData, setNewsData] = useState<CooperationEvent[]>([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [currentNews, setCurrentNews] = useState<CooperationEvent | undefined>();
+    const [currentPage, setCurrentPage] = useState(1); 
+    const itemsPerPage = 3; 
 
-    const [currentPage, setCurrentPage] = useState(1); // Current page
-    const itemsPerPage = 3; // Number of events per page
-
-    const isAdmin = true; // Change based on actual user status
+    const isAdmin = true; 
 
     // Fetch news data from API
     const fetchNewsData = async () => {
         try {
-            const res = await fetch('/api/hop-tac/hop-tac-khoi-han-lam');
+            const res = await fetch('/api/hop-tac/hop-tac-khoi-doanh-nghiep');
             const data = await res.json();
             const eventsWithIds = data.cooperationEventData.map((event: CooperationEvent) => ({
                 ...event,
@@ -41,22 +40,22 @@ export default function NewsPage() {
     }, []);
 
     const handleAdd = () => {
-        setCurrentNews(undefined); 
+        setCurrentNews(undefined); // Clear the current news to add a new one
         setIsModalOpen(true);
     };
 
     const handleEdit = (item: CooperationEvent) => {
-        setCurrentNews(item); 
+        setCurrentNews(item); // Set current item for editing
         setIsModalOpen(true);
     };
 
     const handleDelete = async (item: CooperationEvent) => {
         try {
-            const res = await fetch(`/api/hop-tac/hop-tac-khoi-han-lam?id=${item.id}`, {
+            const res = await fetch(`/api/hop-tac/hop-tac-khoi-doanh-nghiep?id=${item.id}`, {
                 method: 'DELETE',
             });
             if (res.ok) {
-                fetchNewsData(); 
+                fetchNewsData(); // Refresh the list after deletion
             } else {
                 console.error('Failed to delete news item');
             }
@@ -66,9 +65,9 @@ export default function NewsPage() {
     };
 
     const handleSubmit = async (event: CooperationEvent) => {
-        const isEdit = !!event.id; 
+        const isEdit = !!event.id; // Check if we are editing an existing event (PUT) or adding a new one (POST)
         const method = isEdit ? 'PUT' : 'POST';
-        const url = '/api/hop-tac/hop-tac-khoi-han-lam';
+        const url = '/api/hop-tac/hop-tac-khoi-doanh-nghiep';
         
         const bodyContent = isEdit
             ? { id: event.id, updatedEvent: event } 
@@ -113,7 +112,7 @@ export default function NewsPage() {
 
                     {/* News List */}
                     <NewsList
-                        news={paginatedNews}
+                        news={paginatedNews} // Chỉ truyền những sự kiện trong trang hiện tại
                         isAdmin={isAdmin}
                         onEdit={handleEdit}
                         onDelete={handleDelete}
@@ -125,18 +124,19 @@ export default function NewsPage() {
                         onNextPage={() => setCurrentPage((prev) => Math.min(prev + 1, Math.ceil(newsData.length / itemsPerPage)))}
                         onPrevPage={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
                     />
-
+                    {/* Conditionally render CooperationSection if the modal is not open */}
                     {!isModalOpen && (
                         <CooperationSection
                             title={domesticCooperation.title}
                             items={domesticCooperation.items}
                         />
                     )}
-
+                    {/* Pagination Control */}
                     
                 </div>
             </div>
 
+            {/* Form Modal for Adding/Editing */}
             <CooperationEventFormModal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}

@@ -114,7 +114,7 @@ export default function CourseSection({ isAdmin }: CourseSectionProps) {
     } catch (error) {
       console.error('Error deleting course:', error);
       // Revert state on error
-      setCourses((prevCourses) => [...prevCourses, { id, ...editCourse! }]);
+      setCourses((prevCourses) => [...prevCourses, editCourse!]);
     }
   };
 

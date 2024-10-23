@@ -86,7 +86,7 @@ export async function PUT(req: NextRequest) {
         }
     } catch (error) {
         console.error('Error updating recruitment data:', error);
-        return NextResponse.json({ message: 'Server error', error: error.message }, { status: 500 });
+        return NextResponse.json({ message: 'Server error', error: (error as Error).message }, { status: 500 });
     }
 }
 
@@ -130,7 +130,7 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ message: 'Position added successfully', position: newPosition }, { status: 201 });
     } catch (error) {
         console.error('Error processing POST request:', error);
-        return NextResponse.json({ message: 'Server error', error: error.message }, { status: 500 });
+        return NextResponse.json({ message: 'Server error', error: (error as Error).message }, { status: 500 });
     }
 }
 

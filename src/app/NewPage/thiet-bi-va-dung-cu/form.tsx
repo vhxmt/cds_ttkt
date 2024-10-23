@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 interface Tool {
-    id?: string;
+    id: string;
     title: string;
-    imgSrc?: string;
-    description?: string;
+    imgSrc: string;
+    description: string;
 }
 
 interface FormProps {

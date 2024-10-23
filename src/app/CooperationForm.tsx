@@ -59,8 +59,8 @@ export default function CooperationForm({ initialData, onSubmit, onCancel }: Coo
     // Function to handle deleting a block
     const handleDeleteBlock = (section: string, index: number) => {
         const updatedItems = section === 'domestic'
-            ? domesticCooperation.items.filter((_, idx: number) => idx !== index)
-            : internationalCooperation.items.filter((_, idx: number) => idx !== index);
+            ? domesticCooperation.items.filter((_: any, idx: number) => idx !== index)
+            : internationalCooperation.items.filter((_: any, idx: number) => idx !== index);
 
         if (section === 'domestic') {
             setDomesticCooperation({

@@ -12,7 +12,7 @@ export interface RelatedNews {
 
 // Interface for individual research areas
 export interface ResearchArea {
-    researchAreaID: string; // ID based on the creation time
+    researchAreaID?: string; // ID based on the creation time
     name: string;
     description?: string;
 }
